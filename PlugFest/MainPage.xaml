@@ -8,6 +8,9 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Button x:Name="Start_Server_Btn" Content="Start MQTT Server" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="101" Width="204" Click="StartServer" Margin="-500,0,0,0"/>
+        <Button x:Name="Stop_Server_Btn" Content="Stop MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StopServer" Margin="500,0,0,0"/>
+        <Button x:Name="Start_Bluetooth_Btn" Content="Start Bluetooth" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StartBluetooth" Margin="-500,500,0,0"/>
+        <TextBlock x:Name="Title" HorizontalAlignment="Left" Margin="41,54,0,0" Text="PlugFest Demo" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"/>
     </Grid>
 </Page>
