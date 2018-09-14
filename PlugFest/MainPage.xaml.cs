@@ -115,7 +115,7 @@ namespace PlugFest
         }
 
         // Bluetooth functions
-        private async void StartBluetoot()
+        private async void StartBluetooth(object sender, RoutedEventArgs e)
         {
             _provider = await RfcommServiceProvider.CreateAsync(RfcommServiceId.ObexObjectPush);
             StreamSocketListener listener = new StreamSocketListener();
