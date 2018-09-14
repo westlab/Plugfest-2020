@@ -144,12 +144,21 @@ namespace PlugFest
             provider.SdpRawAttributes.Add(SERVICE_VERSION_ATTRIBUTE_ID, data);
         }
 
-        private async void OnConnectionReceived(StreamSocketListener listener, StreamSocketListenerConnectionReceivedEventArgs args)
+        private void OnConnectionReceived(StreamSocketListener listener, StreamSocketListenerConnectionReceivedEventArgs args)
         {
-            // Stop advertising/listening so that we're only serving one client
-            _provider.StopAdvertising();
-            await listener.Close();
-            _socket = args.Socket;
+            try
+            {
+                // Stop advertising/listening so that we're only serving one client
+                _provider.StopAdvertising();
+                listener.Dispose();
+                _socket = args.Socket;
+                Debug.WriteLine("Successfully stoped listening to the sock.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error on server start." + ex.ToString());
+                throw;
+            }
 
             // The client socket is connected. At this point the App can wait for
             // the user to take some action, e.g. click a button to receive a file
