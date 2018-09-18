@@ -17,11 +17,14 @@ using Windows.Devices.Bluetooth.Rfcomm;
 using Windows.Networking.Sockets;
 using MQTTnet;
 using MQTTnet.Server;
+using MQTTnet.Client;
 using MQTTnet.Adapter;
 using MQTTnet.Diagnostics;
 using MQTTnet.Protocol;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage.Streams;
 
 // 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x411 を参照してください
 
@@ -33,10 +36,11 @@ namespace PlugFest
     public sealed partial class MainPage : Page
     {
         private IMqttServer mqttServer = new MqttFactory().CreateMqttServer();
+        private MqttServerOptionsBuilder _serverOptionBuilder;
+        private IMqttClient mqttClient = new MqttFactory().CreateMqttClient();
+        private MqttClientOptionsBuilder _clientOptionBuilder;
         private bool isServerRunning = false;
         public bool IsServerRunning { get => isServerRunning; set => isServerRunning = value; }
-        private System.Net.IPAddress bindAddr;
-        private MqttServerOptionsBuilder optionBuilder;
         RfcommServiceProvider _provider;
         StreamSocket _socket;
 
@@ -46,11 +50,14 @@ namespace PlugFest
             // UWP won't allow you to bind loopback addr.
             // bindAddr = System.Net.IPAddress.Parse("127.0.0.1");
             // bindAddr = System.Net.IPAddress.Parse("192.168.56.1");
-            optionBuilder = new MqttServerOptionsBuilder()
+            _serverOptionBuilder = new MqttServerOptionsBuilder()
                 .WithConnectionBacklog(100)
                 //.WithDefaultEndpointBoundIPAddress(bindAddr)
                 .WithDefaultEndpointPort(1883);
-
+            _clientOptionBuilder = new MqttClientOptionsBuilder()
+                .WithClientId("Client1")
+                .WithTcpServer("127.0.0.1")
+                .WithCleanSession();
         }
 
 
@@ -61,11 +68,10 @@ namespace PlugFest
                 try
                 {
                     IsServerRunning = true;
-                    mqttServer = new MqttFactory().CreateMqttServer();
                     mqttServer.ApplicationMessageReceived += MqttServer_ApplicationMessageReceived;
                     mqttServer.ClientConnected += MqttServer_ClientConnected;
                     mqttServer.ClientDisconnected += MqttServer_ClientDisconnected;
-                    await mqttServer.StartAsync(optionBuilder.Build());
+                    await mqttServer.StartAsync(_serverOptionBuilder.Build());
                     Debug.WriteLine("Server started.");
                 }
                 catch (Exception ex)
@@ -92,19 +98,19 @@ namespace PlugFest
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Error on server hutdown." + ex.ToString());
+                    Debug.WriteLine("Error on server shutdown." + ex.ToString());
                     throw;
                 }
 
             }
         }
         
-        private static void MqttServer_ClientConnected(object sender, MqttClientConnectedEventArgs e)
+        private static void MqttServer_ClientConnected(object sender, MQTTnet.Server.MqttClientConnectedEventArgs e)
         {
             Debug.WriteLine($"Client[{e.ClientId}] connected");
         }
 
-        private static void MqttServer_ClientDisconnected(object sender, MqttClientDisconnectedEventArgs e)
+        private static void MqttServer_ClientDisconnected(object sender, MQTTnet.Server.MqttClientDisconnectedEventArgs e)
         {
             Debug.WriteLine($"Client[{e.ClientId}] disconnected！");
         }
@@ -119,7 +125,7 @@ namespace PlugFest
         {
             _provider = await RfcommServiceProvider.CreateAsync(RfcommServiceId.ObexObjectPush);
             StreamSocketListener listener = new StreamSocketListener();
-            listener.ConnectionReceived += OnConnectionReceived;
+            listener.ConnectionReceived += OnBTConnectionReceived;
             await listener.BindServiceNameAsync(_provider.ServiceId.AsString(), SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
 
             // Set the SDP attributes and start advertising
@@ -144,7 +150,7 @@ namespace PlugFest
             provider.SdpRawAttributes.Add(SERVICE_VERSION_ATTRIBUTE_ID, data);
         }
 
-        private void OnConnectionReceived(StreamSocketListener listener, StreamSocketListenerConnectionReceivedEventArgs args)
+        private async void OnBTConnectionReceived(StreamSocketListener listener, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             try
             {
@@ -163,10 +169,106 @@ namespace PlugFest
             // The client socket is connected. At this point the App can wait for
             // the user to take some action, e.g. click a button to receive a file
             // from the device, which could invoke the Picker and then save the
-            // received file to the picked location. The transfer itself would use
+            // received file to the picked location. The transfer itself would use  
             // the Sockets API and not the Rfcomm API, and so is omitted here for
             // brevity.
+
+            // Create loop here to make server able to get multiple messages within one session.
+            var reader = new DataReader(_socket.InputStream);
+            uint sizeFieldCount = await reader.LoadAsync(sizeof(uint));
+            uint size = reader.ReadUInt32();
+            uint sizeFieldCount2 = await reader.LoadAsync(size);
+            var str = reader.ReadString(sizeFieldCount2);
+            Debug.WriteLine("server receive {0}", str);
+            var message = new MqttApplicationMessageBuilder()
+                        .WithTopic("MyTopic")
+                        .WithPayload(str)
+                        .WithExactlyOnceQoS()
+                        .WithRetainFlag()
+                        .Build();
+            await mqttClient.PublishAsync(message);
+            Debug.WriteLine("Successfuly published the message.");
         }
 
+        private async void ConnectClient(object sender, RoutedEventArgs e)
+        {
+            if (!mqttClient.IsConnected)
+            {
+                try
+                {
+                    mqttClient.Disconnected += ConnectionErrorHandle; 
+                    await mqttClient.ConnectAsync(_clientOptionBuilder.Build());
+                    Debug.WriteLine("Client is trying to connect to the mqtt server.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error on client connect." + ex.ToString());
+                    throw;
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Client is already connected.");
+            }
+        }
+
+        private async void DisconnectClient(object sender, RoutedEventArgs e)
+        {
+            if (mqttClient.IsConnected)
+            {
+                try
+                {
+                    await mqttClient.DisconnectAsync();
+                    Debug.WriteLine("Client disconnected.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error on disconnecting client" + ex.ToString());
+                    throw;
+                }
+
+            }
+        }
+
+        private async void PublishTestMessage(object sender, RoutedEventArgs e)
+        {
+            if (mqttClient.IsConnected)
+            {
+                try
+                {
+                    var message = new MqttApplicationMessageBuilder()
+                        .WithTopic("MyTopic")
+                        .WithPayload("Hello World")
+                        .WithExactlyOnceQoS()
+                        .WithRetainFlag()
+                        .Build();
+                    await mqttClient.PublishAsync(message);
+                    Debug.WriteLine("Successfuly published the message.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error on publishing the message." + ex.ToString());
+                    throw;
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Client is not connected. First, check the connection to the server.");
+            }
+        }
+
+        private async void ConnectionErrorHandle(object sender, MQTTnet.Client.MqttClientDisconnectedEventArgs e)
+        {
+            Debug.WriteLine("### DISCONNECTED FROM SERVER ###");
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            try
+            {
+                await mqttClient.ConnectAsync(_clientOptionBuilder.Build());
+            }
+            catch
+            {
+                Console.WriteLine("### RECONNECTING FAILED ###");
+            }
+        }
     }
 }

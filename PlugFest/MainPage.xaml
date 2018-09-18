@@ -8,9 +8,26 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="Start_Server_Btn" Content="Start MQTT Server" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="101" Width="204" Click="StartServer" Margin="-500,0,0,0"/>
-        <Button x:Name="Stop_Server_Btn" Content="Stop MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StopServer" Margin="500,0,0,0"/>
-        <Button x:Name="Start_Bluetooth_Btn" Content="Start Bluetooth" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StartBluetooth" Margin="-500,500,0,0"/>
         <TextBlock x:Name="Title" HorizontalAlignment="Left" Margin="41,54,0,0" Text="PlugFest Demo" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"/>
+        <Grid Margin="4,142,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="Start_Server_Btn" Content="Start MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StartServer" Grid.Row="0" Grid.Column="0"/>
+            <Button x:Name="Stop_Server_Btn" Content="Stop MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StopServer" Grid.Row="0" Grid.Column="3"/>
+            <Button x:Name="Start_Bluetooth_Btn" Content="Start Bluetooth" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StartBluetooth" Grid.Row="1" Grid.Column="1"/>
+            <Button x:Name="Connect_Client_Btn" Content="Connect to MQTT Server" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="101" Width="204" Click="ConnectClient" Grid.Row="2" Grid.Column="0"/>
+            <Button x:Name="Disconnect_Client_Btn" Content="Disconnect form MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="DisconnectClient" Grid.Row="2" Grid.Column="1"/>
+            <Button x:Name="Publish_Message_Btn" Content="Publish test message" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="PublishTestMessage" Grid.Row="2" Grid.Column="2"/>
+        </Grid>
     </Grid>
 </Page>
