@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.InteropServices;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -33,15 +34,18 @@ namespace PlugFest
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public bool IsServerRunning { get => isServerRunning; set => isServerRunning = value; }
         private IMqttServer _mqttServer = new MqttFactory().CreateMqttServer();
         private MqttServerOptionsBuilder _serverOptionBuilder;
         private IMqttClient _mqttClient = new MqttFactory().CreateMqttClient();
         private MqttClientOptionsBuilder _clientOptionBuilder;
         private StreamSocketListener _listener = new StreamSocketListener();
         private bool isServerRunning = false;
-        public bool IsServerRunning { get => isServerRunning; set => isServerRunning = value; }
-        RfcommServiceProvider _provider;
-        StreamSocket _socket;
+        private RfcommServiceProvider _provider;
+        private StreamSocket _socket;
+        private RetainedMessageHandler retainStorage = new RetainedMessageHandler();
+        // [DllImport("operateTEDS", CharSet=CharSet.Unicode)]
+        // private static extern String TEDStoString(); 
 
         public MainPage()
         {
@@ -51,6 +55,7 @@ namespace PlugFest
             // bindAddr = System.Net.IPAddress.Parse("192.168.56.1");
             _serverOptionBuilder = new MqttServerOptionsBuilder()
                 .WithConnectionBacklog(100)
+                .WithStorage(retainStorage)
                 //.WithDefaultEndpointBoundIPAddress(bindAddr)
                 .WithDefaultEndpointPort(1883);
             _clientOptionBuilder = new MqttClientOptionsBuilder()
@@ -277,6 +282,31 @@ namespace PlugFest
             {
                 Console.WriteLine("### RECONNECTING FAILED ###");
             }
+        }
+    }
+
+    public class RetainedMessageHandler : IMqttServerStorage
+    {
+        // private const string Filename = "C:\\Users\\erwanp\\Desktop\\messageConservé.json";
+        private string wellcomeMessageString = "Welcome to IEEE 1451 Broker!!"; 
+
+        public Task SaveRetainedMessagesAsync(IList<MqttApplicationMessage> messages)
+        {
+            // File.WriteAllText(Filename, JsonConvert.SerializeObject(messages));
+            Debug.WriteLine("Retain message");
+            return Task.FromResult(0);
+        }
+
+        public Task<IList<MqttApplicationMessage>> LoadRetainedMessagesAsync()
+        {
+            IList<MqttApplicationMessage> wellcomeList = new List<MqttApplicationMessage>();
+            MqttApplicationMessage wellcomeMessage = new MqttApplicationMessage();
+            wellcomeMessage.Payload = System.Text.Encoding.Unicode.GetBytes(wellcomeMessageString);
+            wellcomeMessage.Retain = true;
+            wellcomeMessage.Topic = "test";
+            Debug.WriteLine("Load retain message");
+            wellcomeList.Add(wellcomeMessage);
+            return Task.FromResult(wellcomeList);
         }
     }
 }

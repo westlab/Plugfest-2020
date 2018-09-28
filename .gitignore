@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+PlugFestUWP/PlugFest/TEDS.dll
+PlugFestUWP/PlugFest/operateTEDS.dll
