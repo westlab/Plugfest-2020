@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Rfcomm;
+using Windows.Storage.Streams;
 using Windows.Networking.Sockets;
 using MQTTnet;
 using MQTTnet.Server;
@@ -25,12 +27,15 @@ using MQTTnet.Protocol;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage.Streams;
+using Newtonsoft.Json;
 
 namespace PlugFest
 {
     /// <summary>
-    /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
+    /// Current design of topics: 
+    /// "PlugFest/sensors/[Sensor Name]/TEDS"
+    /// "PlugFest/sensors/[Sensor Name]/data"
+    /// "PlugFest/sensors/[Sensor Name]/integrated"
     /// </summary>
     public sealed partial class MainPage : Page
     {
@@ -50,6 +55,8 @@ namespace PlugFest
         public MainPage()
         {
             this.InitializeComponent();
+            Debug.WriteLine(retainStorage.TEDSStringA);
+            this.DataContext = retainStorage;
             // UWP won't allow you to bind loopback addr.
             // bindAddr = System.Net.IPAddress.Parse("127.0.0.1");
             // bindAddr = System.Net.IPAddress.Parse("192.168.56.1");
@@ -71,7 +78,8 @@ namespace PlugFest
             _mqttServer.ApplicationMessageReceived += MqttServer_ApplicationMessageReceived;
             _mqttServer.ClientConnected += MqttServer_ClientConnected;
             _mqttServer.ClientDisconnected += MqttServer_ClientDisconnected;
-            _mqttClient.Disconnected += ConnectionErrorHandle;
+            // Looks like it is confricting with the disconnectAsync
+            // _mqttClient.Disconnected += ConnectionErrorHandle;
         }
 
         private void AsignBluetoothCallback()
@@ -210,8 +218,8 @@ namespace PlugFest
             {
                 try
                 {
-                    await _mqttClient.ConnectAsync(_clientOptionBuilder.Build());
                     Debug.WriteLine("Client is trying to connect to the mqtt server.");
+                    await _mqttClient.ConnectAsync(_clientOptionBuilder.Build());
                 }
                 catch (Exception ex)
                 {
@@ -232,6 +240,7 @@ namespace PlugFest
                 try
                 {
                     await _mqttClient.DisconnectAsync();
+                    await Task.Delay(500);
                     Debug.WriteLine("Client disconnected.");
                 }
                 catch (Exception ex)
@@ -285,28 +294,5 @@ namespace PlugFest
         }
     }
 
-    public class RetainedMessageHandler : IMqttServerStorage
-    {
-        // private const string Filename = "C:\\Users\\erwanp\\Desktop\\messageConservé.json";
-        private string wellcomeMessageString = "Welcome to IEEE 1451 Broker!!"; 
-
-        public Task SaveRetainedMessagesAsync(IList<MqttApplicationMessage> messages)
-        {
-            // File.WriteAllText(Filename, JsonConvert.SerializeObject(messages));
-            Debug.WriteLine("Retain message");
-            return Task.FromResult(0);
-        }
-
-        public Task<IList<MqttApplicationMessage>> LoadRetainedMessagesAsync()
-        {
-            IList<MqttApplicationMessage> wellcomeList = new List<MqttApplicationMessage>();
-            MqttApplicationMessage wellcomeMessage = new MqttApplicationMessage();
-            wellcomeMessage.Payload = System.Text.Encoding.Unicode.GetBytes(wellcomeMessageString);
-            wellcomeMessage.Retain = true;
-            wellcomeMessage.Topic = "test";
-            Debug.WriteLine("Load retain message");
-            wellcomeList.Add(wellcomeMessage);
-            return Task.FromResult(wellcomeList);
-        }
-    }
+   
 }
