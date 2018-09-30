@@ -11,6 +11,7 @@ import binascii
 import RPi.GPIO as GPIO
 import sys
 import time
+import re
 
 def s16(value):
     return -(value & 0b1000000000000000) | (value & 0b0111111111111111)
@@ -42,11 +43,11 @@ class NtfyDelegate(btle.DefaultDelegate):
             NtfyDelegate.GeoMagnetic_X = s16(int((cal[6:8] + cal[4:6]), 16)) * 0.15
             NtfyDelegate.GeoMagnetic_Y = s16(int((cal[10:12] + cal[8:10]), 16)) * 0.15
             NtfyDelegate.GeoMagnetic_Z = s16(int((cal[14:16] + cal[12:14]), 16)) * 0.15
-            print 'Geo-Magnetic X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.GeoMagnetic_X, NtfyDelegate.GeoMagnetic_Y, NtfyDelegate.GeoMagnetic_Z)
+            #print 'Geo-Magnetic X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.GeoMagnetic_X, NtfyDelegate.GeoMagnetic_Y, NtfyDelegate.GeoMagnetic_Z)
             NtfyDelegate.Acceleration_X = 1.0 * s16(int((cal[18:20] + cal[16:18]), 16)) / 1024
             NtfyDelegate.Acceleration_Y = 1.0 * s16(int((cal[22:24] + cal[20:22]), 16)) / 1024
             NtfyDelegate.Acceleration_Z = 1.0 * s16(int((cal[26:28] + cal[24:26]), 16)) / 1024
-            print 'Acceleration X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.Acceleration_X, NtfyDelegate.Acceleration_Y, NtfyDelegate.Acceleration_Z)
+            #print 'Acceleration X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.Acceleration_X, NtfyDelegate.Acceleration_Y, NtfyDelegate.Acceleration_Z)
 
         if int((cal[0:2]), 16) == 0xf3:
             NtfyDelegate.Pressure = int((cal[6:8] + cal[4:6]), 16) * 860.0/65535 + 250
@@ -54,12 +55,10 @@ class NtfyDelegate(btle.DefaultDelegate):
             NtfyDelegate.Temperature = 1.0*((int((cal[14:16] + cal[12:14]), 16) -2096)/50)
             UV = int((cal[18:20] + cal[16:18]), 16) / (100*0.388)
             NtfyDelegate.AmbientLight = int((cal[22:24] + cal[20:22]), 16) / (0.05*0.928)
-            print 'Pressure:{0:.3f} Humidity:{1:.3f} Temperature:{2:.3f} UV:{0:.3f} AmbientLight:{1:.3f} '.format(NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight)
+#            print 'Pressure:{0:.3f} Humidity:{1:.3f} Temperature:{2:.3f} UV:{3:.3f} AmbientLight:{4:.3f} '.format(NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight)
 #            print 'UV:{0:.3f} AmbientLight:{1:.3f} '.format(UV, AmbientLight)
 		
- 
 
- 
 class AlpsSensor(Peripheral):
     def __init__(self,addr):
         Peripheral.__init__(self,addr)
@@ -90,13 +89,21 @@ def main():
     ras.connectBluetooth(ras.bdAddr,ras.port)
      
 # Main loop --------
+    fileset = ["TEDS-TEDS-ACCEL.txt", "TEDS-TEDS-GEOMAG.txt", "TEDS-TEDS-HUMID.txt", "TEDS-TEDS-ILLUMI.txt", "TEDS-TEDS-PRESSURE.txt", "TEDS-TEDS-TEMP.txt", "TEDS-TEDS-UV.txt", 
+    "TEDS-METATEDS-ACCEL.txt", "TEDS-METATEDS-GEOMAG.txt", "TEDS-METATEDS-HUMID.txt", "TEDS-METATEDS-ILLUMI.txt", "TEDS-METATEDS-PRESSURE.txt", "TEDS-METATEDS-TEMP.txt", "TEDS-METATEDS-UV.txt"]
+    for fname in fileset:
+        ftype = re.split('[-.]', fname)
+        with open("../TEDS/"+fname) as f:
+            ras.sock.send("#"+ftype[1]+":"+ftype[2])
+            msg = f.read()
+            ras.sock.send(msg)
+            print ("TEDS:"+msg)
     while True:
         if alps.waitForNotifications(1.0):
             # handleNotification() was called
-            print (NtfyDelegate.Pressure)
-            msg = '[uniqID] Pressure:{0:.3f} Humidity:{1:.3f} Temperature:{2:.3f} UV:{0:.3f} AmbientLight:{1:.3f} '.format(NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight)
+            msg = 'PRESSURE:{0:.3f},HUMID:{1:.3f},TEMP:{2:.3f},ILLUMI:{3:.3f},UV:{4:.3f},GEOMAG:{5:.3f},ACCEL:{6:.3f}'.format(NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
             ras.sock.send(msg)
-            print ("data send")
+            print ("DATA:"+msg)
             continue
  
         print "Waiting..."

@@ -3,6 +3,7 @@
 import time
 import bluetooth
 import select
+import re
 
 def main():
     PORT =1
@@ -14,6 +15,8 @@ def main():
     try:
         server_socket.bind( ("",PORT ))
         server_socket.listen(1)
+        msg = ""
+        teds = {}
 
         while 1:
             rready, wready, xready = select.select(readfds, [], [])        
@@ -21,10 +24,10 @@ def main():
                 if sock is server_socket:
                     client_socket,address = server_socket.accept()
                     readfds.add(client_socket)
-                    print("conecction secuccesful!!")
+                    print("connected!")
                 else:
                     try:
-                        msg = sock.recv(1024)
+                        msg = sock.recv(2048)
                     except KeyboardInterrupt:
                         for sock in readfds:
                             sock.close()
@@ -34,10 +37,25 @@ def main():
                         pass
                     finally:
                         if len(msg) == 0:
-                            slck.close()
+                            sock.close()
                             readfds.remove(sock)
                         else:
-                            print(msg)
+                            print("RCV:"+str(len(msg)))
+                print(msg)
+                if re.match("^#", msg):
+                    name = msg[1:]
+                    print("TEDS="+name)
+                    msg = sock.recv(2048)
+                    teds[name] = msg
+                    print("TEDS="+name+"="+msg)
+                    # publish TEDS with retain bit
+                else:
+                    pmsg = msg.split(',')
+                    for pmsgn in pmsg:
+                        data = pmsgn.split(':')
+                        if(len(data) ==2):
+                            print(data[0]+"="+data[1])
+                            #publish data[0] for data[1]
     finally:
         for sock in readfds:
             sock.close()

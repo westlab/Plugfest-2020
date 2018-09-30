@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>PRESSURE</UserPhysicalMeasurand>
+	<UnitScale>HPA.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>300</PhysicalSensorMin>
+	<PhysicalSensorMax>1100<PhysicalSensorMax>
+	<UserDataValue>S:0.013/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>
