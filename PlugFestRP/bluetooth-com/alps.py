@@ -34,7 +34,7 @@ parser.add_argument('-q', '--quiet',
     action = 'store_true',
     help = 'quiet (does not output data messages)',
     default = False)
-parser.add_argument('-p', '--psude_sensor',
+parser.add_argument('-P', '--psude_sensor',
     action = 'store_true',
     help = 'generate random sensor values without ALPS module',
     default = False)
@@ -167,13 +167,13 @@ def main():
         now = datetime.datetime.now()
         d = datetime.datetime(now.year,now.month,now.day,now.hour,now.minute,now.second,now.microsecond)
         if pflag == True:
-            Pressure = 980.0+random.randint(2000,4000)/100
-            Humidity = 20.0+random.randint(0,6000)/100
-            Temperature = 18.0+random.randint(0,80000)/100
-            AmbientLight = 0.0+random.randint(0,100000)/100
-            UV = 0.0+random.randint(0,100000)/100
-            GeoMagnetic_X = 0.0+random.randint(0,1000000)/100
-            Acceleration_Y  = 0.0+random.randint(0,1000000)/100
+            Pressure = 980.0+random.randint(2000,4000)/100.0
+            Humidity = 20.0+random.randint(0,6000)/100.0
+            Temperature = 18.0+random.randint(0,80000)/100.0
+            AmbientLight = 0.0+random.randint(0,100000)/100.0
+            UV = 0.0+random.randint(0,100000)/100.0
+            GeoMagnetic_X = 0.0+random.randint(0,1000000)/100.0
+            Acceleration_Y  = 0.0+random.randint(0,1000000)/100.0
             msg = '{{"DATETIME":{0},"PRESSURE":{1:.3f},"HUMID":{2:.3f},"TEMP":{3:.3f},"ILLUMI":{4:.3f},"UV":{5:.3f},"GEOMAG":{6:.3f},"ACCEL":{7:.3f}}}'.format(d, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
             ras.sock.send(msg)
             sleep(0.5)
