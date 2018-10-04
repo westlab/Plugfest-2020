@@ -358,10 +358,6 @@ namespace PlugFest
 
         private async void ConnectClient_Click(object sender, RoutedEventArgs e)
         {
-            ConnectClient();
-        }
-        private async void ConnectClient()
-        {
             if (!_mqttClient.IsConnected)
             {
                 try
