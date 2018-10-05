@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.InteropServices;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -14,6 +16,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Rfcomm;
+using Windows.Devices.Enumeration;
+using Windows.Storage.Streams;
 using Windows.Networking.Sockets;
 using MQTTnet;
 using MQTTnet.Server;
@@ -24,33 +28,49 @@ using MQTTnet.Protocol;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage.Streams;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Threading;
+using Windows.Devices.SerialCommunication;
 
 namespace PlugFest
 {
     /// <summary>
-    /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
+    /// Current design of topics: 
+    /// "PlugFest/sensors/[Sensor Name]/TEDS"
+    /// "PlugFest/sensors/[Sensor Name]/data"
+    /// "PlugFest/sensors/[Sensor Name]/integrated"
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public bool IsServerRunning { get => isServerRunning; set => isServerRunning = value; }
+        private bool isServerRunning = false;
+        public bool IsBTServerRunning { get => isBTServerRunning; set => isBTServerRunning = value; }
+        private bool isBTServerRunning = false;
         private IMqttServer _mqttServer = new MqttFactory().CreateMqttServer();
         private MqttServerOptionsBuilder _serverOptionBuilder;
         private IMqttClient _mqttClient = new MqttFactory().CreateMqttClient();
         private MqttClientOptionsBuilder _clientOptionBuilder;
         private StreamSocketListener _listener = new StreamSocketListener();
-        private bool isServerRunning = false;
-        public bool IsServerRunning { get => isServerRunning; set => isServerRunning = value; }
-        RfcommServiceProvider _provider;
-        StreamSocket _socket;
+        private RfcommServiceProvider _provider;
+        private StreamSocket _socket;
+        private RetainedMessageHandler retainStorage = new RetainedMessageHandler();
+        private DataReader dataReaderObject;
+        private ObservableCollection<PairedDeviceInfo> _pairedDevices;
+        // [DllImport("operateTEDS", CharSet=CharSet.Unicode)]
+        // private static extern String TEDStoString(); 
 
         public MainPage()
         {
             this.InitializeComponent();
+            Debug.WriteLine(retainStorage.TEDSStringA);
+            this.DataContext = retainStorage;
             // UWP won't allow you to bind loopback addr.
             // bindAddr = System.Net.IPAddress.Parse("127.0.0.1");
             // bindAddr = System.Net.IPAddress.Parse("192.168.56.1");
             _serverOptionBuilder = new MqttServerOptionsBuilder()
                 .WithConnectionBacklog(100)
+                .WithStorage(retainStorage)
                 //.WithDefaultEndpointBoundIPAddress(bindAddr)
                 .WithDefaultEndpointPort(1883);
             _clientOptionBuilder = new MqttClientOptionsBuilder()
@@ -66,7 +86,8 @@ namespace PlugFest
             _mqttServer.ApplicationMessageReceived += MqttServer_ApplicationMessageReceived;
             _mqttServer.ClientConnected += MqttServer_ClientConnected;
             _mqttServer.ClientDisconnected += MqttServer_ClientDisconnected;
-            _mqttClient.Disconnected += ConnectionErrorHandle;
+            // Looks like it is confricting with the disconnectAsync
+            // _mqttClient.Disconnected += ConnectionErrorHandle;
         }
 
         private void AsignBluetoothCallback()
@@ -131,46 +152,183 @@ namespace PlugFest
         }
 
         // Bluetooth functions
-        private async void StartBluetooth(object sender, RoutedEventArgs e)
+        
+        async Task InitializeRfcommDeviceService()
         {
-            _provider = await RfcommServiceProvider.CreateAsync(RfcommServiceId.ObexObjectPush);
-            await _listener.BindServiceNameAsync(_provider.ServiceId.AsString(), SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
+            try
+            {
+                DeviceInformationCollection DeviceInfoCollection = await DeviceInformation.FindAllAsync(RfcommDeviceService.GetDeviceSelector(RfcommServiceId.SerialPort));
 
-            // Set the SDP attributes and start advertising
-            InitializeServiceSdpAttributes(_provider);
-            _provider.StartAdvertising(_listener);
+
+                var numDevices = DeviceInfoCollection.Count();
+
+                _pairedDevices = new ObservableCollection<PairedDeviceInfo>();
+                _pairedDevices.Clear();
+
+                if (numDevices == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("InitializeRfcommDeviceService: No paired devices found.");
+                }
+                else
+                {
+                    // Found paired devices.
+                    foreach (var deviceInfo in DeviceInfoCollection)
+                    {
+                        _pairedDevices.Add(new PairedDeviceInfo(deviceInfo));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("InitializeRfcommDeviceService: " + ex.Message);
+            }
         }
 
-        // const uint SERVICE_VERSION_ATTRIBUTE_ID = 0x0300;
-        const uint SERVICE_VERSION_ATTRIBUTE_ID = 0x47d6;
-        const byte SERVICE_VERSION_ATTRIBUTE_TYPE = 0x0A;   // UINT32
-        const uint SERVICE_VERSION = 200;
-        void InitializeServiceSdpAttributes(RfcommServiceProvider provider)
+        private void StopBluetooth(object sender, RoutedEventArgs e)
         {
-            var writer = new Windows.Storage.Streams.DataWriter();
+            if (isBTServerRunning)
+            {
+                isBTServerRunning = false;
+                _socket.Dispose();
+                _socket = null;
+            }
+        }
+        private async void StartBluetooth(object sender, RoutedEventArgs e)
+        {
+            if (!IsBTServerRunning)
+            {
+                isBTServerRunning = true;
+                await InitializeRfcommDeviceService();
+                DeviceInformation DeviceInfo; // = await DeviceInformation.CreateFromIdAsync(this.TxtBlock_SelectedID.Text);
+                DeviceInfo = _pairedDevices.First().DeviceInfo;
 
-            // First write the attribute type
-            writer.WriteByte(SERVICE_VERSION_ATTRIBUTE_TYPE);
-            // Then write the data
-            writer.WriteUInt32(SERVICE_VERSION);
+                bool success = true;
+                try
+                {
+                    var _service = await RfcommDeviceService.FromIdAsync(DeviceInfo.Id);
 
-            var data = writer.DetachBuffer();
-            provider.SdpRawAttributes.Add(SERVICE_VERSION_ATTRIBUTE_ID, data);
+                    if (_socket != null)
+                    {
+                        _socket.Dispose();
+                    }
+
+                    _socket = new StreamSocket();
+                    try
+                    {
+                        await _socket.ConnectAsync(_service.ConnectionHostName, _service.ConnectionServiceName);
+                    }
+                    catch (Exception ex)
+                    {
+                        isBTServerRunning = false;
+                        success = false;
+                        System.Diagnostics.Debug.WriteLine("Connect:" + ex.Message);
+                    }
+                    if (success)
+                    {
+                        string msg = String.Format("Connected to {0}!", _socket.Information.RemoteAddress.DisplayName);
+                        System.Diagnostics.Debug.WriteLine(msg);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Overall Connect: " + ex.Message);
+                    _socket.Dispose();
+                    _socket = null;
+                }
+                Listen();
+            }
+        }
+
+        private async void Listen()
+        {
+            try
+            {
+                var ReadCancellationTokenSource = new CancellationTokenSource();
+                if (_socket.InputStream != null)
+                {
+                    dataReaderObject = new DataReader(_socket.InputStream);
+                    // keep reading the serial input
+                    while (true)
+                    {
+                        await ReadAsync(ReadCancellationTokenSource.Token);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                isBTServerRunning = false;
+                if (ex.GetType().Name == "TaskCanceledException")
+                {
+                    System.Diagnostics.Debug.WriteLine("Listen: Reading task was cancelled, closing device and cleaning up");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Listen: " + ex.Message);
+                }
+            }
+            finally
+            {
+                // Cleanup once complete
+                if (dataReaderObject != null)
+                {
+                    dataReaderObject.DetachStream();
+                    dataReaderObject = null;
+                }
+            }
+        }
+
+        private async Task ReadAsync(CancellationToken cancellationToken)
+        {
+            Task<UInt32> loadAsyncTask;
+
+            uint ReadBufferLength = 1024;
+
+            // If task cancellation was requested, comply
+            cancellationToken.ThrowIfCancellationRequested();
+
+            // Set InputStreamOptions to complete the asynchronous read operation when one or more bytes is available
+            dataReaderObject.InputStreamOptions = InputStreamOptions.Partial;
+
+            // Create a task object to wait for data on the serialPort.InputStream
+            loadAsyncTask = dataReaderObject.LoadAsync(ReadBufferLength).AsTask(cancellationToken);
+
+            // Launch the task and wait
+            UInt32 bytesRead = await loadAsyncTask;
+            if (bytesRead > 0)
+            {
+                try
+                {
+                    string recvdtxt = dataReaderObject.ReadString(bytesRead);
+                    System.Diagnostics.Debug.WriteLine(recvdtxt);
+                    var message = new MqttApplicationMessageBuilder()
+            .WithTopic("PlugFest/sensors/A/integrated")
+            .WithPayload(recvdtxt)
+            .WithExactlyOnceQoS()
+            .Build();
+                    await _mqttClient.PublishAsync(message);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("ReadAsync: " + ex.Message);
+                }
+                
+            }
         }
 
         private async void OnBTConnectionReceived(StreamSocketListener listener, StreamSocketListenerConnectionReceivedEventArgs args)
         {
+            Debug.WriteLine("recieved something");
             try
             {
                 // Stop advertising/listening so that we're only serving one client
                 _provider.StopAdvertising();
                 listener.Dispose();
-                _socket = args.Socket;
+                // _socket = args.Socket;
                 Debug.WriteLine("Successfully stoped listening to the sock.");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error on server start." + ex.ToString());
+                Debug.WriteLine("Error on BT received." + ex.ToString());
                 throw;
             }
 
@@ -193,20 +351,23 @@ namespace PlugFest
                         .WithTopic("MyTopic")
                         .WithPayload(str)
                         .WithExactlyOnceQoS()
-                        .WithRetainFlag()
                         .Build();
             await _mqttClient.PublishAsync(message);
             Debug.WriteLine("Successfuly published the message.");
         }
 
-        private async void ConnectClient(object sender, RoutedEventArgs e)
+        private async void ConnectClient_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectClient();
+        }
+        private async void ConnectClient()
         {
             if (!_mqttClient.IsConnected)
             {
                 try
                 {
-                    await _mqttClient.ConnectAsync(_clientOptionBuilder.Build());
                     Debug.WriteLine("Client is trying to connect to the mqtt server.");
+                    await _mqttClient.ConnectAsync(_clientOptionBuilder.Build());
                 }
                 catch (Exception ex)
                 {
@@ -227,6 +388,7 @@ namespace PlugFest
                 try
                 {
                     await _mqttClient.DisconnectAsync();
+                    await Task.Delay(500);
                     Debug.WriteLine("Client disconnected.");
                 }
                 catch (Exception ex)
@@ -279,4 +441,6 @@ namespace PlugFest
             }
         }
     }
+
+   
 }
