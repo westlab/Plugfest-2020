@@ -34,7 +34,7 @@ parser.add_argument('-q', '--quiet',
     action = 'store_true',
     help = 'quiet (does not output data messages)',
     default = False)
-parser.add_argument('-P', '--psude_sensor',
+parser.add_argument('-P', '--pseudo_sensor',
     action = 'store_true',
     help = 'generate random sensor values without ALPS module',
     default = False)
@@ -66,7 +66,7 @@ eflag = False
 if args.erasticsearch:
     eflag = True
 pflag = False
-if args.psude_sensor:
+if args.pseudo_sensor:
     pflag = True
 
 def s16(value):

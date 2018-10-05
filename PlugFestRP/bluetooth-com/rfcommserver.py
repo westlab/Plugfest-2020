@@ -32,7 +32,7 @@ parser.add_argument('-c', '--connect',
     action = 'store_true',
     help = 'connect to MQTT server',
     default = False)
-parser.add_argument('-P', '--psude_sensor',
+parser.add_argument('-P', '--pseudo_sensor',
     action = 'store_true',
     help = 'generate random sensor values without ALPS module',
     default = False)
@@ -68,7 +68,7 @@ cflag = False
 if args.connect:
     cflag = True
 pflag = False
-if args.psude_sensor:
+if args.pseudo_sensor:
     pflag = True
 
 def main():
@@ -112,7 +112,10 @@ def main():
                         finally:
                             if len(msg) == 0:
                                 sock.close()
-                                readfds.remove(sock)
+                                try:
+				    readfds.remove(sock)
+				except:
+				    pass
                             else:
                                 if vflag == True:
                                     print("RCV:"+str(len(msg)))
@@ -150,7 +153,7 @@ def main():
     else:
         # publish TEDS with retain bit
         address = "local"
-        name = "psude_sensor"
+        name = "pseudo_sensor"
         tname = "TEDS"
         msg = "6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124CCA0183933228A60000803F010040830100548500EA540773C1642FE654081C00"
         if vflag == True:
