@@ -50,10 +50,16 @@ parser.add_argument('-d', '--destination_address',
     nargs = '?',
     default = 'B8:27:EB:DB:D2:8E',
     type = str)
-parser.add_argument('-e', '--erasticsearch',
+parser.add_argument('-E', '--elasticsearch',
     action = 'store_true',
-    help = 'prepare erasticsearch/kibana data and push',
+    help = 'prepare elasticsearch/kibana data and push',
     default = False)
+parser.add_argument('-e', '--elasticsearch_address',
+    action = 'store',
+    help = 'specify destination Bluetooth addresss',
+    nargs = '?',
+    default = 'http://localhost:9200/plugfest',
+    type = str)
 
 args = parser.parse_args()
 vflag = False
@@ -63,7 +69,7 @@ qflag = False
 if args.quiet:
     qflag = True
 eflag = False
-if args.erasticsearch:
+if args.elasticsearch:
     eflag = True
 pflag = False
 if args.pseudo_sensor:
@@ -129,7 +135,7 @@ def main():
         alps.setDelegate( NtfyDelegate(btle.DefaultDelegate) )
     
     if eflag == True:
-        response = requests.put('http://localhost:9200/plugfest')
+        response = requests.put(args.elasticsearch_address)
         if vflag == True:
             print response.json()
  
@@ -186,7 +192,7 @@ def main():
             print ("DATA:"+msg)
         if eflag == True:
             eheaders = {'Content-Type': 'application/json'}
-            response = requests.post('http://localhost:9200/plugfest/alps', headers=eheaders, data=msg)
+            response = requests.post(args.elasticsearch_address, headers=eheaders, data=msg)
             if vflag == True:
                 print response.json()
             continue
