@@ -140,20 +140,19 @@ def main():
             print response.json()
  
     if pflag == False:
-        #Hybrid MAG ACC8G　100ms　/ Other 1s
+        #Hybrid MAG ACC8G 100ms / Other 1s
         alps.writeCharacteristic(0x0013, struct.pack('<bb', 0x01, 0x00), True)# Custom1 Notify Enable 
         alps.writeCharacteristic(0x0016, struct.pack('<bb', 0x01, 0x00), True)# Custom2 Notify Enable
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x03), True)# (不揮発)保存内容の初期化
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x01, 0x03, 0x7F), True)# 地磁気、加速度,気圧,温度,湿度,UV,照度を有効
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x03), True)# (Non-volatile) Initialize stored data
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x01, 0x03, 0x7F), True)# Enalbe Geomagnetism, Acceleration, Puressure, Temparature, Humidity, UV, Illuminance
     #    alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x04, 0x03, 0x04), True)# Hybrid Mode
         alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x04, 0x03, 0x00), True)# Hybrid Mode
-    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x64, 0x00), True) # Fast 100msec (地磁気,加速度)
-    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x7A, 0x01), True) # Fast 250msec (地磁気,加速度) Hybrid mode だけ(deleted)
-        alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x05, 0x04, 0x01, 0x00), True) # Slow 1sec (気圧,温度,湿度,UV,照度)     
-
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x02, 0x03, 0x02), True) # 加速度±8G
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x01), True)# 設定内容保存
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x20, 0x03, 0x01), True)# センサ計測開始
+    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x64, 0x00), True) # Fast 100msec (Geomagnetism,Acceleration)
+    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x7A, 0x01), True) # Fast 250msec (Geomagnetism,Acceleration) only Hybrid mode (deleted)
+        alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x05, 0x04, 0x01, 0x00), True) # Slow 1sec (Pressure, Temparature, Humidity, UV, Illuminance)
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x02, 0x03, 0x02), True) # Acceleration +-8G
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x01), True)# Store configuration
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x20, 0x03, 0x01), True)# Sart measuremnt
         ## Setting & Connect
     ras = RN42("ras", args.destination_address, 1)
     ras.connectBluetooth(ras.bdAddr,ras.port)
@@ -180,13 +179,13 @@ def main():
             UV = 0.0+random.randint(0,100000)/100.0
             GeoMagnetic_X = 0.0+random.randint(0,1000000)/100.0
             Acceleration_Y  = 0.0+random.randint(0,1000000)/100.0
-            msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{6:.3f},ACCEL:{7:.3f}}}'.format(d, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
+            msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{6:.3f},ACCEL:{7:.3f}}}'.format(dt, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
             ras.sock.send(msg)
             sleep(0.5)
         else:
             if alps.waitForNotifications(1.0):
                 # handleNotification() was called
-                msg = '{{DATETIME:[0],PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{5:.3f},ACCEL:{6:.3f}}}'.format(d, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
+                msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{5:.3f},ACCEL:{6:.3f}}}'.format(dt, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
                 ras.sock.send(msg)
         if qflag == False:
             print ("DATA:"+msg)
