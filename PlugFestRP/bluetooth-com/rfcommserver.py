@@ -29,9 +29,12 @@ parser.add_argument('-q', '--quiet',
     help = 'quiet (does not output data messages)',
     default = False)
 parser.add_argument('-c', '--connect',
-    action = 'store_true',
-    help = 'connect to MQTT server',
-    default = False)
+    action = 'store',
+    help = 'connect to MQTT server (mode ID can be specified [0:No TEDS 1:Double topics 2:Single topic 3:tripple action Multiple designation is available)',
+    choices = range(0,4),
+    nargs = '*',
+    default = [],
+    type = int)
 parser.add_argument('-P', '--pseudo_sensor',
     action = 'store_true',
     help = 'generate random sensor values without ALPS module',
@@ -64,118 +67,146 @@ if args.verbose:
 qflag = False
 if args.quiet:
     qflag = True
-cflag = False
-if args.connect:
-    cflag = True
 pflag = False
 if args.pseudo_sensor:
     pflag = True
 
-def main():
-    PORT =1
-    server_socket=bluetooth.BluetoothSocket( bluetooth.RFCOMM )
-    readfds = set([server_socket])
+def operation():
+    try:
+        server_socket.bind(("",server_port ))
+        server_socket.listen(1)
+        msg = ""
+        teds = {}
 
-    if cflag == True:
+        while 1:
+            rready, wready, xready = select.select(readfds, [], [])	
+            for sock in rready:
+                if sock is server_socket:
+                    client_socket,address = server_socket.accept()
+                    readfds.add(client_socket)
+                    print("connected! "+address[0])
+                else:
+                    try:
+                        msg = sock.recv(2048)
+                    except KeyboardInterrupt:
+                        for sock in readfds:
+                            sock.close()
+                    except:
+                        sock.close()
+                        readfds.remove(sock)
+                        pass
+                    finally:
+                        if len(msg) == 0:
+                            sock.close()
+                            try:
+                                readfds.remove(sock)
+                            except:
+                                pass
+                        else:
+                            if vflag == True:
+                                print("RCV:"+str(len(msg)))
+                print(msg)
+                if re.match("^#", msg):
+                    pmsg = msg[1:].split(':')
+                    tname = pmsg[0]
+                    name = pmsg[1]
+                    if vflag == True:
+                        print("TEDS="+msg)
+                        print("TEDS TYPE="+tname)
+                        print("TEDS NAME="+name)
+                    msg = sock.recv(2048)
+                    teds[name] = msg
+                    if vflag == True:
+                        print("TEDS="+tname+"="+name+"="+msg)
+                    if 1 in args.connect:
+                        # publish TEDS with retain bit
+                        if qflag == False:
+                            print("Publish[1]:"+args.topic+address[0]+"/"+name+"/"+tname)
+                        mqttc.publish(args.topic+address[0]+"/"+name+"/"+tname, msg, 0, retain=True)
+                    elif 2 in args.connect:
+                        # publish TEDS with retain bit and data topic
+                        if qflag == False:
+                            print("Publish[2]:"+args.topic+address[0]+"/"+name)
+                        mqttc.publish(args.topic+address[0]+"/"+name, msg, 0, retain=True)
+                    elif 3 in args.connect:
+                        # publish TEDS with handshake protocol
+                        if qflag == False:
+                            print("Publish[3]:"+args.topic+address[0]+"/"+name)
+                        mqttc.publish(args.topic+address[0]+"/"+name, msg, 0, retain=True)
+                    else:
+                        print("Illegal MQTT mode.")
+
+                else:
+                    msg = msg[1:-1]
+                    pmsg = msg.split(',')
+                    for pmsgn in pmsg:
+                        data = pmsgn.split(':')
+                        if (len(data) ==2) and (qflag == False):
+                            if qflag == False:
+                                print(data[0]+"="+data[1])
+                            if args.connect:
+                                #publish data[0] for data[1]
+                                if qflag == False:
+                                    print("Publish[data]:"+args.topic+address[0]+"/"+data[0]+" as "+data[1])
+                                mqttc.publish(args.topic+address[0]+"/"+data[0], data[1])
+    finally:
+        for sock in readfds:
+            sock.close()
+    return
+
+def pseudo_operation():
+    # publish TEDS with retain bit
+    address = "local"
+    name = "pseudo_sensor"
+    tname = "TEDS"
+    msg = "6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124CCA0183933228A60000803F010040830100548500EA540773C1642FE654081C00"
+    if vflag == True:
+        print("TEDS TYPE="+tname)
+        print("TEDS TYPE="+tname)
+        print("TEDS NAME="+name)
+    if args.connect:
+        mqttc.publish(args.topic+address+"/"+name+"/"+tname, msg, 0, retain=True)
+        print("Publish:"+args.topic+address+"/"+name+"/"+tname)
+    else:
+        print("Do nothing")
+    #publish data
+    while True:
+        data = -10.0+random.randint(0,2000)/100.0
+        if vflag == True:
+            print("value="+str(data))
+        if args.connect:
+            mqttc.publish(args.topic+address+"/"+name, data)
+            if qflag == False:
+                print("Publish:"+args.topic+address+"/"+name)
+        else:
+            if qflag == False:
+                print("Do nothing")
+        sleep(1)
+
+def main():
+    global readfds, server_socket, server_port
+    global mqttc
+    server_port =1
+    server_socket = bluetooth.BluetoothSocket( bluetooth.RFCOMM )
+    readfds = set([server_socket])
+    if qflag == False:
+        print("System starts")
+
+    if args.connect:
         mqttc = mqtt.Client(protocol=mqtt.MQTTv311)
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
-            print("MQTT server connected")
+            print("MQTT server ["+args.mqtt_server+"] connected")
 
+    mqttc.publish("/plugfest/hoge", "hoge")
+    print("hoge")
     if qflag == False:
         print("waiting clients...")
 
     if pflag == False:
-        try:
-            server_socket.bind( ("",PORT ))
-            server_socket.listen(1)
-            msg = ""
-            teds = {}
-
-            while 1:
-                rready, wready, xready = select.select(readfds, [], [])	
-                for sock in rready:
-                    if sock is server_socket:
-                        client_socket,address = server_socket.accept()
-                        readfds.add(client_socket)
-                        print("connected! "+address[0])
-                    else:
-                        try:
-                            msg = sock.recv(2048)
-                        except KeyboardInterrupt:
-                            for sock in readfds:
-                                sock.close()
-                        except:
-                            sock.close()
-                            readfds.remove(sock)
-                            pass
-                        finally:
-                            if len(msg) == 0:
-                                sock.close()
-                                try:
-				    readfds.remove(sock)
-				except:
-				    pass
-                            else:
-                                if vflag == True:
-                                    print("RCV:"+str(len(msg)))
-                    print(msg)
-                    if re.match("^#", msg):
-                        pmsg = msg[1:].split(':')
-                        tname = pmsg[0]
-                        name = pmsg[1]
-                        if vflag == True:
-                            print("TEDS="+msg)
-                            print("TEDS TYPE="+tname)
-                            print("TEDS NAME="+name)
-                        msg = sock.recv(2048)
-                        teds[name] = msg
-                        if vflag == True:
-                            print("TEDS="+tname+"="+name+"="+msg)
-                        if cflag == True:
-                            # publish TEDS with retain bit
-                            print("Publish:"+args.topic+address[0]+"/"+name+"/"+tname)
-                            mqttc.publish(args.topic+address[0]+"/"+name+"/"+tname, msg, 0, retain=True)
-                    else:
-                        msg = msg[1:-1]
-                        pmsg = msg.split(',')
-                        for pmsgn in pmsg:
-                            data = pmsgn.split(':')
-                            if (len(data) ==2) and (qflag == False):
-                                print(data[0]+"="+data[1])
-                                #publish data[0] for data[1]
-                                if cflag == True:
-                                    mqttc.publish(args.topic+address[0]+"/"+data[0], data[1])
-        finally:
-            for sock in readfds:
-                sock.close()
-        return
+        operation()
     else:
-        # publish TEDS with retain bit
-        address = "local"
-        name = "pseudo_sensor"
-        tname = "TEDS"
-        msg = "6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124CCA0183933228A60000803F010040830100548500EA540773C1642FE654081C00"
-        if vflag == True:
-            print("TEDS TYPE="+tname)
-            print("TEDS TYPE="+tname)
-            print("TEDS NAME="+name)
-        if cflag == True:
-            mqttc.publish(args.topic+address+"/"+name+"/"+tname, msg, 0, retain=True)
-            print("Publish:"+args.topic+address+"/"+name+"/"+tname)
-        else:
-            print("Do nothing")
-        #publish data
-        while True:
-            data = -10.0+random.randint(0,2000)/100.0
-            if vflag == True:
-                print("value="+str(data))
-            if cflag == True:
-                mqttc.publish(args.topic+address+"/"+name, data)
-                print("Publish:"+args.topic+address+"/"+name)
-            else:
-                print("Do nothing")
-            sleep(1)
+        operation()
 
 if __name__ == '__main__':
     main()
