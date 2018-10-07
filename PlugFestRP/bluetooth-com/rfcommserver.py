@@ -79,16 +79,26 @@ def on_message(client, userdata, msg):
     if qflag == False:
         print("TEDSREQ:subscribed:TOPIC:"+topic)
         print("TEDSREQ:subscribed:MSG:"+data)
-        print("TEDSREQ:subscribed:TEDSNAME:"+tedsname)
     if rdata.isalnum():
         stopic = re.sub('TEDSREQ$', 'TEDSRECV', topic)
         tedsname = re.sub('TEDSREQ$', '', topic)
+        if qflag == False:
+            print("TEDSREQ:analyzed:TEDSNAME:"+tedsname)
         mqttc.publish(stopic, teds[tedsname], 0, retain=True)
         if qflag == False:
             print("TEDSRECV:publish:TOPIC:"+stopic)
             print("TEDSRECV:publish:MSG:"+teds[tedsname])
     else:
         print("TEDSREQ contains illegal character set")
+
+def on_connect(client, userdata, msg):
+    data = msg.payload
+    topic = msg.topic
+    rdata = data.decode("utf-8")
+    if qflag == False:
+        print("Connect:TOPIC:"+topic)
+        print("Connect:MSG:"+data)
+    mqttc.subscribe(topic)
 
 def operation():
     try:
@@ -219,6 +229,8 @@ def main():
 
     if args.connect:
         mqttc = mqtt.Client(protocol=mqtt.MQTTv311)
+        mqttc.on_connect = on_connect
+        mqttc.on_message = on_message
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
             print("MQTT server ["+args.mqtt_server+"] connected")
