@@ -20,11 +20,6 @@ You may use BLE-based Smart IoT Sensor Module manufactured by ALPS ELEC Co.Ltd. 
 
 To compile and execute MQTTnet-based MQTT server, Microsoft Visual Studio is required.
 
-## Usage
-### MQTTnet Server
-Open PlugFestUWP/PlugFest.sln in GitHub directory.
-
-
 ## Installation
 ### MQTTnet Server
 - On windows 10 machine, extract GitHub image by using GitHub client for Windows or compatible GitHub clients.
@@ -562,7 +557,11 @@ It is better to check the Bluetooth connection by transferring file via Bluetoot
 If pairing made a success, you may see a cross mark on the address list.
 
 ### Execution
+#### Windows MQTTnet Server
+Open PlugFestUWP/PlugFest.sln in GitHub directory.
+Press "Start MQTT Server".
 
+#### Raspberry Pi
 Now you can execute a program.
 
 ```
