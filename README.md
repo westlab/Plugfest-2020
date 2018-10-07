@@ -66,8 +66,8 @@ You will install software keyboard by using the following command after this ins
 
 - Update your environment
 
-	# apt-get –y upgrade
-	# apt-get –y update
+	# apt-get -y upgrade
+	# apt-get -y update
 
 We need a Japanese environment.
 
@@ -90,7 +90,6 @@ Set default language to en_US
 - Install VNC and enable sshd for remote connection
 
 	# raspi-config
-
 		ssh enable
 		vnc enable
 
