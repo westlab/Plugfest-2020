@@ -71,12 +71,32 @@ pflag = False
 if args.pseudo_sensor:
     pflag = True
 
+global teds
+def on_message(client, userdata, msg):
+    data = msg.payload
+    topic = msg.topic
+    rdata = data.decode("utf-8")
+    if qflag == False:
+        print("TEDSREQ:subscribed:TOPIC:"+topic)
+        print("TEDSREQ:subscribed:MSG:"+data)
+        print("TEDSREQ:subscribed:TEDSNAME:"+tedsname)
+    if rdata.isalnum():
+        stopic = re.sub('TEDSREQ$', 'TEDSRECV', topic)
+        tedsname = re.sub('TEDSREQ$', '', topic)
+        mqttc.publish(stopic, teds[tedsname], 0, retain=True)
+        if qflag == False:
+            print("TEDSRECV:publish:TOPIC:"+stopic)
+            print("TEDSRECV:publish:MSG:"+teds[tedsname])
+    else:
+        print("TEDSREQ contains illegal character set")
+
 def operation():
     try:
         server_socket.bind(("",server_port ))
         server_socket.listen(1)
         msg = ""
         teds = {}
+        tedsreq = []
 
         while 1:
             rready, wready, xready = select.select(readfds, [], [])	
@@ -115,24 +135,29 @@ def operation():
                         print("TEDS TYPE="+tname)
                         print("TEDS NAME="+name)
                     msg = sock.recv(2048)
-                    teds[name] = msg
+                    teds[name+tname] = msg
                     if vflag == True:
                         print("TEDS="+tname+"="+name+"="+msg)
+                    tedsuri = args.topic+address[0]+"/"+name+"/"+tname
+                    tedsuris = args.topic+address[0]+"/"+name
                     if 1 in args.connect:
                         # publish TEDS with retain bit
                         if qflag == False:
-                            print("Publish[1]:"+args.topic+address[0]+"/"+name+"/"+tname)
-                        mqttc.publish(args.topic+address[0]+"/"+name+"/"+tname, msg, 0, retain=True)
+                            print("Publish[1]:"+tedsuri)
+                        mqttc.publish(tedsuri, msg, 0, retain=True)
                     elif 2 in args.connect:
                         # publish TEDS with retain bit and data topic
                         if qflag == False:
-                            print("Publish[2]:"+args.topic+address[0]+"/"+name)
-                        mqttc.publish(args.topic+address[0]+"/"+name, msg, 0, retain=True)
+                            print("Publish[2]:"+tedsuri)
+                        mqttc.publish(tedsuris, msg, 0, retain=True)
                     elif 3 in args.connect:
                         # publish TEDS with handshake protocol
                         if qflag == False:
-                            print("Publish[3]:"+args.topic+address[0]+"/"+name)
-                        mqttc.publish(args.topic+address[0]+"/"+name, msg, 0, retain=True)
+                            print("Publish[3]:"+tedsuri)
+                        tedsreq.append((tedsuri+"/TEDSREQ", 0))
+                        mqttc.subscribe(tedsreq)
+                        if qflag == False:
+                            print("Waiting TEDSREQ at ", tedsreq)
                     else:
                         print("Illegal MQTT mode.")
 
@@ -197,9 +222,6 @@ def main():
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
             print("MQTT server ["+args.mqtt_server+"] connected")
-
-    mqttc.publish("/plugfest/hoge", "hoge")
-    print("hoge")
     if qflag == False:
         print("waiting clients...")
 
