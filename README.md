@@ -66,6 +66,8 @@ You will install software keyboard by using the following command after this ins
 
 - Update your environment
 
+To update use the following commands.
+
 	# apt-get -y upgrade
 	# apt-get -y update
 
@@ -81,13 +83,16 @@ Install the following languages adding to “C.”
 
 Set default language to en_US
 
-- Install dnsutils. It is convenient.
+- Dnsutils
+
+Install dnsutils. It is convenient for checking network conectivity.
 
 	# apt-get install dnsutils
 
 - You may set up your network environment here. You may finish the network environment setting in your installation.
 
 - Install VNC and enable sshd for remote connection
+VNC and sshd are standard method for Raspberry Pi for remote connection.
 
 	# raspi-config
 		ssh enable
@@ -100,8 +105,7 @@ From here, it is better to use rloing for installing multiple machines.  Login v
 - Add USB serial cable entry to use USB serial cable for connecting Serial devices if you want.
 dtoverlay=pi3-miniuart-bt
 
-
-ALPS ELEC Smart IoT BLE Sensor Module
+- ALPS ELEC Smart IoT BLE Sensor Module
  If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor module, which generates random values.
 
 Blog of TomoSoft (as given below) explains how to install the ALPS module. This is a very simple way for us to connect sensors to Raspberry Pi via Bluetooth.
@@ -110,18 +114,21 @@ http://www.hiramine.com/physicalcomputing/raspberrypi3/wlan_howto.html
 These pages are written in Japanese. Use google translator. Simply, it is enough to follow the process below.
 
 - Connect to the Internet
+Firstly, it is better to check the update.
 
 	# sudu su (Not good way? Yes, but is easy.)
 	# apt-get update (anytime you do something, you should do this)
 
 - Set time
+Fix the clock of your raspberry pi.
 
 	# apt-get install ntpdate (we need time for getting sensor data. We want to store sensor data with time.)
 	# timedatectl set-timezone Asia/Tokyo (select your timezone)
 	# ntpdate ntp.nict.jp (select your closest ntp server)
 	# systemctl enable ssh
 
-- Install required modules. Firstly, blupy, a python interface to communicate via bluetooth
+- Install required modules.
+Firstly, blupy, a python interface to communicate via bluetooth
 
 	# apt-get install python-pip libglib2.0-dev
 	# apt-get install git build-essential
@@ -130,6 +137,7 @@ These pages are written in Japanese. Use google translator. Simply, it is enough
 
 + we need some part of bluepy sourses. Extract sources from git.
 + our working directory is /export/
+In the working directory, install bluepy.
 
 	# mkdir /export/install
 	# cd /export/install
@@ -145,6 +153,7 @@ Maybe, it is needless but we want to update the blupy.
 	# cd /export/install
 
 + download our design
+Our all design is available in GitHub.
 
 	# git clone https://github.com/westlab/PlugFest
 	# cd /export/install/bluepy/blupy
@@ -190,6 +199,7 @@ Docker version and general version are available.
 Ok, then, let’s do both. (Wao!)
 
 - Docker
+Install docker by following commands.
 
 	# apt-get update
 	# curl -sSL https://get.docker.com | sh
@@ -234,6 +244,7 @@ NOTE: You have to change the permissions of the directories to allow the user to
 	--name mqtt pascaldevink/rpi-mosquitto
 
 - General installation
+Install mosquitto MQTT server. It is very popular.
 
 	# apt install mosquitto
 	# apt install mosquitto-clients (MQTT clients)
@@ -303,6 +314,7 @@ Check the operation of paho-mqtt.
 - This model supports multiple clients. Here, we use three raspberry-pi to check the operation.
 
 - Preparation
+Firstly, you should do this.
 
 	# apt-get update
 	# apt-get upgrade
@@ -318,14 +330,17 @@ If you do not have our environment, execute the following command.
 	# ln -s install/PlugFest/PlugFestRP/TEDS .
 
 - Install Bluetooth driver 
+get bluetooth repository.
 
 	# apt-get install bluetooth
 
 - Install concerning packages
+get the following repositories.
 
 	# apt-get install libusb-dev libdbus-1-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev libdbus-glib-1-dev
 
 - Install python library (bluez)
+Install bluz library.
 
 	# apt-get install python-dev
 	# apt-get install libboost-python-dev libglib2.0 libboost-thread-dev
@@ -341,11 +356,14 @@ If you do not have our environment, execute the following command.
 	# pip install pybluez
 
 - Install GUI interfaces for bluetooth
+Update Bluetooth control icon on the menu.
 
 	# apt-get install pi-bluetooth blueman
+
 Default GUI Bluetooth on the menu bar will be overwrited.
 
 If you want, you can install the following modles to connect Bluetooth speaker.
+
 	# apt-get install pulseaudio pavucontrol pulseaudio-module-bluetooth 
 	# apt-get install bluez-hcidump
 
@@ -362,9 +380,13 @@ Edit /lib/systemd/system/bluetooth.service
 	#ExecStart=/usr/lib/bluetooth/bluetoothd –C
 	ExecStart=/usr/local/libexec/bluetooth/bluetoothd -C
 	ExecStartPost=/usr/bin/sdptool add SP
+
 Then execute pip to install gittlib.
+
 	# pip install gattlib (this will take a while)
+
 If you failed in installing gattlib, you have to install it from source.
+
 	# cd /export/install
 	# pip3 download gattlib
 	# tar xvzf ./gattlib-0.20150805.tar.gz
@@ -373,6 +395,7 @@ If you failed in installing gattlib, you have to install it from source.
 	# pip3 install . (Do not miss the last period)
 
 - Reload daemon process
+Now reload the daemon processes.
 
 	# systemctl daemon-reload
 	# systemctl restart bluetooth
@@ -416,6 +439,7 @@ We have two method to pair Bluetooth devices. One is GUI-based operation the oth
 You can leave from bluetoothctl by using quit command.
 
 - Pairing from client
+Pair with client. You will check the blutooth physical address of server.
 
 	#bluetoothctl
 	Agent registered
