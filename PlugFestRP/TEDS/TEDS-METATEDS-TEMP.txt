@@ -6,11 +6,12 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>TEMPARATURE</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>TEMPARATURE</UserPhysicalMeasurand>
 	<UnitScale>DEG C/DECIM/TXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>-20</PhysicalSensorMin>
-	<PhysicalSensorMax>85<PhysicalSensorMax>
+	<PhysicalSensorMax>85</PhysicalSensorMax>
 	<UserDataValue>S:0.02/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>

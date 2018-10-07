@@ -10,12 +10,13 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>TEMPARATURE</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>TEMPARATURE</UserPhysicalMeasurand>
 	<UnitScale>DEG C/DECIM/TXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>-20</PhysicalSensorMin>
-	<PhysicalSensorMax>85<PhysicalSensorMax>
+	<PhysicalSensorMax>85</PhysicalSensorMax>
 	<UserDataValue>S:0.02/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
 + HUMID
@@ -30,12 +31,13 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>HUMIDITY</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>HUMIDITY</UserPhysicalMeasurand>
 	<UnitScale>PERC RH.DECTXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>0</PhysicalSensorMin>
-	<PhysicalSensorMax>100<PhysicalSensorMax>
+	<PhysicalSensorMax>100</PhysicalSensorMax>
 	<UserDataValue>S:0.016/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
 + PRESSURE
@@ -50,12 +52,13 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>PRESSURE</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>PRESSURE</UserPhysicalMeasurand>
 	<UnitScale>HPA.DECTXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>300</PhysicalSensorMin>
-	<PhysicalSensorMax>1100<PhysicalSensorMax>
+	<PhysicalSensorMax>1100</PhysicalSensorMax>
 	<UserDataValue>S:0.013/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
 +ILLUMI
@@ -70,12 +73,13 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>ILLUMINATION</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>ILLUMINATION</UserPhysicalMeasurand>
 	<UnitScale>LX</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>0</PhysicalSensorMin>
-	<PhysicalSensorMax>81900<PhysicalSensorMax>
+	<PhysicalSensorMax>81900</PhysicalSensorMax>
 	<UserDataValue>S:20/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
 +UV
@@ -90,12 +94,13 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>UV</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>UV</UserPhysicalMeasurand>
 	<UnitScale>MILW/SSM.DECTXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>0</PhysicalSensorMin>
-	<PhysicalSensorMax>20.48<PhysicalSensorMax>
+	<PhysicalSensorMax>20.48</PhysicalSensorMax>
 	<UserDataValue>S:0.005/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
 +ACCEL
@@ -110,12 +115,13 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>ACCELERATION</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>ACCELERATION</UserPhysicalMeasurand>
 	<UnitScale>G.DECTXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>-2</PhysicalSensorMin>
-	<PhysicalSensorMax>2<PhysicalSensorMax>
+	<PhysicalSensorMax>2</PhysicalSensorMax>
 	<UserSensorScaleChangeable>Yes</UserSensorScaleChangeable>
 	<UserDataValue>S:0.24mG/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
@@ -131,11 +137,12 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>GEOMAGNETISM</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>GEOMAGNETISM</UserPhysicalMeasurand>
 	<UnitScale>MT.DECTXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>-2.4</PhysicalSensorMin>
-	<PhysicalSensorMax>2.4<PhysicalSensorMax>
+	<PhysicalSensorMax>2.4</PhysicalSensorMax>
 	<UserDataValue>S:0.15uT/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
