@@ -15,7 +15,7 @@ import re
 import argparse
 import requests
 import random
-import datetime
+from datetime import datetime
 
 parser = argparse.ArgumentParser(
     prog = 'alps.py',
@@ -170,8 +170,8 @@ def main():
             if qflag == False:
                 print ("TEDS:"+msg)
     while True:
-        now = datetime.datetime.now()
-        d = datetime.datetime(now.year,now.month,now.day,now.hour,now.minute,now.second,now.microsecond)
+        (dt, micro) = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f').split('.')
+        dt = "%s.%03d" % (dt, int(micro)/1000)
         if pflag == True:
             Pressure = 980.0+random.randint(2000,4000)/100.0
             Humidity = 20.0+random.randint(0,6000)/100.0
@@ -180,13 +180,13 @@ def main():
             UV = 0.0+random.randint(0,100000)/100.0
             GeoMagnetic_X = 0.0+random.randint(0,1000000)/100.0
             Acceleration_Y  = 0.0+random.randint(0,1000000)/100.0
-            msg = '{{"DATETIME":{0},"PRESSURE":{1:.3f},"HUMID":{2:.3f},"TEMP":{3:.3f},"ILLUMI":{4:.3f},"UV":{5:.3f},"GEOMAG":{6:.3f},"ACCEL":{7:.3f}}}'.format(d, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
+            msg = '{{"DATETIME":{0},"PRESSURE":{1:.3f},"HUMID":{2:.3f},"TEMP":{3:.3f},"ILLUMI":{4:.3f},"UV":{5:.3f},"GEOMAG":{6:.3f},"ACCEL":{7:.3f}}}'.format(dt, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
             ras.sock.send(msg)
             sleep(0.5)
         else:
             if alps.waitForNotifications(1.0):
                 # handleNotification() was called
-                msg = '{{"DATETIME":[0],"PRESSURE":{1:.3f},"HUMID":{2:.3f},"TEMP":{3:.3f},"ILLUMI":{4:.3f},"UV":{5:.3f},"GEOMAG":{5:.3f},"ACCEL":{6:.3f}}}'.format(d, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
+                msg = '{{"DATETIME":{0},"PRESSURE":{1:.3f},"HUMID":{2:.3f},"TEMP":{3:.3f},"ILLUMI":{4:.3f},"UV":{5:.3f},"GEOMAG":{5:.3f},"ACCEL":{6:.3f}}}'.format(dt, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
                 ras.sock.send(msg)
         if qflag == False:
             print ("DATA:"+msg)
