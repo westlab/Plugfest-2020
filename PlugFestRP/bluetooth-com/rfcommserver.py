@@ -29,9 +29,11 @@ parser.add_argument('-q', '--quiet',
     help = 'quiet (does not output data messages)',
     default = False)
 parser.add_argument('-c', '--connect',
-    action = 'store_true',
-    help = 'connect to MQTT server',
-    default = False)
+    action = 'store',
+    help = 'connect to MQTT server (mode ID can be specified [0:Unconnected 1:Double topics  2:Single topic 3:tripple action)',
+    choices = range(0,4),
+    default = 0,
+    type = int)
 parser.add_argument('-P', '--pseudo_sensor',
     action = 'store_true',
     help = 'generate random sensor values without ALPS module',
@@ -64,9 +66,6 @@ if args.verbose:
 qflag = False
 if args.quiet:
     qflag = True
-cflag = False
-if args.connect:
-    cflag = True
 pflag = False
 if args.pseudo_sensor:
     pflag = True
@@ -75,8 +74,9 @@ def main():
     PORT =1
     server_socket=bluetooth.BluetoothSocket( bluetooth.RFCOMM )
     readfds = set([server_socket])
+    print("System starts")
 
-    if cflag == True:
+    if args.connect > 0:
         mqttc = mqtt.Client(protocol=mqtt.MQTTv311)
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
@@ -132,10 +132,21 @@ def main():
                         teds[name] = msg
                         if vflag == True:
                             print("TEDS="+tname+"="+name+"="+msg)
-                        if cflag == True:
+                        if args.connect == 1:
                             # publish TEDS with retain bit
-                            print("Publish:"+args.topic+address[0]+"/"+name+"/"+tname)
+                            print("Publish[1]:"+args.topic+address[0]+"/"+name+"/"+tname)
                             mqttc.publish(args.topic+address[0]+"/"+name+"/"+tname, msg, 0, retain=True)
+                        elif args.connect == 2:
+                            # publish TEDS with retain bit and data topic
+                            print("Publish[2]:"+args.topic+address[0]+"/"+name)
+                            mqttc.publish(args.topic+address[0]+"/"+name, msg, 0, retain=True)
+                        elif args.connect == 3:
+                            # publish TEDS with handshake protocol
+                            print("Publish[3]:"+args.topic+address[0]+"/"+name)
+                            mqttc.publish(args.topic+address[0]+"/"+name, msg, 0, retain=True)
+                        else:
+                            print("Illegal MQTT mode.")
+
                     else:
                         msg = msg[1:-1]
                         pmsg = msg.split(',')
@@ -144,7 +155,7 @@ def main():
                             if (len(data) ==2) and (qflag == False):
                                 print(data[0]+"="+data[1])
                                 #publish data[0] for data[1]
-                                if cflag == True:
+                                if args.connect > 0:
                                     mqttc.publish(args.topic+address[0]+"/"+data[0], data[1])
         finally:
             for sock in readfds:
@@ -160,7 +171,7 @@ def main():
             print("TEDS TYPE="+tname)
             print("TEDS TYPE="+tname)
             print("TEDS NAME="+name)
-        if cflag == True:
+        if args.connect > 0:
             mqttc.publish(args.topic+address+"/"+name+"/"+tname, msg, 0, retain=True)
             print("Publish:"+args.topic+address+"/"+name+"/"+tname)
         else:
@@ -170,7 +181,7 @@ def main():
             data = -10.0+random.randint(0,2000)/100.0
             if vflag == True:
                 print("value="+str(data))
-            if cflag == True:
+            if args.connect > 0:
                 mqttc.publish(args.topic+address+"/"+name, data)
                 print("Publish:"+args.topic+address+"/"+name)
             else:
