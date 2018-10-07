@@ -6,12 +6,13 @@
 	<SerialNo>50</SerialNo>
 	<UserManufacturer>ALPS ELE</UserManufacturer>
 	<UserModelNo>IOT SMART MDL</UserModelNo>
-	<UserSerialNo>SUFOYUEYWO</UserSerialNo>	<UserPhysicalMeasurand>ACCELERATION</UserPhysicalMeasurand>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>ACCELERATION</UserPhysicalMeasurand>
 	<UnitScale>G.DECTXT</UnitScale>
 	<UnitConvertionFactor>1</UnitConvertionFactor>
 	<UserSensorLimits>Yes</UserSensorLimits>
 	<PhysicalSensorMin>-2</PhysicalSensorMin>
-	<PhysicalSensorMax>2<PhysicalSensorMax>
+	<PhysicalSensorMax>2</PhysicalSensorMax>
 	<UserSensorScaleChangeable>Yes</UserSensorScaleChangeable>
 	<UserDataValue>S:0.24mG/LSB</UserDataValue>
 </MetaIdentificationTEDSDataBlock>
