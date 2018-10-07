@@ -95,8 +95,11 @@ Install dnsutils. It is convenient for checking network conectivity.
 VNC and sshd are standard method for Raspberry Pi for remote connection.
 
 	# raspi-config
-		ssh enable
-		vnc enable
+
+Then select memnu to enable the following services.
+
+	ssh enable
+	vnc enable
 
 From here, it is better to use rloing for installing multiple machines.  Login via ssh clients (the best one is rlogin)
 
@@ -116,15 +119,15 @@ These pages are written in Japanese. Use google translator. Simply, it is enough
 - Connect to the Internet
 Firstly, it is better to check the update.
 
-	# sudu su (Not good way? Yes, but is easy.)
-	# apt-get update (anytime you do something, you should do this)
+	# sudu su # (This is not a good way? Yes, but is easy.)
+	# apt-get update # (Anytime you do something, you should do update.)
 
 - Set time
 Fix the clock of your raspberry pi.
 
-	# apt-get install ntpdate (we need time for getting sensor data. We want to store sensor data with time.)
-	# timedatectl set-timezone Asia/Tokyo (select your timezone)
-	# ntpdate ntp.nict.jp (select your closest ntp server)
+	# apt-get install ntpdate # (we need time for getting sensor data. We want to store sensor data with time.)
+	# timedatectl set-timezone Asia/Tokyo # (select your timezone)
+	# ntpdate ntp.nict.jp # (select your closest ntp server)
 	# systemctl enable ssh
 
 - Install required modules.
