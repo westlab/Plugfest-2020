@@ -90,6 +90,7 @@ Set default language to en_US
 - Install VNC and enable sshd for remote connection
 
 	# raspi-config
+
 		ssh enable
 		vnc enable
 
@@ -110,48 +111,66 @@ http://www.hiramine.com/physicalcomputing/raspberrypi3/wlan_howto.html
 These pages are written in Japanese. Use google translator. Simply, it is enough to follow the process below.
 
 - Connect to the Internet
+
 	# sudu su (Not good way? Yes, but is easy.)
 	# apt-get update (anytime you do something, you should do this)
+
 - Set time
+
 	# apt-get install ntpdate (we need time for getting sensor data. We want to store sensor data with time.)
 	# timedatectl set-timezone Asia/Tokyo (select your timezone)
 	# ntpdate ntp.nict.jp (select your closest ntp server)
 	# systemctl enable ssh
+
 - Install required modules. Firstly, blupy, a python interface to communicate via bluetooth
+
 	# apt-get install python-pip libglib2.0-dev
 	# apt-get install git build-essential
 	# cd
 	# pip install bluepy
+
 + we need some part of bluepy sourses. Extract sources from git.
 + our working directory is /export/
+
 	# mkdir /export/install
 	# cd /export/install
 	# git clone https://github.com/IanHarvey/bluepy.git
 	# cd bluepy
+
 Maybe, it is needless but we want to update the blupy.
+
 	# python setup.py build
 	# python setup.py install
 	# cd bluepy
 	# ls btle.py (check the existence of the file)
 	# cd /export/install
+
 + download our design
+
 	# git clone https://github.com/westlab/PlugFest
 	# cd /export/install/bluepy/blupy
 	# cp ../../PlugFest/PlugFestRP/alps/alps_sensor.py .
 	# python alps_sensor.py
+
 Check it does not report any errors, and just quiet.
 Type Ctrl-C
+
 	# ls 
+
 Check btle.pyc and bluepy-helper.
 These files are very important to communicate with the Bluetooth sensor module.
+
 	# cd /export
 	# ln -s –r install/PlugFest/PlugFestRP/alps .
 	# cp install/bluepy/bluepy/{btle.pyc,bluepy-helper} alps
 	# cd alps
 	# python alps_sensor.py
+
 Type Ctrl-C
 Check it does not report any errors, and just quiet, again
+
 	# apt-get install vim (you may edit the source file)
+
 The source is also given at the end of this file.
 
 Edit the following line in the source to fit your sensor module address.
@@ -159,6 +178,7 @@ alps = AlpsSensor("28:A1:83:E1:59:48")
 The address is printed on the surface of the sensor module.
 
 	# python alps_sensor.py
+
 Then you can get the sensor values. It takes about 10 seconds when it executes.
 The program uses HyblidMode and set all sensors ON.
 The sampling rate of the acceleration sensor and the geomagnetic sensor is 100 mil seconds.
@@ -171,8 +191,10 @@ Docker version and general version are available.
 Ok, then, let’s do both. (Wao!)
 
 - Docker
+
 	# apt-get update
 	# curl -sSL https://get.docker.com | sh
+
 This is only what you do. However, it takes time.
 To execute docker container by pi adding to root.
 You may have some troubles when resolving DNS of get.docker.com or getting PGP keys. In this case, IP address and the canonical name of get.docker.com by using nslookup command, and directly write the address and name to /etc/hosts. You also add download.docker.com to the hosts file.
@@ -180,23 +202,32 @@ You may have some troubles when resolving DNS of get.docker.com or getting PGP k
 If you edited /etc/hosts, bring it back.
 
 	# usermod -aG docker pi
+
 As a test, execute hypriot image. This hypriot is a very nice site, which preparing manyu kinesof Docker images.
+
 	# docker run -d -p 80:80 hypriot/rpi-busybox-httpd
 This command executes httpd web server in a docker. Check a test site is open in your raspberry-pi by accessing a web browser in your network.
 
 	# docker ps
 	# docker stop [NAME] (This name will be changed at any time)
+
 Then install docker image of mosquitto MQTT server
+
 	# docker run -tip 1883:1883 -p 9001:9001 pascaldevink/rpi-mosquitto
 
 If you execute mosquitto docker image by changing its configurations, do following commands.
+
 	mkdir -p /srv/mqtt/config/
 	mkdir -p /srv/mqtt/data/
 	mkdir -p /srv/mqtt/log/
+
 place your mosquitto.conf in /srv/mqtt/config/
 NOTE: You have to change the permissions of the directories to allow the user to read/write to data and log and read from config directory For TESTING purposes you can use the following command
+
 	# chmod -R 777 /srv/mqtt/*
+
  Better use "-u" with a valid user id on your docker host
+
 	# docker run -ti -p 1883:1883 -p 9001:9001 \
 	-v /srv/mqtt/config:/mqtt/config:ro \
 	-v /srv/mqtt/log:/mqtt/log \
@@ -204,15 +235,20 @@ NOTE: You have to change the permissions of the directories to allow the user to
 	--name mqtt pascaldevink/rpi-mosquitto
 
 - General installation
+
 	# apt install mosquitto
 	# apt install mosquitto-clients (MQTT clients)
+
 To confirm the installation and execution, do following commands.
+
 	# mosquitto_sub -d -t orz
 	# mosquitto_pub -d -t orz -m hogehoge
+
 To connect another host, use –h option.
 
 You may also install MQTT server into Windows 10 machine.
 http://www.eclipse.org/downloads/download.php?file=/mosquitto/binary/win32/mosquitto-1.4.14-install-win32.exe
+
 You may also install the following libraries.
 From [ http://slproweb.com/products/Win32OpenSSL.html ], download [ install Win32OpenSSL_Light-1_0_2k.exe ] and execute it.
 Copy libeay32.dll and ssleay32.dll in C:¥OpenSSL-Win32¥bin of OpenSSL to C:\Program Files (x86)\mosquitto
@@ -225,11 +261,13 @@ Use Services menu of Windows Management tool and enable it.
 - Windows 10 mosquitto clients
 
 Check your config file
+
 	C:\Program Files (x86)\mosquitto\mosquitto.conf
 	>cd "C:\Program Files (x86)\mosquitto"
 	>mosquito_sub –t test
 
 In another window
+
 	>cd "C:\Program Files (x86)\mosquitto"
 	>mosquito_pub –t test –m hoge
 
@@ -243,15 +281,18 @@ One important point. Windows mosquitto cannot send and recive UTF coded messages
 To use MQTT server from python, install paho-mqtt.
 This is only available for Python v3.
 So you may change python link to python 3. In my environment, it is not required.
+
 	# cd /usr/bin
 	# rm python
 	# ln -s python3.5 python
+
 Do not forget restoring this change.
 Install the paho library.
 pip install paho-mqtt
 
 pub-, sub- client examples of paho-mqtt are as follows.
 You can check it in /export/install/PlugFest/PlugFestRP/mqtt-client-py
+
 	# cd /export
 	# ln -s install/PlugFest/PlugFestRP/mqtt-client-py
 
@@ -263,11 +304,13 @@ Check the operation of paho-mqtt.
 - This model supports multiple clients. Here, we use three raspberry-pi to check the operation.
 
 - Preparation
+
 	# apt-get update
 	# apt-get upgrade
 	# apt-get dist-upgrade
 
 If you do not have our environment, execute the following command.
+
 	# mkdir –p /export/install
 	# cd /export/install
 	# git clonse https://github.com/westlab/PlugFest
@@ -276,11 +319,15 @@ If you do not have our environment, execute the following command.
 	# ln -s install/PlugFest/PlugFestRP/TEDS .
 
 - Install Bluetooth driver 
+
 	# apt-get install bluetooth
 
 - Install concerning packages
+
 	# apt-get install libusb-dev libdbus-1-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev libdbus-glib-1-dev
+
 - Install python library (bluez)
+
 	# apt-get install python-dev
 	# apt-get install libboost-python-dev libglib2.0 libboost-thread-dev
 	# apt-get install libbluetooth3-dev
@@ -295,6 +342,7 @@ If you do not have our environment, execute the following command.
 	# pip install pybluez
 
 - Install GUI interfaces for bluetooth
+
 	# apt-get install pi-bluetooth blueman
 Default GUI Bluetooth on the menu bar will be overwrited.
 
@@ -303,6 +351,7 @@ If you want, you can install the following modles to connect Bluetooth speaker.
 	# apt-get install bluez-hcidump
 
 Now, reboot your system. Need reboot to use new GUI.
+
 	# reboot
 
 Remove old Bluetooth GUI interface on the menu
@@ -310,6 +359,7 @@ Click the right button of the mouse on the old Bluetooth icon on the menu -> Sel
 
 - Additional installation to use bluetooth
 Edit /lib/systemd/system/bluetooth.service
+
 	#ExecStart=/usr/lib/bluetooth/bluetoothd –C
 	ExecStart=/usr/local/libexec/bluetooth/bluetoothd -C
 	ExecStartPost=/usr/bin/sdptool add SP
@@ -324,6 +374,7 @@ If you failed in installing gattlib, you have to install it from source.
 	# pip3 install . (Do not miss the last period)
 
 - Reload daemon process
+
 	# systemctl daemon-reload
 	# systemctl restart bluetooth
 
@@ -339,6 +390,7 @@ Firstly, check the physical address of Bluetooth device on Raspberry Pi.
 Now you have to select NCAP (server) and TIM (client).
 Check the server’s physical address.
 Type the following commands in the server.
+
 	# hciconfig
 	hci0:   Type: BR/EDR  Bus: USB
 	    BD Address: B8:27:EB:9A:A4:C7 ACL MTU: 1021:8  SCO MTU: 64:1
@@ -353,8 +405,8 @@ We have two method to pair Bluetooth devices. One is GUI-based operation the oth
 + Give a permission to be searched from others server
 
 [CMD]
-	# bluetoothctl
 
+	# bluetoothctl
 	Agent registered
 	[bluetooth] # power on               <= command
 	Changing power on succeeded
@@ -365,6 +417,7 @@ We have two method to pair Bluetooth devices. One is GUI-based operation the oth
 You can leave from bluetoothctl by using quit command.
 
 - Pairing from client
+
 	#bluetoothctl
 	Agent registered
 	[bluetooth] # pair B8:27:EB:9A:A4:C7
@@ -388,20 +441,25 @@ Now you can execute a program.
 	# cp /export/install/bluepy/bluepy/{btle.pyc,bluepy-helper} .
 
 [server]
+
 	# python rfcommserver.py –h
 
 Now just run it. (No MQTT server connection)
+
 	# python rfcommserver.py -v
 
 [client]
+
 	# python alps.py –h
 
 You may special ALPS IOT Module address by –m option, or you may use pseudo_sensor option to use random values. As an example:
+
 	# python alps.py -P -d B8:27:EB:DB:97:2F -v
 
 #### Paring trouble shooting
 
 - To check all physical addresses in command line
+
 	#hciconfig –a
 		50 BD Address: B8:27:EB:35:5A:5E
 		51 BD Address: B8:27:EB:DB:D2:8E
@@ -414,12 +472,15 @@ You may special ALPS IOT Module address by –m option, or you may use pseudo_se
 You have to set up two machines; server and client.
 Client
 Make /dev/rfcomm0
+
 	# rfcomm bind 0 B8:27:EB:9A:A4:C7
 
 Server
+
 	# rfcomm watch 0 1 agetty rfcomm0 115200 linux -a pi
 
 Then, execute the following command at client. You will login to the server machine via Bluetooth.
+
 	# screen /dev/rfcomm0 115200
 
 This means your rfcomm is open and works correctly.
