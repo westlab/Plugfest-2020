@@ -19,7 +19,7 @@ from datetime import datetime
 
 parser = argparse.ArgumentParser(
     prog = 'alps.py',
-    usage = 'Receive BLE sensor data and send to NCAP with multipully formated TEDS',
+    usage = 'Receive BLE sensor data and send to NCAP with TEDS and METATEDS',
     description= 'TIM for ALPS Smart IoT BLE Sensor module\nYou have to put TEDS files of required filenames to ../TEDS/ directory',
     epilog = 'Programmer Hiroaki Nishi west@west.yokohama',
     add_help = True)
@@ -46,7 +46,7 @@ parser.add_argument('-m', '--alpsmodule',
     type = str)
 parser.add_argument('-d', '--destination_address',
     action = 'store',
-    help = 'specify destination Bluetooth addresss',
+    help = 'specify destination Bluetooth address',
     nargs = '?',
     default = 'B8:27:EB:DB:D2:8E',
     type = str)
@@ -56,7 +56,7 @@ parser.add_argument('-E', '--elasticsearch',
     default = False)
 parser.add_argument('-e', '--elasticsearch_address',
     action = 'store',
-    help = 'specify destination Bluetooth addresss',
+    help = 'specify destination Bluetooth address',
     nargs = '?',
     default = 'http://localhost:9200/plugfest',
     type = str)
