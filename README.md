@@ -1,38 +1,9 @@
 Demonstration of IEEE P21451-1-6 for 2018 IEEE IES IECON PlugFest
 ====
+
 IEEE P21451-1-6 Working Group (WG) Development Meeting on STANDARD FOR A SMART TRANSDUCER INTERFACE FOR SENSORS, ACTUATORS AND DEVICES – MESSAGE QUEUE TELEMETRY TRANSPORT (MQTT)FOR NETWORKED DEVICE COMMUNICATION. 
 
-IEEE 1451 Standards Plug Fest is achieved at INTEROP 1451, IECON '18.
-The objectivies is as follows.
-
-- Provide the IEEE 1451/21451 standards community with verification and validation platforms for the standards so the community can test their development of their applications to these benchmarks, ensuring compliance and interoperability to their systems.
-- The standards and platforms will provide compliance and interoperability to the IoT applications and its industrial components (IIoT)
-- Encourage industry partners to make sure of the verification and validation platforms for IEEE Standards compliance in the industry context.
-- Verification and developing platforms are being implemented following several different approaches, allowing coverage of specific sensor transducer applications conforming to the IEEE P1451 standards.
-- Goal of these platforms is to support users with “turn-key” approaches for their applications, by providing relatively easy initial start-up processes, allowing easy installation and configuration.
-
-This demonstation program shows the typical example of IEEE P21451-1-6.
-
-## Description
-
-
-
-## Demo
-
-## Requirement
-
-Required libraries python packages must be installed. Follow the description of Install section.
-You may use BLE-based ALPS ELEC Co.Ltd.
-
-## Usage
-
-
-Demonstration of IEEE P21451-1-6 for 2018 IEEE IES IECON PlugFest
-====
-IEEE P21451-1-6 Working Group (WG) Development Meeting on STANDARD FOR A SMART TRANSDUCER INTERFACE FOR SENSORS, ACTUATORS AND DEVICES – MESSAGE QUEUE TELEMETRY TRANSPORT (MQTT)FOR NETWORKED DEVICE COMMUNICATION. 
-
-IEEE 1451 Standards Plug Fest is achieved at INTEROP 1451, IECON '18.
-The objectives are as follows.
+IEEE P21451-1-6 is included in IEEE 1451 Standards family. An event, IEEE 1451 Standards Plug Fest, is achieved at INTEROP 1451, IECON '18. The objectives are as follows.
 
 - Provide the IEEE 1451/21451 standards community with verification and validation platforms for the standards so the community can test the development of their applications to these benchmarks, ensuring compliance and interoperability to their systems.
 - The standards and platforms will provide compliance and interoperability to the IoT applications and its industrial components (IIoT)
@@ -41,12 +12,6 @@ The objectives are as follows.
 - The goal of these platforms is to support users with “turn-key” approaches for their applications, by providing relatively easy initial start-up processes, allowing easy installation and configuration.
 
 This demonstration program shows the typical example of IEEE P21451-1-6.
-
-## Description
-
-
-
-## Demo
 
 ## Requirement
 
@@ -57,7 +22,7 @@ To compile and execute MQTTnet-based MQTT server, Microsoft Visual Studio is req
 
 ## Usage
 ### MQTTnet Server
-Open PlugFestUWP/PlugFest.sln
+Open PlugFestUWP/PlugFest.sln in GitHub directory.
 
 
 ## Installation
@@ -80,6 +45,7 @@ KEIO-MODEL Installation manual for Raspberry-Pi 3 (B+)
 - Edit your /boot/config.txt for fitting your display.
 
 + If you use Getic mobile display panel, then give a pache as follows.
+
 	disable_oberscan=1
 	overscan_left=-
 	overscan_top=0
@@ -91,28 +57,38 @@ KEIO-MODEL Installation manual for Raspberry-Pi 3 (B+)
 	hdmi_mode=16
 
 + if you use 7-inch touch panel for Raspberry-Pi, add the following setting at the tail of the file.
+
 	lcd_lotate=2
+
 You will install software keyboard by using the following command after this installation.
+
 	# apt-get install matchbox-keyboard
 
 - Update your environment
+
 	# apt-get –y upgrade
 	# apt-get –y update
 
 We need a Japanese environment.
+
 	# raspi-config ($ means root command line)
+
 Install the following languages adding to “C.”
+
 	en_GB.UTF-8
 	en_US.UTF-8
 	ja_JP.UTF-8
+
 Set default language to en_US
 
 - Install dnsutils. It is convenient.
+
 	# apt-get install dnsutils
 
 - You may set up your network environment here. You may finish the network environment setting in your installation.
 
 - Install VNC and enable sshd for remote connection
+
 	# raspi-config
 		ssh enable
 		vnc enable
