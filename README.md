@@ -74,20 +74,19 @@ To update use the following commands.
 	# apt-get -y update
 ```
 
-We need a Japanese environment.
-
-```
-	# raspi-config ($ means root command line)
-```
+We need a Japanese environment. You can skip here. Here is for our lab members.
 Install the following languages adding to “C.”
 
 ```
-	en_GB.UTF-8
-	en_US.UTF-8
-	ja_JP.UTF-8
+	# raspi-config ($ means root command line)
+		en_GB.UTF-8
+		en_US.UTF-8
+		ja_JP.UTF-8
+			Set default language to en_US
+	# pt-get install –y fonts-noto
+	# apt-get install –y uim uim-anthy
+	# reboot
 ```
-
-Set default language to en_US
 
 - Dnsutils
 
