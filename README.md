@@ -126,7 +126,7 @@ From here, it is better to use rloing for installing multiple machines.  Login v
 	dtoverlay=pi3-miniuart-bt
 ```
 
-- ALPS ELEC Smart IoT BLE Sensor Module
+#### ALPS ELEC Smart IoT BLE Sensor Module
 
 If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor module, which generates random values.
 
@@ -399,10 +399,12 @@ You can check it in /export/install/PlugFest/PlugFestRP/mqtt-client-py
 
 Check the operation of paho-mqtt.
 
-#### Installing Bluetooth connection
+#### Installing Bluetooth to Raspberry-Pi
 
-- Two raspberry-pi are required to check the connectivity.
-- This model supports multiple clients. Here, we use three raspberry-pi to check the operation.
+The bluetooth instration for ALPS MODULE is for Bluetooth Low Energy. This is simple protocol and pairing is not needed. To communicate between sensor node and processing/combining node, it needs general Bluetooth connection modules.
+
+- Two raspberry-pi for sensor node and processing node are required to check the connectivity.
+- This model supports multiple clients. Here, we use three raspberry-pi as sensor nodes to check the operation.
 
 - Preparation
 
