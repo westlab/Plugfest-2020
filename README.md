@@ -72,6 +72,7 @@ To update use the following commands.
 ```
 	# apt-get -y upgrade
 	# apt-get -y update
+	# apt-get -y dist-upgrade
 ```
 
 We need a Japanese environment. You can skip here. Here is for our lab members.
@@ -79,12 +80,12 @@ Install the following languages adding to “C.”
 
 ```
 	# raspi-config ($ means root command line)
-		en_GB.UTF-8
+		C.UTF-8
 		en_US.UTF-8
 		ja_JP.UTF-8
 			Set default language to en_US
-	# pt-get install –y fonts-noto
-	# apt-get install –y uim uim-anthy
+	# apt-get -y install fonts-noto
+	# apt-get -y install uim uim-anthy
 	# reboot
 ```
 
@@ -193,7 +194,7 @@ Our all design is available in GitHub.
 
 ```
 	# git clone https://github.com/westlab/PlugFest
-	# cd /export/install/bluepy/blupy
+	# cd /export/install/bluepy/bluepy
 	# cp ../../PlugFest/PlugFestRP/alps/alps_sensor.py .
 	# python alps_sensor.py
 ```
@@ -212,7 +213,7 @@ These files are very important to communicate with the Bluetooth sensor module.
 
 ```
 	# cd /export
-	# ln -s –r install/PlugFest/PlugFestRP/alps .
+	# ln -s install/PlugFest/PlugFestRP/alps .
 	# cp install/bluepy/bluepy/{btle.pyc,bluepy-helper} alps
 	# cd alps
 	# python alps_sensor.py
@@ -252,7 +253,7 @@ The following code has a fix of sign handling mistakes in the original source. A
 Docker version and general version are available.
 Ok, then, let’s do both. (Wao!)
 
-- Docker
+- MQTT broker server on Docker
 
 Install docker by following commands.
 
@@ -262,6 +263,7 @@ Install docker by following commands.
 ```
 
 This is only what you do. However, it takes time.
+
 To execute docker container by pi adding to root.
 
 You may have some troubles when resolving DNS of get.docker.com or getting PGP keys. In this case, IP address and the canonical name of get.docker.com by using nslookup command, and directly write the address and name to /etc/hosts. You also add download.docker.com to the hosts file.
@@ -305,11 +307,6 @@ NOTE: You have to change the permissions of the directories to allow the user to
 
 ```
 	# chmod -R 777 /srv/mqtt/*
-```
-
-Better use "-u" with a valid user id on your docker host
-
-```
 	# docker run -ti -p 1883:1883 -p 9001:9001 \
 	-v /srv/mqtt/config:/mqtt/config:ro \
 	-v /srv/mqtt/log:/mqtt/log \
@@ -317,9 +314,9 @@ Better use "-u" with a valid user id on your docker host
 	--name mqtt pascaldevink/rpi-mosquitto
 ```
 
-- General installation
+- Mosquitto MQTT broker installation
 
-Install mosquitto MQTT server. It is very popular.
+Install mosquitto MQTT broker server. It is very popular.
 
 ```
 	# apt install mosquitto
@@ -386,7 +383,10 @@ So you may change python link to python 3. In my environment, it is not required
 
 Do not forget restoring this change.
 Install the paho library.
-pip install paho-mqtt
+
+```
+	# pip install paho-mqtt
+```
 
 pub-, sub- client examples of paho-mqtt are as follows.
 You can check it in /export/install/PlugFest/PlugFestRP/mqtt-client-py
@@ -683,3 +683,96 @@ By using GUI you can confirm the status of Bluetooth device.
 		drwx------  4 root root 4096  Sep  23 20:50 B8:27:EB:72:B3:11 (address of yourself)
 ```
 
+### Application
+
+#### Node-RED
+Elasticsearch+kibana works but is very heavy.
+Dashing is Ok but is just a “dashboard”
+
+Here, install Node-red as IoT application.
+
+```
+	# apt-get install –y nodered
+	# systemctl start nodered
+```
+
+Access to the following site.
+http://localhost:1880
+localhost is your installed machine name or IP address.
+
+It has many functions to connect IoT services.
+One important function for demonstration is drawing graphs.
+Install nodered-dashboard
+
+```
+	# systemctl stop nodered
+	# apt-get install npm
+	# update-nodejs-and-nodered
+	# npm i node-red-dashboard
+	# systemctl start nodered
+```
+
+To use dashboard, select menu button (right top) and select “setting”, “pallet”, and search node-red-dashboard. Then press install button on the node-red-dashboard tab. You may find many plugin applications for Node-RED.
+
+You can access the dashboard panel by the following URL.
+http://localhost:1880/ui
+
+It does not have authorization as it’s original configuration.
+It is better to install authorization function for Node-RED.
+
+```
+	# npm i bcrypt
+```
+
+You have to implement encoded password into the configuration file.
+Use the following command to get the encoded password.
+
+```
+	# node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" PASSWORD
+```
+
+Type the code into setting.js
+
+```
+	# vi ~pi/node-red/settings.js
+```
+
+Edit the appropriate section of the file as follows.
+
+```
+adminAuth: {
+    type: "credentials",
+    users: [{
+        username: "admin",
+        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
+        permissions: "*"
+    }]
+}
+```
+
+#### Prevent Darkout
+If you want to use the dashboard like KIOSK, which means to prevent the screen darkout, use the following command.
+
+```
+	$ xset s 0 0
+	$ xset s noblank
+	$ set s noexpose
+	$ xset dpms 0 0 0
+```
+
+You may think these commands are automatically executed. Then, edit the following file.
+
+```
+	$ vi ~pi/.config/lxsession/LXDE-pi/autostart
+```
+
+Then, insert the following lines to the end of the file.
+
+```
+@xset s 0 0
+@xset s noblank
+@xset s noexpose
+@xset dpms 0 0 0
+```
+
+The screen will not go sleep.
