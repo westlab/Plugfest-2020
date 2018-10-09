@@ -72,6 +72,7 @@ To update use the following commands.
 ```
 	# apt-get -y upgrade
 	# apt-get -y update
+	# apt-get -y dist-upgrade
 ```
 
 We need a Japanese environment. You can skip here. Here is for our lab members.
