@@ -84,8 +84,8 @@ Install the following languages adding to “C.”
 		en_US.UTF-8
 		ja_JP.UTF-8
 			Set default language to en_US
-	# apt-get install –y fonts-noto
-	# apt-get install –y uim uim-anthy
+	# apt-get -y install fonts-noto
+	# apt-get -y install uim uim-anthy
 	# reboot
 ```
 
@@ -184,7 +184,7 @@ Our all design is available in GitHub.
 
 ```
 	# git clone https://github.com/westlab/PlugFest
-	# cd /export/install/bluepy/blupy
+	# cd /export/install/bluepy/bluepy
 	# cp ../../PlugFest/PlugFestRP/alps/alps_sensor.py .
 	# python alps_sensor.py
 ```
@@ -201,7 +201,7 @@ These files are very important to communicate with the Bluetooth sensor module.
 
 ```
 	# cd /export
-	# ln -s –r install/PlugFest/PlugFestRP/alps .
+	# ln -s install/PlugFest/PlugFestRP/alps .
 	# cp install/bluepy/bluepy/{btle.pyc,bluepy-helper} alps
 	# cd alps
 	# python alps_sensor.py
