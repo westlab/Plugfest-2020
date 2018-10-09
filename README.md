@@ -362,7 +362,10 @@ So you may change python link to python 3. In my environment, it is not required
 
 Do not forget restoring this change.
 Install the paho library.
-pip install paho-mqtt
+
+```
+	# pip install paho-mqtt
+```
 
 pub-, sub- client examples of paho-mqtt are as follows.
 You can check it in /export/install/PlugFest/PlugFestRP/mqtt-client-py
