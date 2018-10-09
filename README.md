@@ -463,7 +463,7 @@ Click the right button of the mouse on the old Bluetooth icon on the menu -> Sel
 Edit /lib/systemd/system/bluetooth.service
 
 ```
-	#ExecStart=/usr/lib/bluetooth/bluetoothd –C
+	#ExecStart=/usr/libexec/bluetooth/bluetoothd –C
 	ExecStart=/usr/local/libexec/bluetooth/bluetoothd -C
 	ExecStartPost=/usr/bin/sdptool add SP
 ```
