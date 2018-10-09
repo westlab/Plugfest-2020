@@ -9,9 +9,9 @@ import paho.mqtt.client as mqtt
 
 sys.stderr.write("*** START ***\n")
 
-host = '192.168.8.101'
+host = '10.1.1.24'
 port = 1883
-topic = 'topic_1'
+topic = '/plugfest/hoge'
 
 client = mqtt.Client(protocol=mqtt.MQTTv311)
 

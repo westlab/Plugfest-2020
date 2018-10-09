@@ -15,11 +15,11 @@ import re
 import argparse
 import requests
 import random
-import datetime
+from datetime import datetime
 
 parser = argparse.ArgumentParser(
     prog = 'alps.py',
-    usage = 'Receive BLE sensor data and send to NCAP with multipully formated TEDS',
+    usage = 'Receive BLE sensor data and send to NCAP with TEDS and METATEDS',
     description= 'TIM for ALPS Smart IoT BLE Sensor module\nYou have to put TEDS files of required filenames to ../TEDS/ directory',
     epilog = 'Programmer Hiroaki Nishi west@west.yokohama',
     add_help = True)
@@ -34,7 +34,7 @@ parser.add_argument('-q', '--quiet',
     action = 'store_true',
     help = 'quiet (does not output data messages)',
     default = False)
-parser.add_argument('-P', '--psude_sensor',
+parser.add_argument('-P', '--pseudo_sensor',
     action = 'store_true',
     help = 'generate random sensor values without ALPS module',
     default = False)
@@ -46,14 +46,20 @@ parser.add_argument('-m', '--alpsmodule',
     type = str)
 parser.add_argument('-d', '--destination_address',
     action = 'store',
-    help = 'specify destination Bluetooth addresss',
+    help = 'specify destination Bluetooth address',
     nargs = '?',
     default = 'B8:27:EB:DB:D2:8E',
     type = str)
-parser.add_argument('-e', '--erasticsearch',
+parser.add_argument('-E', '--elasticsearch',
     action = 'store_true',
-    help = 'prepare erasticsearch/kibana data and push',
+    help = 'prepare elasticsearch/kibana data and push',
     default = False)
+parser.add_argument('-e', '--elasticsearch_address',
+    action = 'store',
+    help = 'specify destination Bluetooth address',
+    nargs = '?',
+    default = 'http://localhost:9200/plugfest',
+    type = str)
 
 args = parser.parse_args()
 vflag = False
@@ -63,10 +69,10 @@ qflag = False
 if args.quiet:
     qflag = True
 eflag = False
-if args.erasticsearch:
+if args.elasticsearch:
     eflag = True
 pflag = False
-if args.psude_sensor:
+if args.pseudo_sensor:
     pflag = True
 
 def s16(value):
@@ -129,25 +135,24 @@ def main():
         alps.setDelegate( NtfyDelegate(btle.DefaultDelegate) )
     
     if eflag == True:
-        response = requests.put('http://localhost:9200/plugfest')
+        response = requests.put(args.elasticsearch_address)
         if vflag == True:
             print response.json()
  
     if pflag == False:
-        #Hybrid MAG ACC8G　100ms　/ Other 1s
+        #Hybrid MAG ACC8G 100ms / Other 1s
         alps.writeCharacteristic(0x0013, struct.pack('<bb', 0x01, 0x00), True)# Custom1 Notify Enable 
         alps.writeCharacteristic(0x0016, struct.pack('<bb', 0x01, 0x00), True)# Custom2 Notify Enable
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x03), True)# (不揮発)保存内容の初期化
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x01, 0x03, 0x7F), True)# 地磁気、加速度,気圧,温度,湿度,UV,照度を有効
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x03), True)# (Non-volatile) Initialize stored data
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x01, 0x03, 0x7F), True)# Enalbe Geomagnetism, Acceleration, Puressure, Temparature, Humidity, UV, Illuminance
     #    alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x04, 0x03, 0x04), True)# Hybrid Mode
         alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x04, 0x03, 0x00), True)# Hybrid Mode
-    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x64, 0x00), True) # Fast 100msec (地磁気,加速度)
-    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x7A, 0x01), True) # Fast 250msec (地磁気,加速度) Hybrid mode だけ(deleted)
-        alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x05, 0x04, 0x01, 0x00), True) # Slow 1sec (気圧,温度,湿度,UV,照度)     
-
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x02, 0x03, 0x02), True) # 加速度±8G
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x01), True)# 設定内容保存
-        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x20, 0x03, 0x01), True)# センサ計測開始
+    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x64, 0x00), True) # Fast 100msec (Geomagnetism,Acceleration)
+    #    alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x06, 0x04, 0x7A, 0x01), True) # Fast 250msec (Geomagnetism,Acceleration) only Hybrid mode (deleted)
+        alps.writeCharacteristic(0x0018, struct.pack('<bbbb', 0x05, 0x04, 0x01, 0x00), True) # Slow 1sec (Pressure, Temparature, Humidity, UV, Illuminance)
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x02, 0x03, 0x02), True) # Acceleration +-8G
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x2F, 0x03, 0x01), True)# Store configuration
+        alps.writeCharacteristic(0x0018, struct.pack('<bbb', 0x20, 0x03, 0x01), True)# Sart measuremnt
         ## Setting & Connect
     ras = RN42("ras", args.destination_address, 1)
     ras.connectBluetooth(ras.bdAddr,ras.port)
@@ -164,8 +169,8 @@ def main():
             if qflag == False:
                 print ("TEDS:"+msg)
     while True:
-        now = datetime.datetime.now()
-        d = datetime.datetime(now.year,now.month,now.day,now.hour,now.minute,now.second,now.microsecond)
+        (dt, micro) = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f').split('.')
+        dt = "%s.%03d" % (dt, int(micro)/1000)
         if pflag == True:
             Pressure = 980.0+random.randint(2000,4000)/100.0
             Humidity = 20.0+random.randint(0,6000)/100.0
@@ -174,19 +179,19 @@ def main():
             UV = 0.0+random.randint(0,100000)/100.0
             GeoMagnetic_X = 0.0+random.randint(0,1000000)/100.0
             Acceleration_Y  = 0.0+random.randint(0,1000000)/100.0
-            msg = '{{"DATETIME":{0},"PRESSURE":{1:.3f},"HUMID":{2:.3f},"TEMP":{3:.3f},"ILLUMI":{4:.3f},"UV":{5:.3f},"GEOMAG":{6:.3f},"ACCEL":{7:.3f}}}'.format(d, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
+            msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{6:.3f},ACCEL:{7:.3f}}}'.format(dt, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
             ras.sock.send(msg)
             sleep(0.5)
         else:
             if alps.waitForNotifications(1.0):
                 # handleNotification() was called
-                msg = '{{"DATETIME":[0],"PRESSURE":{1:.3f},"HUMID":{2:.3f},"TEMP":{3:.3f},"ILLUMI":{4:.3f},"UV":{5:.3f},"GEOMAG":{5:.3f},"ACCEL":{6:.3f}}}'.format(d, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
+                msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{5:.3f},ACCEL:{6:.3f}}}'.format(dt, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
                 ras.sock.send(msg)
         if qflag == False:
             print ("DATA:"+msg)
         if eflag == True:
             eheaders = {'Content-Type': 'application/json'}
-            response = requests.post('http://localhost:9200/plugfest/alps', headers=eheaders, data=msg)
+            response = requests.post(args.elasticsearch_address, headers=eheaders, data=msg)
             if vflag == True:
                 print response.json()
             continue
