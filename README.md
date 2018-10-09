@@ -235,7 +235,8 @@ The following code has a fix of sign handling mistakes in the original source. A
 Docker version and general version are available.
 Ok, then, let’s do both. (Wao!)
 
-- Docker
+- MQTT broker server on Docker
+
 Install docker by following commands.
 
 ```
@@ -244,7 +245,9 @@ Install docker by following commands.
 ```
 
 This is only what you do. However, it takes time.
+
 To execute docker container by pi adding to root.
+
 You may have some troubles when resolving DNS of get.docker.com or getting PGP keys. In this case, IP address and the canonical name of get.docker.com by using nslookup command, and directly write the address and name to /etc/hosts. You also add download.docker.com to the hosts file.
 
 If you edited /etc/hosts, bring it back.
@@ -293,8 +296,9 @@ NOTE: You have to change the permissions of the directories to allow the user to
 	--name mqtt pascaldevink/rpi-mosquitto
 ```
 
-- General installation
-Install mosquitto MQTT server. It is very popular.
+- Mosquitto MQTT broker installation
+
+Install mosquitto MQTT broker server. It is very popular.
 
 ```
 	# apt install mosquitto
