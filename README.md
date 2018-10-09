@@ -100,6 +100,7 @@ Install dnsutils. It is convenient for checking network conectivity.
 - You may set up your network environment here. You may finish the network environment setting in your installation.
 
 - Install VNC and enable sshd for remote connection
+
 VNC and sshd are standard method for Raspberry Pi for remote connection.
 
 ```
@@ -120,10 +121,14 @@ From here, it is better to use rloing for installing multiple machines.  Login v
 ```
 
 - Add USB serial cable entry to use USB serial cable for connecting Serial devices if you want.
-dtoverlay=pi3-miniuart-bt
 
-- ALPS ELEC Smart IoT BLE Sensor Module
- If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor module, which generates random values.
+```
+	dtoverlay=pi3-miniuart-bt
+```
+
+#### ALPS ELEC Smart IoT BLE Sensor Module
+
+If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor module, which generates random values.
 
 Blog of TomoSoft (as given below) explains how to install the ALPS module. This is a very simple way for us to connect sensors to Raspberry Pi via Bluetooth.
 http://tomosoft.jp/design/?p=8104
@@ -131,6 +136,7 @@ http://www.hiramine.com/physicalcomputing/raspberrypi3/wlan_howto.html
 These pages are written in Japanese. Use google translator. Simply, it is enough to follow the process below.
 
 - Connect to the Internet
+
 Firstly, it is better to check the update.
 
 ```
@@ -139,6 +145,7 @@ Firstly, it is better to check the update.
 ```
 
 - Set time
+
 Fix the clock of your raspberry pi.
 
 ```
@@ -149,6 +156,7 @@ Fix the clock of your raspberry pi.
 ```
 
 - Install required modules.
+
 Firstly, blupy, a python interface to communicate via bluetooth
 
 ```
@@ -160,6 +168,7 @@ Firstly, blupy, a python interface to communicate via bluetooth
 
 + we need some part of bluepy sourses. Extract sources from git.
 + our working directory is /export/
+
 In the working directory, install bluepy.
 
 ```
@@ -180,6 +189,7 @@ Maybe, it is needless but we want to update the blupy.
 ```
 
 + download our design
+
 Our all design is available in GitHub.
 
 ```
@@ -189,14 +199,16 @@ Our all design is available in GitHub.
 	# python alps_sensor.py
 ```
 
-Check it does not report any errors, and just quiet.
-Type Ctrl-C
+Check it does not report any errors, and it will be quiet.
+
+Then, type Ctrl-C
 
 ```
 	# ls 
 ```
 
 Check btle.pyc and bluepy-helper.
+
 These files are very important to communicate with the Bluetooth sensor module.
 
 ```
@@ -207,7 +219,8 @@ These files are very important to communicate with the Bluetooth sensor module.
 	# python alps_sensor.py
 ```
 
-Type Ctrl-C
+Again, type Ctrl-C
+
 Check it does not report any errors, and just quiet, again
 
 ```
@@ -217,7 +230,11 @@ Check it does not report any errors, and just quiet, again
 The source is also given at the end of this file.
 
 Edit the following line in the source to fit your sensor module address.
-alps = AlpsSensor("28:A1:83:E1:59:48")
+
+```
+	alps = AlpsSensor("28:A1:83:E1:59:48")
+```
+
 The address is printed on the surface of the sensor module.
 
 ```
@@ -228,6 +245,7 @@ Then you can get the sensor values. It takes about 10 seconds when it executes.
 The program uses HyblidMode and set all sensors ON.
 The sampling rate of the acceleration sensor and the geomagnetic sensor is 100 mil seconds.
 Others are 1 second.
+
 The following code has a fix of sign handling mistakes in the original source. Acceleration sensor value and geomagnetic sensor value are signed values. The original code handles these values as unsigned values.
 
 #### MQTT clients and server installation.
@@ -315,12 +333,15 @@ To confirm the installation and execution, do following commands.
 To connect another host, use –h option.
 
 You may also install MQTT server into Windows 10 machine.
+
 http://www.eclipse.org/downloads/download.php?file=/mosquitto/binary/win32/mosquitto-1.4.14-install-win32.exe
 
 You may also install the following libraries.
+
 From [ http://slproweb.com/products/Win32OpenSSL.html ], download [ install Win32OpenSSL_Light-1_0_2k.exe ] and execute it.
 Copy libeay32.dll and ssleay32.dll in C:¥OpenSSL-Win32¥bin of OpenSSL to C:\Program Files (x86)\mosquitto
 Get pthreadVC2.dll from ftp://sources.redhat.com/pub/pthreads-win32/dll-latest/dll/x86/
+
 And, copy it to C:\Program Files (x86)\mosquitto
 
 If you want to execute Mosquitto Broker, it only can be executed as a Windows service.
@@ -377,12 +398,15 @@ You can check it in /export/install/PlugFest/PlugFestRP/mqtt-client-py
 
 Check the operation of paho-mqtt.
 
-#### Installing Bluetooth connection
+#### Installing Bluetooth to Raspberry-Pi
 
-- Two raspberry-pi are required to check the connectivity.
-- This model supports multiple clients. Here, we use three raspberry-pi to check the operation.
+The bluetooth instration for ALPS MODULE is for Bluetooth Low Energy. This is simple protocol and pairing is not needed. To communicate between sensor node and processing/combining node, it needs general Bluetooth connection modules.
+
+- Two raspberry-pi for sensor node and processing node are required to check the connectivity.
+- This model supports multiple clients. Here, we use three raspberry-pi as sensor nodes to check the operation.
 
 - Preparation
+
 Firstly, you should do this.
 
 ```
@@ -403,6 +427,7 @@ If you do not have our environment, execute the following command.
 ```
 
 - Install Bluetooth driver 
+
 get bluetooth repository.
 
 ```
@@ -410,6 +435,7 @@ get bluetooth repository.
 ```
 
 - Install concerning packages
+
 get the following repositories.
 
 ```
@@ -417,7 +443,8 @@ get the following repositories.
 ```
 
 - Install python library (bluez)
-Install bluz library.
+
+Install bluez library.
 
 ```
 	# apt-get install python-dev
@@ -435,6 +462,7 @@ Install bluz library.
 ```
 
 - Install GUI interfaces for bluetooth
+
 Update Bluetooth control icon on the menu.
 
 ```
@@ -463,7 +491,7 @@ Click the right button of the mouse on the old Bluetooth icon on the menu -> Sel
 Edit /lib/systemd/system/bluetooth.service
 
 ```
-	#ExecStart=/usr/libexec/bluetooth/bluetoothd –C
+	#ExecStart=/usr/lib/bluetooth/bluetoothd     ( or /usr/local/libexec/bluetooth/bluetoothd )
 	ExecStart=/usr/local/libexec/bluetooth/bluetoothd -C
 	ExecStartPost=/usr/bin/sdptool add SP
 ```

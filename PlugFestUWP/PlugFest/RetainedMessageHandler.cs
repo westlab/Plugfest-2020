@@ -19,8 +19,12 @@ namespace PlugFest
         // private Windows.Storage.StorageFolder storageFolder;
         // private Windows.Storage.StorageFile retainFile;
         private IList<MqttApplicationMessage> retainList = new List<MqttApplicationMessage>();
+        public IList<MqttApplicationMessage> GetRetainList () {
+            return retainList;
+        }
         // private String[] topicList = {"PlugFest/sensors/A/integrated", "PlugFest/sensors/B/integrated", "PlugFest/sensors/C/integrated", "PlugFest/sensors/A/TEDS", "PlugFest/sensors/B/TEDS", "PlugFest/sensors/C/TEDS"};
         private Hashtable topicMsgConnector = new Hashtable();
+
         private void InitTEDS()
         {
             MqttApplicationMessage TEDSA = new MqttApplicationMessage();
@@ -31,23 +35,23 @@ namespace PlugFest
             MqttApplicationMessage TEDSSepC = new MqttApplicationMessage();
             TEDSA.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringA);
             TEDSA.Retain = true;
-            TEDSA.Topic = "PlugFest/sensors/A/integrated";
+            TEDSA.Topic = "/PlugFest/sensors/A/integrated";
             TEDSB.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringB);
             TEDSB.Retain = true;
-            TEDSB.Topic = "PlugFest/sensors/B/integrated";
+            TEDSB.Topic = "/PlugFest/sensors/B/integrated";
             TEDSC.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringC);
             TEDSC.Retain = true;
-            TEDSC.Topic = "PlugFest/sensors/C/integrated";
+            TEDSC.Topic = "/PlugFest/sensors/C/integrated";
 
             TEDSSepA.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringA);
             TEDSSepA.Retain = true;
-            TEDSSepA.Topic = "PlugFest/sensors/A/TEDS";
+            TEDSSepA.Topic = "/PlugFest/sensors/A/TEDS";
             TEDSSepB.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringB);
             TEDSSepB.Retain = true;
-            TEDSSepB.Topic = "PlugFest/sensors/B/TEDS";
+            TEDSSepB.Topic = "/PlugFest/sensors/B/TEDS";
             TEDSSepC.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringC);
             TEDSSepC.Retain = true;
-            TEDSSepC.Topic = "PlugFest/sensors/C/TEDS";
+            TEDSSepC.Topic = "/PlugFest/sensors/C/TEDS";
 
             retainList.Add(TEDSA);
             retainList.Add(TEDSB);
@@ -57,14 +61,14 @@ namespace PlugFest
             retainList.Add(TEDSSepC);
         }
 
-        private void UpdateTEDS()
+        public void UpdateTEDS()
         {
-            topicMsgConnector["PlugFest/sensors/A/integrated"] = TEDSStringA;
-            topicMsgConnector["PlugFest/sensors/B/integrated"] = TEDSStringB;
-            topicMsgConnector["PlugFest/sensors/C/integrated"] = TEDSStringC;
-            topicMsgConnector["PlugFest/sensors/A/TEDS"] = TEDSStringA;
-            topicMsgConnector["PlugFest/sensors/B/TEDS"] = TEDSStringB;
-            topicMsgConnector["PlugFest/sensors/C/TEDS"] = TEDSStringC;
+            topicMsgConnector["/PlugFest/sensors/A/integrated"] = TEDSStringA;
+            topicMsgConnector["/PlugFest/sensors/B/integrated"] = TEDSStringB;
+            topicMsgConnector["/PlugFest/sensors/C/integrated"] = TEDSStringC;
+            topicMsgConnector["/PlugFest/sensors/A/TEDS"] = TEDSStringA;
+            topicMsgConnector["/PlugFest/sensors/B/TEDS"] = TEDSStringB;
+            topicMsgConnector["/PlugFest/sensors/C/TEDS"] = TEDSStringC;
 
             foreach (String topicName in topicMsgConnector.Keys)
             {
@@ -90,26 +94,24 @@ namespace PlugFest
 
         public Task SaveRetainedMessagesAsync(IList<MqttApplicationMessage> messages)
         {
-            // There should be better implementation....
-            // File.WriteAllText(Filename, JsonConvert.SerializeObject(messages));
-            foreach (MqttApplicationMessage message in messages)
-            {
-                bool alreadyExist = false;
-                for (int i = 0; i < retainList.Count; i++)
-                {
-                    if (message.Topic == retainList[i].Topic)
-                    {
-                        retainList[i] = message;
-                        alreadyExist = true;
-                    }
-                }
-                if (!alreadyExist)
-                {
-                    retainList.Add(message);
-                }
-            }
-            UpdateTEDS();
-            Debug.WriteLine("Retain message");
+            // foreach (MqttApplicationMessage message in messages)
+            // {
+            //     bool alreadyExist = false;
+            //     for (int i = 0; i < retainList.Count; i++)
+            //     {
+            //         if (message.Topic == retainList[i].Topic)
+            //         {
+            //             retainList[i] = message;
+            //             alreadyExist = true;
+            //         }
+            //     }
+            //     if (!alreadyExist)
+            //     {
+            //         retainList.Add(message);
+            //     }
+            // }
+            // UpdateTEDS();
+            // Debug.WriteLine("Retain message");
             return Task.FromResult(0);
         }
 
