@@ -281,15 +281,11 @@ If you execute mosquitto docker image by changing its configurations, do followi
 ```
 
 place your mosquitto.conf in /srv/mqtt/config/
+
 NOTE: You have to change the permissions of the directories to allow the user to read/write to data and log and read from config directory For TESTING purposes you can use the following command
 
 ```
 	# chmod -R 777 /srv/mqtt/*
-```
-
-Better use "-u" with a valid user id on your docker host
-
-```
 	# docker run -ti -p 1883:1883 -p 9001:9001 \
 	-v /srv/mqtt/config:/mqtt/config:ro \
 	-v /srv/mqtt/log:/mqtt/log \
