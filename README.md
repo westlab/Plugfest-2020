@@ -80,11 +80,11 @@ Install the following languages adding to “C.”
 
 ```
 	# raspi-config ($ means root command line)
-		en_GB.UTF-8
+		C.UTF-8
 		en_US.UTF-8
 		ja_JP.UTF-8
 			Set default language to en_US
-	# pt-get install –y fonts-noto
+	# apt-get install –y fonts-noto
 	# apt-get install –y uim uim-anthy
 	# reboot
 ```
