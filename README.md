@@ -651,3 +651,96 @@ By using GUI you can confirm the status of Bluetooth device.
 		drwx------  4 root root 4096  Sep  23 20:50 B8:27:EB:72:B3:11 (address of yourself)
 ```
 
+### Application
+
+#### Node-RED
+Elasticsearch+kibana works but is very heavy.
+Dashing is Ok but is just a “dashboard”
+
+Here, install Node-red as IoT application.
+
+```
+	# apt-get install –y nodered
+	# systemctl start nodered
+```
+
+Access to the following site.
+http://localhost:1880
+localhost is your installed machine name or IP address.
+
+It has many functions to connect IoT services.
+One important function for demonstration is drawing graphs.
+Install nodered-dashboard
+
+```
+	# systemctl stop nodered
+	# apt-get install npm
+	# update-nodejs-and-nodered
+	# npm i node-red-dashboard
+	# systemctl start nodered
+```
+
+To use dashboard, select menu button (right top) and select “setting”, “pallet”, and search node-red-dashboard. Then press install button on the node-red-dashboard tab. You may find many plugin applications for Node-RED.
+
+You can access the dashboard panel by the following URL.
+http://localhost:1880/ui
+
+It does not have authorization as it’s original configuration.
+It is better to install authorization function for Node-RED.
+
+```
+	# npm i bcrypt
+```
+
+You have to implement encoded password into the configuration file.
+Use the following command to get the encoded password.
+
+```
+	# node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" PASSWORD
+```
+
+Type the code into setting.js
+
+```
+	# vi ~pi/node-red/settings.js
+```
+
+Edit the appropriate section of the file as follows.
+
+```
+adminAuth: {
+    type: "credentials",
+    users: [{
+        username: "admin",
+        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
+        permissions: "*"
+    }]
+}
+```
+
+#### Prevent Darkout
+If you want to use the dashboard like KIOSK, which means to prevent the screen darkout, use the following command.
+
+```
+	$ xset s 0 0
+	$ xset s noblank
+	$ set s noexpose
+	$ xset dpms 0 0 0
+```
+
+You may think these commands are automatically executed. Then, edit the following file.
+
+```
+	$ vi ~pi/.config/lxsession/LXDE-pi/autostart
+```
+
+Then, insert the following lines to the end of the file.
+
+```
+@xset s 0 0
+@xset s noblank
+@xset s noexpose
+@xset dpms 0 0 0
+```
+
+The screen will not go sleep.
