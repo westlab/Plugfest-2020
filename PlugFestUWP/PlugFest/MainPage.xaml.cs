@@ -95,6 +95,24 @@ namespace PlugFest
             _listener.ConnectionReceived += OnBTConnectionReceived;
         }
 
+
+        private async void TEDS_TextChanged(object sender, RoutedEventArgs e)
+        {
+            retainStorage.UpdateTEDS();
+            await PublishTEDS();
+        }
+
+        private async Task PublishTEDS()
+        {
+            if (_mqttClient.IsConnected)
+            {
+                foreach (var message in retainStorage.GetRetainList())
+                {
+                    await _mqttClient.PublishAsync(message);
+                }
+            }
+        }
+
         private async void StartServer(object sender, RoutedEventArgs e)
         {
             if (!IsServerRunning)
@@ -104,6 +122,8 @@ namespace PlugFest
                     IsServerRunning = true;
                     await _mqttServer.StartAsync(_serverOptionBuilder.Build());
                     Debug.WriteLine("Server started.");
+                    await ConnectClient();
+                    await PublishTEDS();
                 }
                 catch (Exception ex)
                 {
@@ -135,7 +155,14 @@ namespace PlugFest
 
             }
         }
-        
+        private async void ReinitializeRetainMessage(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Reinitializing retained messages. It'll be droped unless it is predefined TEDS.");
+            await _mqttServer.ClearRetainedMessagesAsync();
+            await PublishTEDS();
+        }
+
+
         private static void MqttServer_ClientConnected(object sender, MQTTnet.Server.MqttClientConnectedEventArgs e)
         {
             Debug.WriteLine($"Client[{e.ClientId}] connected");
@@ -152,7 +179,7 @@ namespace PlugFest
         }
 
         // Bluetooth functions
-        
+
         async Task InitializeRfcommDeviceService()
         {
             try
@@ -311,7 +338,7 @@ namespace PlugFest
                 {
                     Debug.WriteLine("ReadAsync: " + ex.Message);
                 }
-                
+
             }
         }
 
@@ -356,8 +383,7 @@ namespace PlugFest
             Debug.WriteLine("Successfuly published the message.");
         }
 
-        private async void ConnectClient_Click(object sender, RoutedEventArgs e)
-        {
+        private async Task ConnectClient() {
             if (!_mqttClient.IsConnected)
             {
                 try
@@ -375,6 +401,11 @@ namespace PlugFest
             {
                 Debug.WriteLine("Client is already connected.");
             }
+        }
+
+        private async void ConnectClient_Click(object sender, RoutedEventArgs e)
+        {
+            await ConnectClient();
         }
 
         private async void DisconnectClient(object sender, RoutedEventArgs e)
@@ -436,7 +467,6 @@ namespace PlugFest
                 Console.WriteLine("### RECONNECTING FAILED ###");
             }
         }
-    }
 
-   
+    }
 }
