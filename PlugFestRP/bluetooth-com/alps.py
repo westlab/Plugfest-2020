@@ -183,7 +183,11 @@ def main():
             ras.sock.send(msg)
             sleep(0.5)
         else:
-            if alps.waitForNotifications(1.0):
+            try:
+                n = alps.waitForNotifications(1.0)
+            except:
+                pass
+            if n:
                 # handleNotification() was called
                 msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{5:.3f},ACCEL:{6:.3f}}}'.format(dt, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
                 ras.sock.send(msg)
