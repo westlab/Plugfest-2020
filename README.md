@@ -15,7 +15,7 @@ This demonstration program shows the typical example of IEEE P21451-1-6.
 
 ## Requirement
 
-Required libraries python packages must be installed. Follow the description of Install section.
+Required libraries and python packages must be installed. Follow the description of Install section.
 You may use BLE-based Smart IoT Sensor Module manufactured by ALPS ELEC Co.Ltd. If you don’t have the module, you can use pseudo sensor mode. TIM and NCAP are run on Raspberry-Pi 3 or BLE/Bluetooth compatible Raspberry-Pi. NOOBS+Raspbian installation is recommended. For the minimum, two raspberry-pi, one for TIM and the other for NCAP are required. Designed NCAP has a capability of multiple connections and supports multiple TIM.
 
 To compile and execute MQTTnet-based MQTT server, Microsoft Visual Studio is required.
