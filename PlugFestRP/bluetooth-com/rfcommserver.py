@@ -107,6 +107,7 @@ def operation():
         msg = ""
         teds = {}
         tedsreq = []
+        peeraddr = "";
 
         while 1:
             rready, wready, xready = select.select(readfds, [], [])	
@@ -114,7 +115,7 @@ def operation():
                 if sock is server_socket:
                     client_socket,address = server_socket.accept()
                     readfds.add(client_socket)
-                    print("connected! "+address[0])
+                    print("connected!:"+client_socket.getpeername()[0])
                 else:
                     try:
                         msg = sock.recv(2048)
@@ -124,10 +125,18 @@ def operation():
                     except:
                         sock.close()
                         readfds.remove(sock)
+                        print("closed")
                         pass
                     finally:
+                        try:
+                            peer = sock.getpeername()
+                        except:
+                            peeraddr = "N/A"
+                        else:
+                            peeraddr = peer[0]
                         if len(msg) == 0:
                             sock.close()
+                            print("closed")
                             try:
                                 readfds.remove(sock)
                             except:
@@ -135,7 +144,8 @@ def operation():
                         else:
                             if vflag == True:
                                 print("RCV:"+str(len(msg)))
-                print(msg)
+                if qflag == False:
+                    print(msg)
                 if re.match("^#", msg):
                     pmsg = msg[1:].split(':')
                     tname = pmsg[0]
@@ -148,8 +158,8 @@ def operation():
                     teds[name+tname] = msg
                     if vflag == True:
                         print("TEDS="+tname+"="+name+"="+msg)
-                    tedsuri = args.topic+address[0]+"/"+name+"/"+tname
-                    tedsuris = args.topic+address[0]+"/"+name
+                    tedsuri = args.topic+peeraddr+"/"+name+"/"+tname
+                    tedsuris = args.topic+peeraddr+"/"+name
                     if 1 in args.connect:
                         # publish TEDS with retain bit
                         if qflag == False:
@@ -176,14 +186,14 @@ def operation():
                     pmsg = msg.split(',')
                     for pmsgn in pmsg:
                         data = pmsgn.split(':')
-                        if (len(data) ==2) and (qflag == False):
+                        if len(data) == 2:
                             if qflag == False:
                                 print(data[0]+"="+data[1])
                             if args.connect:
                                 #publish data[0] for data[1]
+                                mqttc.publish(args.topic+peeraddr+"/"+data[0], data[1])
                                 if qflag == False:
-                                    print("Publish[data]:"+args.topic+address[0]+"/"+data[0]+" as "+data[1])
-                                mqttc.publish(args.topic+address[0]+"/"+data[0], data[1])
+                                    print("Publish[data]:"+args.topic+peeraddr+"/"+data[0]+" as "+data[1])
     finally:
         for sock in readfds:
             sock.close()
@@ -210,9 +220,9 @@ def pseudo_operation():
         if vflag == True:
             print("value="+str(data))
         if args.connect:
-            mqttc.publish(args.topic+address+"/"+name, data)
             if qflag == False:
                 print("Publish:"+args.topic+address+"/"+name)
+            mqttc.publish(args.topic+address+"/"+name, data)
         else:
             if qflag == False:
                 print("Do nothing")
@@ -231,7 +241,7 @@ def main():
         mqttc = mqtt.Client(protocol=mqtt.MQTTv311)
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
-	mqttc.will_set(args.topic+address, "503 Service Unavailable")
+	mqttc.will_set("503 Service Unavailable")
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
             print("MQTT server ["+args.mqtt_server+"] connected")
