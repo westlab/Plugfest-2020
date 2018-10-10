@@ -72,22 +72,22 @@ To update use the following commands.
 ```
 	# apt-get -y upgrade
 	# apt-get -y update
+	# apt-get -y dist-upgrade
 ```
 
-We need a Japanese environment.
-
-```
-	# raspi-config ($ means root command line)
-```
+We need a Japanese environment. You can skip here. Here is for our lab members.
 Install the following languages adding to “C.”
 
 ```
-	en_GB.UTF-8
-	en_US.UTF-8
-	ja_JP.UTF-8
+	# raspi-config ($ means root command line)
+		C.UTF-8
+		en_US.UTF-8
+		ja_JP.UTF-8
+			Set default language to en_US
+	# apt-get -y install fonts-noto
+	# apt-get -y install uim uim-anthy
+	# reboot
 ```
-
-Set default language to en_US
 
 - Dnsutils
 
@@ -100,6 +100,7 @@ Install dnsutils. It is convenient for checking network conectivity.
 - You may set up your network environment here. You may finish the network environment setting in your installation.
 
 - Install VNC and enable sshd for remote connection
+
 VNC and sshd are standard method for Raspberry Pi for remote connection.
 
 ```
@@ -120,10 +121,14 @@ From here, it is better to use rloing for installing multiple machines.  Login v
 ```
 
 - Add USB serial cable entry to use USB serial cable for connecting Serial devices if you want.
-dtoverlay=pi3-miniuart-bt
 
-- ALPS ELEC Smart IoT BLE Sensor Module
- If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor module, which generates random values.
+```
+	dtoverlay=pi3-miniuart-bt
+```
+
+#### ALPS ELEC Smart IoT BLE Sensor Module
+
+If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor module, which generates random values.
 
 Blog of TomoSoft (as given below) explains how to install the ALPS module. This is a very simple way for us to connect sensors to Raspberry Pi via Bluetooth.
 http://tomosoft.jp/design/?p=8104
@@ -131,6 +136,7 @@ http://www.hiramine.com/physicalcomputing/raspberrypi3/wlan_howto.html
 These pages are written in Japanese. Use google translator. Simply, it is enough to follow the process below.
 
 - Connect to the Internet
+
 Firstly, it is better to check the update.
 
 ```
@@ -139,6 +145,7 @@ Firstly, it is better to check the update.
 ```
 
 - Set time
+
 Fix the clock of your raspberry pi.
 
 ```
@@ -149,6 +156,7 @@ Fix the clock of your raspberry pi.
 ```
 
 - Install required modules.
+
 Firstly, blupy, a python interface to communicate via bluetooth
 
 ```
@@ -160,6 +168,7 @@ Firstly, blupy, a python interface to communicate via bluetooth
 
 + we need some part of bluepy sourses. Extract sources from git.
 + our working directory is /export/
+
 In the working directory, install bluepy.
 
 ```
@@ -180,34 +189,38 @@ Maybe, it is needless but we want to update the blupy.
 ```
 
 + download our design
+
 Our all design is available in GitHub.
 
 ```
 	# git clone https://github.com/westlab/PlugFest
-	# cd /export/install/bluepy/blupy
+	# cd /export/install/bluepy/bluepy
 	# cp ../../PlugFest/PlugFestRP/alps/alps_sensor.py .
 	# python alps_sensor.py
 ```
 
-Check it does not report any errors, and just quiet.
-Type Ctrl-C
+Check it does not report any errors, and it will be quiet.
+
+Then, type Ctrl-C
 
 ```
 	# ls 
 ```
 
 Check btle.pyc and bluepy-helper.
+
 These files are very important to communicate with the Bluetooth sensor module.
 
 ```
 	# cd /export
-	# ln -s –r install/PlugFest/PlugFestRP/alps .
+	# ln -s install/PlugFest/PlugFestRP/alps .
 	# cp install/bluepy/bluepy/{btle.pyc,bluepy-helper} alps
 	# cd alps
 	# python alps_sensor.py
 ```
 
-Type Ctrl-C
+Again, type Ctrl-C
+
 Check it does not report any errors, and just quiet, again
 
 ```
@@ -217,7 +230,11 @@ Check it does not report any errors, and just quiet, again
 The source is also given at the end of this file.
 
 Edit the following line in the source to fit your sensor module address.
-alps = AlpsSensor("28:A1:83:E1:59:48")
+
+```
+	alps = AlpsSensor("28:A1:83:E1:59:48")
+```
+
 The address is printed on the surface of the sensor module.
 
 ```
@@ -228,6 +245,7 @@ Then you can get the sensor values. It takes about 10 seconds when it executes.
 The program uses HyblidMode and set all sensors ON.
 The sampling rate of the acceleration sensor and the geomagnetic sensor is 100 mil seconds.
 Others are 1 second.
+
 The following code has a fix of sign handling mistakes in the original source. Acceleration sensor value and geomagnetic sensor value are signed values. The original code handles these values as unsigned values.
 
 #### MQTT clients and server installation.
@@ -235,7 +253,8 @@ The following code has a fix of sign handling mistakes in the original source. A
 Docker version and general version are available.
 Ok, then, let’s do both. (Wao!)
 
-- Docker
+- MQTT broker server on Docker
+
 Install docker by following commands.
 
 ```
@@ -244,7 +263,9 @@ Install docker by following commands.
 ```
 
 This is only what you do. However, it takes time.
+
 To execute docker container by pi adding to root.
+
 You may have some troubles when resolving DNS of get.docker.com or getting PGP keys. In this case, IP address and the canonical name of get.docker.com by using nslookup command, and directly write the address and name to /etc/hosts. You also add download.docker.com to the hosts file.
 
 If you edited /etc/hosts, bring it back.
@@ -281,15 +302,11 @@ If you execute mosquitto docker image by changing its configurations, do followi
 ```
 
 place your mosquitto.conf in /srv/mqtt/config/
+
 NOTE: You have to change the permissions of the directories to allow the user to read/write to data and log and read from config directory For TESTING purposes you can use the following command
 
 ```
 	# chmod -R 777 /srv/mqtt/*
-```
-
-Better use "-u" with a valid user id on your docker host
-
-```
 	# docker run -ti -p 1883:1883 -p 9001:9001 \
 	-v /srv/mqtt/config:/mqtt/config:ro \
 	-v /srv/mqtt/log:/mqtt/log \
@@ -297,8 +314,9 @@ Better use "-u" with a valid user id on your docker host
 	--name mqtt pascaldevink/rpi-mosquitto
 ```
 
-- General installation
-Install mosquitto MQTT server. It is very popular.
+- Mosquitto MQTT broker installation
+
+Install mosquitto MQTT broker server. It is very popular.
 
 ```
 	# apt install mosquitto
@@ -315,12 +333,15 @@ To confirm the installation and execution, do following commands.
 To connect another host, use –h option.
 
 You may also install MQTT server into Windows 10 machine.
+
 http://www.eclipse.org/downloads/download.php?file=/mosquitto/binary/win32/mosquitto-1.4.14-install-win32.exe
 
 You may also install the following libraries.
+
 From [ http://slproweb.com/products/Win32OpenSSL.html ], download [ install Win32OpenSSL_Light-1_0_2k.exe ] and execute it.
 Copy libeay32.dll and ssleay32.dll in C:¥OpenSSL-Win32¥bin of OpenSSL to C:\Program Files (x86)\mosquitto
 Get pthreadVC2.dll from ftp://sources.redhat.com/pub/pthreads-win32/dll-latest/dll/x86/
+
 And, copy it to C:\Program Files (x86)\mosquitto
 
 If you want to execute Mosquitto Broker, it only can be executed as a Windows service.
@@ -362,7 +383,10 @@ So you may change python link to python 3. In my environment, it is not required
 
 Do not forget restoring this change.
 Install the paho library.
-pip install paho-mqtt
+
+```
+	# pip install paho-mqtt
+```
 
 pub-, sub- client examples of paho-mqtt are as follows.
 You can check it in /export/install/PlugFest/PlugFestRP/mqtt-client-py
@@ -374,12 +398,15 @@ You can check it in /export/install/PlugFest/PlugFestRP/mqtt-client-py
 
 Check the operation of paho-mqtt.
 
-#### Installing Bluetooth connection
+#### Installing Bluetooth to Raspberry-Pi
 
-- Two raspberry-pi are required to check the connectivity.
-- This model supports multiple clients. Here, we use three raspberry-pi to check the operation.
+The bluetooth instration for ALPS MODULE is for Bluetooth Low Energy. This is simple protocol and pairing is not needed. To communicate between sensor node and processing/combining node, it needs general Bluetooth connection modules.
+
+- Two raspberry-pi for sensor node and processing node are required to check the connectivity.
+- This model supports multiple clients. Here, we use three raspberry-pi as sensor nodes to check the operation.
 
 - Preparation
+
 Firstly, you should do this.
 
 ```
@@ -400,6 +427,7 @@ If you do not have our environment, execute the following command.
 ```
 
 - Install Bluetooth driver 
+
 get bluetooth repository.
 
 ```
@@ -407,6 +435,7 @@ get bluetooth repository.
 ```
 
 - Install concerning packages
+
 get the following repositories.
 
 ```
@@ -414,7 +443,8 @@ get the following repositories.
 ```
 
 - Install python library (bluez)
-Install bluz library.
+
+Install bluez library.
 
 ```
 	# apt-get install python-dev
@@ -432,6 +462,7 @@ Install bluz library.
 ```
 
 - Install GUI interfaces for bluetooth
+
 Update Bluetooth control icon on the menu.
 
 ```
@@ -460,7 +491,7 @@ Click the right button of the mouse on the old Bluetooth icon on the menu -> Sel
 Edit /lib/systemd/system/bluetooth.service
 
 ```
-	#ExecStart=/usr/lib/bluetooth/bluetoothd –C
+	#ExecStart=/usr/lib/bluetooth/bluetoothd     ( or /usr/local/libexec/bluetooth/bluetoothd )
 	ExecStart=/usr/local/libexec/bluetooth/bluetoothd -C
 	ExecStartPost=/usr/bin/sdptool add SP
 ```
@@ -652,3 +683,96 @@ By using GUI you can confirm the status of Bluetooth device.
 		drwx------  4 root root 4096  Sep  23 20:50 B8:27:EB:72:B3:11 (address of yourself)
 ```
 
+### Application
+
+#### Node-RED
+Elasticsearch+kibana works but is very heavy.
+Dashing is Ok but is just a “dashboard”
+
+Here, install Node-red as IoT application.
+
+```
+	# apt-get install –y nodered
+	# systemctl start nodered
+```
+
+Access to the following site.
+http://localhost:1880
+localhost is your installed machine name or IP address.
+
+It has many functions to connect IoT services.
+One important function for demonstration is drawing graphs.
+Install nodered-dashboard
+
+```
+	# systemctl stop nodered
+	# apt-get install npm
+	# update-nodejs-and-nodered
+	# npm i node-red-dashboard
+	# systemctl start nodered
+```
+
+To use dashboard, select menu button (right top) and select “setting”, “pallet”, and search node-red-dashboard. Then press install button on the node-red-dashboard tab. You may find many plugin applications for Node-RED.
+
+You can access the dashboard panel by the following URL.
+http://localhost:1880/ui
+
+It does not have authorization as it’s original configuration.
+It is better to install authorization function for Node-RED.
+
+```
+	# npm i bcrypt
+```
+
+You have to implement encoded password into the configuration file.
+Use the following command to get the encoded password.
+
+```
+	# node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" PASSWORD
+```
+
+Type the code into setting.js
+
+```
+	# vi ~pi/node-red/settings.js
+```
+
+Edit the appropriate section of the file as follows.
+
+```
+adminAuth: {
+    type: "credentials",
+    users: [{
+        username: "admin",
+        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
+        permissions: "*"
+    }]
+}
+```
+
+#### Prevent Darkout
+If you want to use the dashboard like KIOSK, which means to prevent the screen darkout, use the following command.
+
+```
+	$ xset s 0 0
+	$ xset s noblank
+	$ set s noexpose
+	$ xset dpms 0 0 0
+```
+
+You may think these commands are automatically executed. Then, edit the following file.
+
+```
+	$ vi ~pi/.config/lxsession/LXDE-pi/autostart
+```
+
+Then, insert the following lines to the end of the file.
+
+```
+@xset s 0 0
+@xset s noblank
+@xset s noexpose
+@xset dpms 0 0 0
+```
+
+The screen will not go sleep.

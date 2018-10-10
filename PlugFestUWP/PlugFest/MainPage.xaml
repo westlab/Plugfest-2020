@@ -23,11 +23,12 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="TEDS_A" TextWrapping="Wrap" FontSize="20" Text="{Binding TEDSStringA}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" Grid.Column="0"/>
-            <TextBox x:Name="TEDS_B" TextWrapping="Wrap" FontSize="20" Text="{Binding TEDSStringB}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" Grid.Column="1"/>
-            <TextBox x:Name="TEDS_C" TextWrapping="Wrap" FontSize="20" Text="{Binding TEDSStringC}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" Grid.Column="2"/>
+            <TextBox x:Name="TEDS_A" TextWrapping="Wrap" FontSize="20" Text="{Binding TEDSStringA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="TEDS_TextChanged" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" Grid.Column="0"/>
+            <TextBox x:Name="TEDS_B" TextWrapping="Wrap" FontSize="20" Text="{Binding TEDSStringB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="TEDS_TextChanged" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" Grid.Column="1"/>
+            <TextBox x:Name="TEDS_C" TextWrapping="Wrap" FontSize="20" Text="{Binding TEDSStringC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" LostFocus="TEDS_TextChanged" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" Grid.Row="0" Grid.Column="2"/>
             <Button x:Name="Start_Server_Btn" Content="Start MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StartServer" Grid.Row="1" Grid.Column="0"/>
-            <Button x:Name="Stop_Server_Btn" Content="Stop MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StopServer" Grid.Row="1" Grid.Column="3"/>
+            <Button x:Name="Drop_Retain_Btn" Content="Drop Retained Messages" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="ReinitializeRetainMessage" Grid.Row="1" Grid.Column="1"/>
+            <Button x:Name="Stop_Server_Btn" Content="Stop MQTT Server" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StopServer" Grid.Row="1" Grid.Column="2"/>
             <Button x:Name="Start_Bluetooth_Btn" Content="Start Bluetooth" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StartBluetooth" Grid.Row="2" Grid.Column="0"/>
             <Button x:Name="Stop_Bluetooth_Btn" Content="Stop Bluetooth" HorizontalAlignment="Center" VerticalAlignment="Center" Height="101" Width="204" Click="StopBluetooth" Grid.Row="2" Grid.Column="2"/>
             <Button x:Name="Connect_Client_Btn" Content="Connect to MQTT Server" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="101" Width="204" Click="ConnectClient_Click" Grid.Row="3" Grid.Column="0"/>

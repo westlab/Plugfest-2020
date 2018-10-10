@@ -13,7 +13,7 @@ import random
 
 parser = argparse.ArgumentParser(
     prog = 'alps.py',
-    usage = 'Receive BLE sensor data and send to NCAP with multipully formated TEDS',
+    usage = 'Receive BLE sensor data and send to NCAP with TEDS and METATEDS',
     description= 'NCAP for TIM of ALPS Smart IoT BLE Sensor module\nYou have to install and communicate with supported TIM',
     epilog = 'Programmer: Hiroaki Nishi west@west.yokohama',
     add_help = True)
@@ -30,7 +30,7 @@ parser.add_argument('-q', '--quiet',
     default = False)
 parser.add_argument('-c', '--connect',
     action = 'store',
-    help = 'connect to MQTT server (mode ID can be specified [0:No TEDS 1:Double topics 2:Single topic 3:tripple action Multiple designation is available)',
+    help = 'connect to MQTT server (mode ID can be specified [0:No TEDS 1:Dual topics 2:Single topic 3:Callback  Multiple designation is available)',
     choices = range(0,4),
     nargs = '*',
     default = [],
@@ -231,6 +231,7 @@ def main():
         mqttc = mqtt.Client(protocol=mqtt.MQTTv311)
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
+	mqttc.will_set(args.topic+address, "503 Service Unavailable")
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
             print("MQTT server ["+args.mqtt_server+"] connected")
