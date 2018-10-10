@@ -181,10 +181,13 @@ def main():
             Acceleration_Y  = 0.0+random.randint(0,1000000)/100.0
             msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{6:.3f},ACCEL:{7:.3f}}}'.format(dt, Pressure, Humidity, Temperature, AmbientLight, UV, GeoMagnetic_X, Acceleration_Y)
             ras.sock.send(msg)
-            sleep(0.5)
+            sleep(1)
         else:
             try:
                 n = alps.waitForNotifications(1.0)
+            except KeyboardInterrupt:
+                print("key pressed")
+                sys.exit()
             except:
                 pass
             if n:
@@ -204,4 +207,3 @@ def main():
         # Perhaps do something else here
 if __name__ == "__main__":
     main()
- 
