@@ -239,9 +239,9 @@ especially managing distribution tree.
 
 ### TEDS update sequence (option)
 
-Simply, TEDS will be updated when a certain topic in the initialization process was published.
+- Simply, TEDS will be updated when a certain topic in the initialization process was published.
 
-Dynamic update?
+- Dynamic update?  
 Sensor has to subscribe the topic periodically.
 
 ---
@@ -254,8 +254,11 @@ http://sourceforge.jp/projects/sfnet_win32diskimager/
 - Our design on Git  
 https://github.com/westlab/PlugFest
 
-- Presentation Magerials  
+- Installation document  
 https://github.com/westlab/PlugFest
+
+- Presentation Magerials  
+https://gitpitchcom/westlab/PlugFest
 
 ---
 
@@ -272,7 +275,7 @@ https://github.com/westlab/PlugFest
 
 ### Creating TEDS
 
-- ALPS Electric Co.Ltd. Smart IoT Sensor Module
+Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 
 ![Specifications](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Spec.png)
 
@@ -281,8 +284,10 @@ https://github.com/westlab/PlugFest
 ### TEDS example (Temperature Sensor)
 
 - TEDS  
+```
     40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124  
     CCA0183933228A60000803F010040830100548500EA540773C1642FE654081C00
+```
 - METATEDS (XML)  
 ```
 <?xml version="1.0" encoding="UTF-8"?>  
@@ -311,11 +316,13 @@ https://github.com/westlab/PlugFest
 - Command
  - Write command
 
+|:---|:---|:---|
 |Event Code|Length|Data (Single/LSB,MSB)|
 |:---|:---|:---|
 
   - Read command
 
+|:---|:---|:---|
 |Event Code + 0x80|Length|Data (Single/LSB,MSB)|
 |:---|:---|:---|
 
@@ -341,9 +348,10 @@ https://github.com/westlab/PlugFest
   - Currently, only X axis is transferred for GEOMAG and ACCEL
   - DATETIME format is YYYY-MM-DD HH:MM:SS.mmm
 
+---
+
 ### Command line options (TIM : alps.py)
 
-```
 usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
 optional arguments:
   -h, --help            show this help message and exit
@@ -359,6 +367,8 @@ optional arguments:
   -e [ELASTICSEARCH_ADDRESS], --elasticsearch_address [ELASTICSEARCH_ADDRESS]
                         specify destination Bluetooth address
 ```
+
+---
 
 ### Command line options (NCAP : rfcommserver.py)
 
@@ -382,6 +392,8 @@ optional arguments:
                         specify topic to publish (suffix is automatically added)
 
 ```
+
+---
 
 ### Testing Environment
 
