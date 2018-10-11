@@ -1,17 +1,17 @@
-# PlugFest Demo
-# MQTT+Bluetooth+IoT
+## PlugFest Demo
+## MQTT+Bluetooth+IoT
 Keio University
 Tokyo Denki University
 
 ---
 
-## Interop 1451 Plugfest/Demo System Configuration
+### Interop 1451 Plugfest/Demo System Configuration
 
----?image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png&size=auto 30%
+---?image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png&size=auto 10%
 
 ---
 
-## How to use Bluetooth?
+### How to use Bluetooth?
 
 - BNEP encapsulation (Bluetooth Network Encapsulation Protocol)
   - To use bnep0 network device
