@@ -1,4 +1,4 @@
 theme : White
 slide-number: true
 transition : fade
-theme-override: GITPITCH.css
+theme-override: PITCHME.css
