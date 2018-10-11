@@ -47,13 +47,14 @@ Tokyo Denki University
 
 ### Raspberry Pi 3 connection
 
-- Raspberry Pi 3 B/B+　　　　　　　　　　　　　　　　　　　　　　
+- Raspberry Pi 3 B/B+　　　　　　　　　　　　　　　　　　　　
   - NOOBS + bluepy + alps_extension
 - Rasberry Pi 2 or earlier needs bluetooth and  
   WiFi dongles.
 - Heat Sink is preferable to use.
-- Raspberry Pi 3 B+ has PoE function and is convenient  
-  to build Raspberry Pi Cluster environment.
+- Raspberry Pi 3 B+ has PoE function and is  
+  convenient to build Raspberry Pi Cluster  
+  environment.
 - Raspberry Pi 3 and Heat Sink may need appropriate  
   case for preventing interference between the heat  
   sink and the case.
