@@ -27,7 +27,7 @@ Tokyo Denki University
 ---
 
 @snap[north]
-Bluetooth Sensor
+###Bluetooth Sensor
 @snapend
 
 @snap[west]
@@ -48,7 +48,7 @@ Bluetooth Sensor
 @snapend
 
 @snap[east]
-<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="40%">
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="70%">
 @snapend
 
 ---
