@@ -169,15 +169,13 @@ Tokyo Denki University
   - Publish TEDS *with retain flag*  
   /plugfest/ModeName/SensorName/TEDS  
   /plugfest/ModeName/SensorName/METATEDS  
-  [Option-A]  
-  Use Keep-Alive-Timer  
+  [Option-A]  Use Keep-Alive-Timer  
     (PINGREQ/PINGRESQ Message)  
   We need to check whether the timer expires.  
   In this case, WILL is helpful.  
   OR  
-  [Option-A’] 
-  Subscribe PING topic with similar way of  
-  next Option B  
+  [Option-A’] Subscribe PING topic  
+  with similar way of next Option B  
   plugfest/ModeName/SensorName/ALIVE
 - Application
   - Subscribe TEDS by method [Option-A]
@@ -187,13 +185,11 @@ Tokyo Denki University
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png" alt="Dual" width="40%">
 @snapend
 
-@snapend
-
 ---
 
 ### TEDS acquisition sequence (Option B)
 
-- MQTT Broker can keep TEDS by retain flag　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+- MQTT Broker can keep TEDS by retain flag　　　　　　　　　　　　　　　　　
   - Publisher publishes TEDS message with retain bit firstly.
   - After that sensor data is sent to the same topic without  
   retain bit.
@@ -201,8 +197,8 @@ Tokyo Denki University
 - Clients can get TEDS again by reconnecting.
 
 - Redundant TEDS connumication will be achived.
-- Application has to know everytime the first message is TEDS.  
-If application do not care the first TEDS in its implementation, it may cause a serious system failure.
+- If application do not care the first TEDS in its  
+implementation, it may cause a serious system failure.
 
 @snap[east]
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png" alt="Single" width="40%">
