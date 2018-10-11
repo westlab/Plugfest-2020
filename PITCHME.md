@@ -31,7 +31,7 @@ Tokyo Denki University
 - ALPS IoT Sensor (BLE)
 - Power: 2.35-3.30V 7mA(Peak)
 - Communication: Bluetooth 4.1
-- Sensors:
+- Sensors:　　　　　　　　　　　　　　　　　　　　　　　　　　
   - 6D Acceleration Sensor (-2G – 2G extendable)
   - Presser Sensor (300-1100hPa, 0.013hPa/LSB)
   - Temperature (-20 - +85 C, 0.02 C/LSB)
