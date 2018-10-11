@@ -20,7 +20,6 @@ To know about this design model, please use the following link.
 https://gitpitch.com/westlab/PlugFest/
 
 To obtain PDF file of the material, please access the following link. PDF file will be automatically generated.
-
 https://gitpitch.com/pitchme/print/github/westlab/PlugFest/master/white/PITCHME.pdf
 
 ## Requirement
