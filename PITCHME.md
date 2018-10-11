@@ -40,18 +40,20 @@ Tokyo Denki University
   - Illuminance (0 – 81900Lx, 20Lx/LSB)
 
 @snap[east]
-<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="70%">
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="50%">
 @snapend
 
 ---
 
 ### Raspberry Pi 3 connection
 
-- Raspberry Pi 3 B/B+
+- Raspberry Pi 3 B/B+　　　　　　　　　　　　　　　　　　　　　　
   - NOOBS + bluepy + alps_extension
 - Rasberry Pi 2 or earlier needs bluetooth and WiFi dongles.
 
-![Raspberry Pi 3](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/RP3.png)
+@snap[east]
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/RP3.png" alt="Raspberry Pi 3" width="50%">
+@snapend
 
 ---
 
