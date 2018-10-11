@@ -9,7 +9,7 @@ Tokyo Denki University
 
 ### Interop 1451 Plugfest/Demo System Configuration
 
-![System Configuration](PlugFest/img/P2.png)
+![Demo System Configuration](PlugFest/assets/img/PlugFest.png)
 
 ---
 
@@ -38,16 +38,25 @@ Tokyo Denki University
     - Humidity (0 – 100%, 0.016%/LSB)
     - UV (0 - 20.48mW/cm2)
     - Illuminance (0 – 81900Lx, 20Lx/LSB)
+
+![BLE Sensor](PlugFest/assets/img/alps.png)
+
 - Raspberry Pi 3 B/B+
   - NOOBS + bluepy + alps_extension
+
+![Raspberry Pi 3](PlugFest/assets/img/RP3.png)
 
 ---
 
 ### Design Map
 
+![Design Map](PlugFest/assets/img/ConfigMap.png)
+
 ---
 
 ### System Configuration
+
+![System Configuration](PlugFest/assets/img/SystemStructure.png)
 
 ---
 
@@ -154,6 +163,8 @@ Becomes Subscriber to read the sensor data by using same Topic
   - Subscribe TEDS by [A]
   - Check availability of sensor by TEDS availability, [A]+WILL, or [A’]
 
+![Dual Topic](PlugFest/assets/img/DualTopic.png)
+
 ---
 
 ### TEDS acquisition sequence (Option B)
@@ -163,6 +174,8 @@ Becomes Subscriber to read the sensor data by using same Topic
   - After that sensor data is sent to the same topic without retain bit.
 - Then, all application can subscribe TEDS in the beginning.
 - Clients can get TEDS again by reconnecting.
+
+![Single Topic](PlugFest/assets/img/SingleTopic.png)
 
 ---
 
@@ -183,6 +196,8 @@ Becomes Subscriber to read the sensor data by using same Topic
   /plugfest/Node name/TEDSRECV/[UniqID] [B]
   - Close the Port of the Topic
 Retain flag may simplify this process. However, this option implies no retain and will implementation on the server as well as incompatible implementation.
+
+![Callback](PlugFest/assets/img/Callback.png)
 
 ---
 
@@ -222,6 +237,10 @@ https://github.com/westlab/PlugFest
 ### Creating TEDS
 
 - ALPS Electric Co.Ltd. Smart IoT Sensor Module
+
+![Specifications](PlugFest/assets/img/Spec.png)
+
+---
 
 ### TEDS example (Temperature Sensor)
 
@@ -330,11 +349,13 @@ optional arguments:
 
 ### Testing Environment
 
+![Testing Environment](PlugFest/assets/img/TestEnv.png)
 
 ---
 
 ### Plugfest Demo Image
 
+![Developgment Environment](PlugFest/assets/img/DevEnv.png)
 
 ---
 
