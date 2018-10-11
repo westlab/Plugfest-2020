@@ -1,3 +1,5 @@
+@css{font-size}{smaller;}
+
 ### PlugFest Demo
 ### MQTT+Bluetooth+IoT
 Keio University
@@ -7,7 +9,7 @@ Tokyo Denki University
 
 ### Interop 1451 Plugfest/Demo System Configuration
 
-![System Configuration](img/P2.png)
+![System Configuration](PlugFest/img/P2.png)
 
 ---
 
