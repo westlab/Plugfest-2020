@@ -27,7 +27,7 @@ Tokyo Denki University
 ---
 
 @snap[north]
-###Bluetooth Sensor
+### Bluetooth Sensor
 @snapend
 
 @snap[west]
