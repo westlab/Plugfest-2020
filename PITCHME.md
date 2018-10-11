@@ -200,6 +200,8 @@ Tokyo Denki University
 - Redundant TEDS connumication will be achived.
 - If application do not care the first TEDS in its  
 implementation, it may cause a serious system failure.
+- This is simple and can maximize the benefit of using MQTT,  
+especially managing distribution tree.
 
 @snap[east]
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png" alt="Single" width="40%">
