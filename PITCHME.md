@@ -26,26 +26,18 @@ Tokyo Denki University
 
 ---
 
-@snap[north]
-<h2>Bluetooth Sensor</h2>
-@snapend
+### Bluetooth Sensor
 
-@snap[west]
-<ul>
-  <li>ALPS IoT Sensor (BLE)</li>
-  <li>Power: 2.35-3.30V 7mA(Peak)</li>
-  <li>Communication: Bluetooth 4.1</li>
-  <li>Sensors:
-    <ul>
-      <li>6D Acceleration Sensor (-2G – 2G extendable)</li>
-      <li>Presser Sensor (300-1100hPa, 0.013hPa/LSB)</li>
-      <li>Temperature (-20 - +85 C, 0.02 C/LSB)</li>
-      <li>Humidity (0 – 100%, 0.016%/LSB)</li>
-      <li>UV (0 - 20.48mW/cm2)</li>
-      <li>Illuminance (0 – 81900Lx, 20Lx/LSB)</li>
-    </ul>
-</ul>
-@snapend
+- ALPS IoT Sensor (BLE)
+- Power: 2.35-3.30V 7mA(Peak)
+- Communication: Bluetooth 4.1
+- Sensors:
+  - 6D Acceleration Sensor (-2G – 2G extendable)
+  - Presser Sensor (300-1100hPa, 0.013hPa/LSB)
+  - Temperature (-20 - +85 C, 0.02 C/LSB)
+  - Humidity (0 – 100%, 0.016%/LSB)
+  - UV (0 - 20.48mW/cm2)
+  - Illuminance (0 – 81900Lx, 20Lx/LSB)
 
 @snap[east]
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="70%">
