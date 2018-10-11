@@ -15,13 +15,15 @@ This demonstration program shows the typical example of IEEE P21451-1-6.
 
 ## Requirement
 
-Required libraries python packages must be installed. Follow the description of Install section.
+Required libraries and python packages must be installed. Follow the description of Install section.
 You may use BLE-based Smart IoT Sensor Module manufactured by ALPS ELEC Co.Ltd. If you don’t have the module, you can use pseudo sensor mode. TIM and NCAP are run on Raspberry-Pi 3 or BLE/Bluetooth compatible Raspberry-Pi. NOOBS+Raspbian installation is recommended. For the minimum, two raspberry-pi, one for TIM and the other for NCAP are required. Designed NCAP has a capability of multiple connections and supports multiple TIM.
 
 To compile and execute MQTTnet-based MQTT server, Microsoft Visual Studio is required.
 
 ## Installation
+
 ### MQTTnet Server
+
 - On windows 10 machine, extract GitHub image by using GitHub client for Windows or compatible GitHub clients.
 - Click PlugFestUWP/PlugFest.sln
 Then, Visual Studio opens the design, and you can compile and execute the program.
@@ -29,7 +31,9 @@ Then, Visual Studio opens the design, and you can compile and execute the progra
 You can execute MQTTnet server by pressing “Start MQTT Server” button.
 
 ### Confiture and establish Raspberry Pi Environment
+
 #### Raspberry Pi Setup
+
 KEIO-MODEL Installation manual for Raspberry-Pi 3 (B+)
 
 (Notice) It is easy to copy the installation-completed image. However, we have a problem in creating images. Still, it is easy to mount the image and copy into your installation.
@@ -76,6 +80,7 @@ To update use the following commands.
 ```
 
 We need a Japanese environment. You can skip here. Here is for our lab members.
+
 Install the following languages adding to “C.”
 
 ```
@@ -484,7 +489,8 @@ Now, reboot your system. Need reboot to use new GUI.
 	# reboot
 ```
 
-Remove old Bluetooth GUI interface on the menu
+Remove old Bluetooth GUI interface on the menu.
+
 Click the right button of the mouse on the old Bluetooth icon on the menu -> Select Remove “Bluetooth” From Panel
 
 - Additional installation to use bluetooth
@@ -524,6 +530,7 @@ Now reload the daemon processes.
 ## Usage
 
 ### Pairing
+
 This paring task is sometimes tough because you do not see terget Bluetooth device in your window or list. You may try again and again to type commands to make pair.
 
 As a preparation, give appropriate Bluetooth name to client and server machine.
@@ -588,11 +595,14 @@ It is better to check the Bluetooth connection by transferring file via Bluetoot
 If pairing made a success, you may see a cross mark on the address list.
 
 ### Execution
+
 #### Windows MQTTnet Server
+
 Open PlugFestUWP/PlugFest.sln in GitHub directory.
 Press "Start MQTT Server".
 
 #### Raspberry Pi
+
 Now you can execute a program.
 
 ```
@@ -686,7 +696,9 @@ By using GUI you can confirm the status of Bluetooth device.
 ### Application
 
 #### Node-RED
+
 Elasticsearch+kibana works but is very heavy.
+
 Dashing is Ok but is just a “dashboard”
 
 Here, install Node-red as IoT application.
@@ -751,6 +763,7 @@ adminAuth: {
 ```
 
 #### Prevent Darkout
+
 If you want to use the dashboard like KIOSK, which means to prevent the screen darkout, use the following command.
 
 ```
