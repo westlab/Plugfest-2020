@@ -5,11 +5,13 @@ Tokyo Denki University
 
 ---
 
-### Interop 1451 Plugfest/Demo System Configuration
+#### Interop 1451 Plugfest/Demo System Configuration
 
 ![PlugFest](image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png)
 
-### How to use Bluetooth?
+---
+
+#### How to use Bluetooth?
 
 - BNEP encapsulation (Bluetooth Network Encapsulation Protocol)
   - To use bnep0 network device
@@ -22,7 +24,7 @@ Tokyo Denki University
 
 ---
 
-### Bluetooth Sensor – Raspberry Pi 3 connection
+#### Bluetooth Sensor – Raspberry Pi 3 connection
 
 - ALPS IoT Sensor (BLE)
   - Power: 2.35-3.30V 7mA(Peak)
@@ -44,19 +46,19 @@ Tokyo Denki University
 
 ---
 
-### Design Map
+#### Design Map
 
 ![Design Map](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/ConfigMap.png)
 
 ---
 
-### System Configuration
+#### System Configuration
 
 ![System Configuration](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SystemStructure.png)
 
 ---
 
-### How to communicate via MQTT?
+#### How to communicate via MQTT?
 
 - Sensor Data Transmission over MQTT
 - TEDS Transmission over MQTT
@@ -75,7 +77,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### How to send TEDS?
+#### How to send TEDS?
 
 - Design Policy
   - TEDS is only needed when required.  
@@ -87,7 +89,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### Retain and WILL mechanism
+#### Retain and WILL mechanism
 
 - Retain
   - Publisher can send a message with retain bit.
@@ -102,7 +104,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### Implementation status of retain and WILL
+#### Implementation status of retain and WILL
 
 |Broker(version)|Language|Supported version|QoS level|Retain|Will|
 |:---|:---|:---|:---|:---|:---|
@@ -119,7 +121,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### You don’t like MQTT?
+#### You don’t like MQTT?
 
 - Almost all problems are solved by using MQTT 5.0
 - Encryption / Authorization supported
@@ -134,7 +136,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### MQTT 5.0 Support
+#### MQTT 5.0 Support
 
 - We can support MQTT 5.0 by using Python gmqtt and flespi MQTT broker.
   - All MQTT 5.0 functions are not supported
@@ -144,7 +146,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### TEDS acquisition sequence (Option A = preferable)
+#### TEDS acquisition sequence (Option A = preferable)
 
 - Sensor Node
   - Publish TEDS *with retain flag*  
@@ -163,7 +165,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### TEDS acquisition sequence (Option B)
+#### TEDS acquisition sequence (Option B)
 
 - MQTT Broker can keep TEDS by retain flag
   - Publisher publishes TEDS message with retain bit firstly.
@@ -175,7 +177,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 
 ---
 
-### TEDS acquisition sequence (Option C)
+#### TEDS acquisition sequence (Option C)
 
 - Sensor Node
   - Subscribe predefined Topic to receive TEDS request  
@@ -197,7 +199,7 @@ Retain flag may simplify this process. However, this option implies no retain an
 
 ---
 
-### TEDS update sequence (option)
+#### TEDS update sequence (option)
 
 Simply, TEDS will be updated when a certain topic in the initialization process was published.
 
@@ -206,7 +208,7 @@ Sensor has to subscribe the topic periodically.
 
 ---
 
-### Other useful information
+#### Other useful information
 
 - Raspberry Pi Image file Reader/Writer  
 http://sourceforge.jp/projects/sfnet_win32diskimager/
@@ -219,7 +221,7 @@ https://github.com/westlab/PlugFest
 
 ---
 
-### TEDS
+#### TEDS
 
 - We used DeweTEDSEditor to generate TEDS information
   - It outputs TEDS binary data (HEX text) only
@@ -230,7 +232,7 @@ https://github.com/westlab/PlugFest
   
 ---
 
-### Creating TEDS
+#### Creating TEDS
 
 - ALPS Electric Co.Ltd. Smart IoT Sensor Module
 
@@ -238,7 +240,7 @@ https://github.com/westlab/PlugFest
 
 ---
 
-### TEDS example (Temperature Sensor)
+#### TEDS example (Temperature Sensor)
 
 - TEDS  
     40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124  
@@ -266,7 +268,7 @@ https://github.com/westlab/PlugFest
 
 ---
 
-### Sensor BLE Format
+#### Sensor BLE Format
 
 - Command
  - Write command
@@ -289,7 +291,7 @@ https://github.com/westlab/PlugFest
 
 ---
 
-### TIM Operation
+#### TIM Operation
 
 - Get sensor data from BLE sensor
 - Load TEDS format from file system
@@ -301,7 +303,7 @@ https://github.com/westlab/PlugFest
   - Currently, only X axis is transferred for GEOMAG and ACCEL
   - DATETIME format is YYYY-MM-DD HH:MM:SS.mmm
 
-### Command line options (TIM : alps.py)
+#### Command line options (TIM : alps.py)
 
 ```
 usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
@@ -320,7 +322,7 @@ optional arguments:
                         specify destination Bluetooth address
 ```
 
-### Command line options (NCAP : rfcommserver.py)
+#### Command line options (NCAP : rfcommserver.py)
 
 ```
 usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
@@ -343,19 +345,19 @@ optional arguments:
 
 ```
 
-### Testing Environment
+#### Testing Environment
 
 ![Testing Environment](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/TestEnv.png)
 
 ---
 
-### Plugfest Demo Image
+#### Plugfest Demo Image
 
 ![Developgment Environment](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DevEnv.png)
 
 ---
 
-### Operation Demo
+#### Operation Demo
 
 https://www.youtube.com/watch?v=fLECv2HtAZ4
 
