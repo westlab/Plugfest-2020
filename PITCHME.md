@@ -79,20 +79,17 @@ Tokyo Denki University
 
 ### How to communicate via MQTT?
 
-- Sensor Data Transmission over MQTT
-- TEDS Transmission over MQTT
-
+- Both Sensor and TEDS Data Transmission over MQTT
 - Sensor Data
   - Sequential Mode
     - Data come periodically
-  - TIM becomes Publisher with the Topic of
+  - TIM becomes Publisher with the Topic of  
   /plugfest/NodeName/SensorName/[data] (for demo)  
-  Generally  
+  Generally, it will be  
   /Manufacturer/Model/Version/SerialNumber[/Field]  
   OR  
   /Country/Region/City/Area/Street/Building/Apartment/Sensor[/Field]
- - Application
-Becomes Subscriber to read the sensor data by using same Topic
+ - Application becomes subscriber to read the sensor data by using same Topic
 
 ---
 
