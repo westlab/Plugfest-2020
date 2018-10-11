@@ -1,0 +1,11 @@
+# Theme
+theme : sky
+
+# Logo
+logo : logo.png
+
+# Footnote
+footnote : "Keio University, Hiroaki Nishi 2018/10"
+
+# Page No
+slide-number: true
