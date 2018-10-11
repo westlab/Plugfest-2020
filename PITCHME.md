@@ -165,7 +165,7 @@ Tokyo Denki University
 
 ### TEDS acquisition sequence (Option A = preferable)
 
-- Sensor Node
+- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Publish TEDS *with retain flag*  
   /plugfest/ModeName/SensorName/TEDS  
   /plugfest/ModeName/SensorName/METATEDS
@@ -179,26 +179,30 @@ Tokyo Denki University
   - Check availability of sensors by cheking TEDS accessibility using method [Opt-A]+WILL or [Opt-A’]
 
 @snap[east]
----?image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png&size=20%
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png" alt="Dual" width="30%">
+@snapend
+
 @snapend
 
 ---
 
 ### TEDS acquisition sequence (Option B)
 
-- MQTT Broker can keep TEDS by retain flag
+- MQTT Broker can keep TEDS by retain flag　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Publisher publishes TEDS message with retain bit firstly.
   - After that sensor data is sent to the same topic without retain bit.
 - Then, all application can subscribe TEDS in the beginning.
 - Clients can get TEDS again by reconnecting.
 
----?https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png&size=auto 50%
+@snap[east]
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png" alt="Single" width="30%">
+@snapend
 
 ---
 
 ### TEDS acquisition sequence (Option C)
 
-- Sensor Node
+- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Subscribe predefined Topic to receive TEDS request  
   /plugfest/ModeName/SensorName/TEDS/TEDSREQ [A]  
   /plugfest/ModeName/SensorName/METATEDS/TEDSREQ
@@ -214,7 +218,10 @@ Tokyo Denki University
   - Close the Port of the Topic
 Retain flag may simplify this process. However, this option implies no retain and will implementation on the server as well as incompatible implementation.
 
-![Callback](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Callback.png)
+@snap[east]
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Callback.png" alt="Callback" width="30%">
+@snapend
+
 
 ---
 
