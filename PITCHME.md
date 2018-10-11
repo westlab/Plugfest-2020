@@ -1,4 +1,3 @@
-#スライドのページ数表示の設定
 slide-number: true
 
 ### PlugFest Demo
