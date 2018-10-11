@@ -46,8 +46,11 @@ Tokyo Denki University
 @snapend
 
 @snap{east}
-![BLE Sensor](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png)
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="50%">
 @snapend
+
+---
+![BLE Sensor](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png)
 
 ---
 
