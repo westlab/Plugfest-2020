@@ -15,7 +15,7 @@ Tokyo Denki University
 
 ### How to use Bluetooth?
 
-@size[1em](hogehoge)
+@size[0.2em](hogehoge)
 - BNEP encapsulation (Bluetooth Network Encapsulation Protocol)
   - To use bnep0 network device
   - Working on L2CAP (Logical Link Control and Adaption Protocol)
