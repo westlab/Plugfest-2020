@@ -277,7 +277,9 @@ https://gitpitchcom/westlab/PlugFest
 
 Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 
-![Specifications](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Spec.png)
+@snap[bottom]
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Spec.png" alt="Specification" width="40%">
+@snapend
 
 ---
 
