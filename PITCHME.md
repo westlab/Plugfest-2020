@@ -169,10 +169,11 @@ Tokyo Denki University
   - Publish TEDS *with retain flag*  
   /plugfest/ModeName/SensorName/TEDS  
   /plugfest/ModeName/SensorName/METATEDS
-  - Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message) [Opt-A]  
-  (We need to check whether the timer expires. In this case, WILL is helpful.)  
+  [Opt-A] Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message)　 
+  (We need to check whether the timer expires.  
+  In this case, WILL is helpful.)  
   OR
-  - Subscribe PING topic with similar way of Option B [Opt-A’]  
+  [Opt-A’] Subscribe PING topic with similar way of Option B  
   plugfest/ModeName/SensorName/ALIVE
 - Application
   - Subscribe TEDS by method [Opt-A]
@@ -194,6 +195,10 @@ Tokyo Denki University
 - Then, all application can subscribe TEDS in the beginning.
 - Clients can get TEDS again by reconnecting.
 
+- Redundant TEDS connumication will be achived.
+- Application has to know everytime the first message is TEDS.  
+If application do not care the first TEDS in its implementation, it may cause a serious system failure.
+
 @snap[east]
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png" alt="Single" width="30%">
 @snapend
@@ -207,16 +212,16 @@ Tokyo Denki University
   /plugfest/ModeName/SensorName/TEDS/TEDSREQ [A]  
   /plugfest/ModeName/SensorName/METATEDS/TEDSREQ
 - Application
-  - Generate UniqID (according to MAC address and current time)
+  - Generate UniqID (according to MAC address and time)
   - Subscribe (wait) TEDS by using the topic of  
   /plugfest/Node name/TEDS/TEDSRECV/[UniqID]
-  - Publish UniqID to /plugfest/NodeName/SensorName/TEDS/TEDSREQ [A]
+  - Publish UniqID to  
+   /plugfest/NodeName/SensorName/TEDS/TEDSREQ [A]
 - Sensor Node
-  - Receive ID by [A]
-  - Publish TEDS to given Topic  
+  - Receive ID by [A] and Publish TEDS to given Topic  
   /plugfest/Node name/TEDSRECV/[UniqID] [B]
-  - Close the Port of the Topic
-Retain flag may simplify this process. However, this option implies no retain and will implementation on the server as well as incompatible implementation.
+  - Close the Topic
+  Retain flag may simplify this process. However, this option implies the target broker does not have any retain and will implementation.
 
 @snap[east]
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Callback.png" alt="Callback" width="30%">
