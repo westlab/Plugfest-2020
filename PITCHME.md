@@ -28,7 +28,7 @@ Tokyo Denki University
 
 ### Bluetooth Sensor
 
-@snap{west}
+@snap[west]
 <ul>
   <li>ALPS IoT Sensor (BLE)</li>
   <li>Power: 2.35-3.30V 7mA(Peak)</li>
@@ -45,12 +45,12 @@ Tokyo Denki University
 </ul>
 @snapend
 
-@snap{east}
-<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="50%">
+@snap[east]
+![BLE Sensor](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png)
 @snapend
 
 ---
-![BLE Sensor](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png)
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png" alt="BLE Sensor" width="10%">
 
 ---
 
