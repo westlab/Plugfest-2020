@@ -29,7 +29,8 @@ Tokyo Denki University
 ### Bluetooth Sensor
 
 @snap{west}
-- ALPS IoT Sensor (BLE)
+<ul>
+  <li>ALPS IoT Sensor (BLE)</li>
   - Power: 2.35-3.30V 7mA(Peak)
   - Communication: Bluetooth 4.1
   - Sensors:
@@ -39,6 +40,7 @@ Tokyo Denki University
     - Humidity (0 – 100%, 0.016%/LSB)
     - UV (0 - 20.48mW/cm2)
     - Illuminance (0 – 81900Lx, 20Lx/LSB)
+</ul>
 @snapend
 
 @snap{east}
