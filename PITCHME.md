@@ -169,15 +169,17 @@ Tokyo Denki University
   - Publish TEDS *with retain flag*  
   /plugfest/ModeName/SensorName/TEDS  
   /plugfest/ModeName/SensorName/METATEDS  
-  [Opt-A] Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message)  
+  [Option-A]  
+  Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message)  
   We need to check whether the timer expires.  
   In this case, WILL is helpful.  
   OR
-  [Opt-A’] Subscribe PING topic with similar way of Option B  
+  [Option-A’] 
+  Subscribe PING topic with similar way of Option B  
   plugfest/ModeName/SensorName/ALIVE
 - Application
-  - Subscribe TEDS by method [Opt-A]
-  - Check availability of sensors by cheking TEDS accessibility using method [Opt-A]+WILL or [Opt-A’]
+  - Subscribe TEDS by method [Option-A]
+  - Check availability of sensors by cheking TEDS accessibility using method [Option-A]+WILL or [Option-A’]
 
 @snap[east]
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png" alt="Dual" width="30%">
@@ -210,17 +212,17 @@ If application do not care the first TEDS in its implementation, it may cause a 
 
 - Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Subscribe predefined Topic to receive TEDS request  
-  /plugfest/ModeName/SensorName/TEDS/TEDSREQ [A]  
+  /plugfest/ModeName/SensorName/TEDS/TEDSREQ [a]  
   /plugfest/ModeName/SensorName/METATEDS/TEDSREQ
 - Application
   - Generate UniqID (according to MAC address and time)
   - Subscribe (wait) TEDS by using the topic of  
   /plugfest/Node name/TEDS/TEDSRECV/[UniqID]
   - Publish UniqID to  
-   /plugfest/NodeName/SensorName/TEDS/TEDSREQ [A]
+   /plugfest/NodeName/SensorName/TEDS/TEDSREQ [a]
 - Sensor Node
   - Receive ID by [A] and Publish TEDS to given Topic  
-  /plugfest/Node name/TEDSRECV/[UniqID] [B]
+  /plugfest/Node name/TEDSRECV/[UniqID] [b]
   - Close the Topic
   Retain flag may simplify this process. However, this option implies the target broker does not have any retain and will implementation.
 
