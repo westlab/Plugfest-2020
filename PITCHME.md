@@ -6,7 +6,7 @@ Tokyo Denki University
 ---
 
 #### Interop 1451 Plugfest/Demo  
-System Configuration
+#### System Configuration
 
 ![PlugFest](image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png)
 
