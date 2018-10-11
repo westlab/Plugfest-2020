@@ -410,6 +410,6 @@ optional arguments:
 
 ### Operation Demo
 
-![Video](https://www.youtube.com/watch?v=fLECv2HtAZ4)
+![Video](https://www.youtube.com/embed/fLECv2HtAZ4)
 
 ---
