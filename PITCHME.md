@@ -189,7 +189,7 @@ Tokyo Denki University
 
 ### TEDS acquisition sequence (Option B)
 
-- MQTT Broker can keep TEDS by retain flag　　　　　　　　　　　　　　　　　
+- MQTT Broker can keep TEDS by retain flag　　　　　　　　　　　　　　　　　　　
   - Publisher publishes TEDS message with retain bit firstly.
   - After that sensor data is sent to the same topic without  
   retain bit.
