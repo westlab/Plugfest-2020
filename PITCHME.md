@@ -190,9 +190,10 @@ Tokyo Denki University
 ### TEDS acquisition sequence (Option B)
 
 - MQTT Broker can keep TEDS by retain flag　　　　　　　　　　　　　　　　　　　
-  - Publisher publishes TEDS message with retain bit firstly.
-  - After that sensor data is sent to the same topic without  
-  retain bit.
+  - Publisher publishes TEDS message with retain bit.
+  - Publisher has to publish the TES message first.
+  - After the TEDS, the publisher sends sensor data  
+  to the *same topic without retain bit*.
 - Then, all application can subscribe TEDS in the beginning.
 - Clients can get TEDS again by reconnecting.
 
@@ -208,19 +209,22 @@ implementation, it may cause a serious system failure.
 
 ### TEDS acquisition sequence (Option C)
 
-- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Subscribe predefined Topic to receive TEDS request  
-  /plugfest/ModeName/SensorName/TEDS/TEDSREQ [a]  
-  /plugfest/ModeName/SensorName/METATEDS/TEDSREQ
+  /plugfest/ModeName/SensorName/TEDS/TEDSREQ  
+  OR  
+  .../METATEDS/TEDSREQ
 - Application
-  - Generate UniqID (according to MAC address and time)
-  - Subscribe (wait) TEDS by using the topic of  
+  - Generate UniqID  
+  (according to MAC address and time)
+  - Subscribe (and wait) TEDS by checking the topic of  
   /plugfest/Node name/TEDS/TEDSRECV/[UniqID]
   - Publish UniqID to  
-   /plugfest/NodeName/SensorName/TEDS/TEDSREQ [a]
+   /plugfest/NodeName/SensorName/TEDS/TEDSREQ
 - Sensor Node
-  - Receive ID by [A] and Publish TEDS to given Topic  
-  /plugfest/Node name/TEDSRECV/[UniqID] [b]
+  - Receive ID from TEDSREQ and publish TEDS to  
+  the given Topic  
+  /plugfest/Node name/TEDSRECV/[UniqID]
   - Close the Topic
   Retain flag may simplify this process. However, this option implies the target broker does not have any retain and will implementation.
 
