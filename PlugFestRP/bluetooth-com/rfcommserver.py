@@ -28,6 +28,10 @@ parser.add_argument('-q', '--quiet',
     action = 'store_true',
     help = 'quiet (does not output data messages)',
     default = False)
+parser.add_argument('-~', '--super_quiet',
+    action = 'store_true',
+    help = 'Perfectly quiet (does not output data messages)',
+    default = False)
 parser.add_argument('-c', '--connect',
     action = 'store',
     help = 'connect to MQTT server (mode ID can be specified [0:No TEDS 1:Dual topics 2:Single topic 3:Callback  Multiple designation is available)',
@@ -67,6 +71,9 @@ if args.verbose:
 qflag = False
 if args.quiet:
     qflag = True
+sqflag = False
+if args.super_quiet:
+    sqflag = True
 pflag = False
 if args.pseudo_sensor:
     pflag = True
@@ -76,18 +83,22 @@ def on_message(client, userdata, msg):
     data = msg.payload
     topic = msg.topic
     rdata = data.decode("utf-8")
-    if qflag == False:
+    if sqflag == False:
         print("TEDSREQ:subscribed:TOPIC:"+topic)
         print("TEDSREQ:subscribed:MSG:"+data)
     if rdata.isalnum():
         stopic = re.sub('TEDSREQ$', 'TEDSRECV', topic)
         tedsname = re.sub('TEDSREQ$', '', topic)
-        if qflag == False:
-            print("TEDSREQ:analyzed:TEDSNAME:"+tedsname)
-        mqttc.publish(stopic, teds[tedsname], 0, retain=True)
-        if qflag == False:
-            print("TEDSRECV:publish:TOPIC:"+stopic)
-            print("TEDSRECV:publish:MSG:"+teds[tedsname])
+        if teds[tedsname]:
+            if sqflag == False:
+                print("TEDSREQ:analyzed:TEDSNAME:"+tedsname)
+            mqttc.publish(stopic, teds[tedsname], 0, retain=True)
+            if sqflag == False:
+                print("TEDSRECV:publish:TOPIC:"+stopic)
+                print("TEDSRECV:publish:MSG:"+teds[tedsname])
+        else:
+            print("TEDSREQ: No registered TEDSNAME:"+tedsname)
+            mqttc.publish(stopic, "ERR: No TEDS or SENSORS", 0, retain=True)
     else:
         print("TEDSREQ contains illegal character set")
 
@@ -95,10 +106,29 @@ def on_connect(client, userdata, msg):
     data = msg.payload
     topic = msg.topic
     rdata = data.decode("utf-8")
-    if qflag == False:
+    if sqflag == False:
         print("Connect:TOPIC:"+topic)
         print("Connect:MSG:"+data)
     mqttc.subscribe(topic)
+
+def on_publish(client, userdata, msg):
+    if qflag == False:
+        print("Published: "+str(msg))
+
+def on_subscribe(client, userdata, msg, qos):
+    # only when QoS is set
+    if qflag == False:
+        print("Subscribed: "+str(msg)+" "+str(qos))
+
+def on_unsubscribe(client, userdata, msg):
+    if qflag == False:
+        print("UnSubscribed: "+str(msg))
+
+def on_disconnect(client, userdata, msg):
+    if msg != 0:
+        print("Unexpected Disconnection")
+    else:
+        print("What's happen?")
 
 def operation():
     try:
@@ -144,6 +174,11 @@ def operation():
                         else:
                             if vflag == True:
                                 print("RCV:"+str(len(msg)))
+<<<<<<< HEAD
+                if peeraddr == "N/A":
+                    continue
+=======
+>>>>>>> 224f790336bae3e0f493245f4cc262ddf5e72f2b
                 if qflag == False:
                     print(msg)
                 if re.match("^#", msg):
@@ -241,6 +276,13 @@ def main():
         mqttc = mqtt.Client(protocol=mqtt.MQTTv311)
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
+<<<<<<< HEAD
+        mqttc.on_subscribe = on_subscribe
+        mqttc.on_unsubscribe = on_unsubscribe
+        mqttc.on_publish = on_subscribe
+        mqttc.on_disconnect = on_disconnect
+=======
+>>>>>>> 224f790336bae3e0f493245f4cc262ddf5e72f2b
 	mqttc.will_set("503 Service Unavailable")
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
