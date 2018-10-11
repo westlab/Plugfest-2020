@@ -16,7 +16,7 @@ This demonstration program shows the typical example of IEEE P21451-1-6.
 ## Presentation Material
 
 This document focusis on installation.
-To know about this design model, please use the following link.
+To know about this design model, please use the following link.  
 https://gitpitch.com/westewest/PlugFest/
 
 ## Requirement
