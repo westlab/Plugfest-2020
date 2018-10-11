@@ -348,8 +348,9 @@ Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 
 ---
 
-### Command line options (TIM : alps.py)
+### Command line options (TIM)
 
+- alps.py
 ```
 usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
 optional arguments:
@@ -369,8 +370,9 @@ optional arguments:
 
 ---
 
-### Command line options (NCAP : rfcommserver.py)
+### Command line options (NCAP)
 
+- rfcommserver.py
 ```
 usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
 optional arguments:
@@ -408,6 +410,6 @@ optional arguments:
 
 ### Operation Demo
 
-![Video]{https://www.youtube.com/watch?v=fLECv2HtAZ4}
+![Video](https://www.youtube.com/watch?v=fLECv2HtAZ4)
 
 ---
