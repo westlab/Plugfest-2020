@@ -1,0 +1,1 @@
+Assets files for GitPitch
