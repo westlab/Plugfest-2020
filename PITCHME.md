@@ -230,7 +230,7 @@ especially managing distribution tree.
   - Close the Topic
   Retain flag may simplify this process. However, this option implies the target broker does not have any retain and will implementation.
 
-@snap[east]
+@snap[right]
 <img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Callback.png" alt="Callback" width="40%">
 @snapend
 
@@ -278,7 +278,7 @@ https://gitpitchcom/westlab/PlugFest
 Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 
 @snap[bottom]
-<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Spec.png" alt="Specification" width="40%">
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Spec.png" alt="Specification" width="60%">
 @snapend
 
 ---
