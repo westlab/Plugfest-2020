@@ -7,7 +7,7 @@ Tokyo Denki University
 
 ### Interop 1451 Plugfest/Demo System Configuration
 
-![Demo System Configuration](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png)
+---?iamge=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png
 
 ---
 
@@ -161,7 +161,7 @@ Becomes Subscriber to read the sensor data by using same Topic
   - Subscribe TEDS by [A]
   - Check availability of sensor by TEDS availability, [A]+WILL, or [A’]
 
-![Dual Topic](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png)
+---?image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png
 
 ---
 
@@ -173,7 +173,7 @@ Becomes Subscriber to read the sensor data by using same Topic
 - Then, all application can subscribe TEDS in the beginning.
 - Clients can get TEDS again by reconnecting.
 
-![Single Topic](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png)
+---?https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png&size=auto 50%
 
 ---
 
