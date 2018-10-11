@@ -89,7 +89,7 @@ Tokyo Denki University
   /Manufacturer/Model/Version/SerialNumber[/Field]  
   OR  
   /Country/Region/City/Area/Street/Building/Apartment/Sensor[/Field]
- - Application becomes subscriber to read the sensor data by using same Topic
+ - Application becomes subscriber to read the sensor data by using same Topic.
 
 ---
 
@@ -97,8 +97,8 @@ Tokyo Denki University
 
 - Design Policy
   - TEDS is only needed when required.  
-  Namely, TEDS request from application to TIM is required.
-  - After that, TIM send appropriate TEDS according to Topic of the request.
+  Namely, TEDS request to TIM/NCAP is required from an application.
+  - After that, TIM/NCAP send appropriate TEDS according to Topic of the request.
   - When sensor becomes unavailable, application should recognize the unavailability.
 
 - This sequence should be designed on MQTT transactions.
@@ -114,8 +114,9 @@ Tokyo Denki University
   - MQTT brokers does not guarantee storing all messages with retain bit.
   - Some MQTT brokers does not implement retain mechanism.
 - WILL
-  - When subscribers becomes unavailable, WILL message returns to all subscribers of the sensor’s topics.
+  - When publisher becomes unavailable, WILL message returns to all subscribers of the publisher's topics.
     - WILL message may observe HTTP status code (RFC7231)
+    - MQTT v5.0 has extension in this status code. However, it does not give any guideline of WILL message contents.
   - Keep Alive Timer function with PINGREQ/PINGRESP message will be used for checking availability of sensors.
 
 ---
@@ -132,22 +133,23 @@ Tokyo Denki University
 |VerneMQ(0.9.4)|Erlang|3.1/3.1.1|0,1,2|Yes|Yes|
 |HIVEMQ(3.4.0)|Java|3.1/3.1.1|0,1,2|Yes|Yes|
 |MQTTnet(2.8.2)|C#|3.1/3.1.1|0,1,2|Yes|Yes|
-|RabbitMQ(3.5.3)|Erlang|3.1|0,1|No|Yes|
-|Mosca(0.29.0)|Node.js|3.1|0,1|No|Yes|
+|RabbitMQ(3.5.3)|Erlang|3.1|0,1|*No*|Yes|
+|Mosca(0.29.0)|Node.js|3.1|0,1|*No*|Yes|
 
 ---
 
 ### You don’t like MQTT?
 
-- Almost all problems are solved by using MQTT 5.0
-- Encryption / Authorization supported
-  - Negotiation can be supported by client ID and key/value properties
-  - Injection can be prevented (It was supported, but standardized in 5.0)
-- Scalability is improved
-  - Support connection-less communication = No limitation in the number of connection
-- Expression flexibility is improved
- - User Property was given and error codes are improved
-- End-to-end message acceptance confirmation is supported
+- Almost all problems are solved in MQTT 5.0.
+- Encryption / Authorization support
+  - Negotiation can be supported by client ID and key/value properties.
+  - Injection can be prevented (It has already solved, but standardized in 5.0).
+- Scalability improvement
+  - Support connection-less communication. = No limitation in the number of connection
+  - Connection-less communication degrades functionalities.
+- Expression flexibility improvement
+ - User Property was given and error codes are improved.
+- End-to-end message acceptance confirmation is supported.
 - MQTT v3 defined little about broker, and MQTT extend the definition. However, MQTT broker design had flexibility. MQTT v5 defines many broker design rules.
 
 ---
@@ -155,8 +157,7 @@ Tokyo Denki University
 ### MQTT 5.0 Support
 
 - We can support MQTT 5.0 by using Python gmqtt and flespi MQTT broker.
-  - All MQTT 5.0 functions are not supported
-    It depends on flespi MQTT broker design and update
+  - Even if using flspi MQTT broker, all MQTT 5.0 functions are not supported.
 
 - These set is not a major implementation
 
@@ -169,15 +170,17 @@ Tokyo Denki University
   /plugfest/ModeName/SensorName/TEDS  
   /plugfest/ModeName/SensorName/METATEDS
   - Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message) [Opt-A]  
-  (We need to check MQTT behavior when Timer expires and retain-flagged message is lost or remains. This is case WILL is helpful.)  
+  (We need to check whether the timer expires. In this case, WILL is helpful.)  
   OR
-  - Subscribe PING topic with similar way of Option B [Opt-A’ not good idea]  
+  - Subscribe PING topic with similar way of Option B [Opt-A’]  
   plugfest/ModeName/SensorName/ALIVE
 - Application
-  - Subscribe TEDS by [A]
-  - Check availability of sensor by TEDS availability, [A]+WILL, or [A’]
+  - Subscribe TEDS by method [Opt-A]
+  - Check availability of sensors by cheking TEDS accessibility using method [Opt-A]+WILL or [Opt-A’]
 
----?image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png
+@snap[east]
+---?image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png&size=20%
+@snapend
 
 ---
 
