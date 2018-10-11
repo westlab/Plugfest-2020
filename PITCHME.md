@@ -7,6 +7,8 @@ Tokyo Denki University
 
 ### Interop 1451 Plugfest/Demo System Configuration
 
+![System Configuration](img/p2.png)
+
 ---
 
 ### How to use Bluetooth?
