@@ -165,12 +165,13 @@ Tokyo Denki University
 
 ### TEDS acquisition sequence (Option A = preferable)
 
-- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Publish TEDS *with retain flag*  
   /plugfest/ModeName/SensorName/TEDS  
   /plugfest/ModeName/SensorName/METATEDS  
   [Option-A]  
-  Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message)  
+  Use Keep-Alive-Timer  
+    (PINGREQ/PINGRESQ Message)  
   We need to check whether the timer expires.  
   In this case, WILL is helpful.  
   OR  
