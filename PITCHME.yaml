@@ -2,8 +2,7 @@
 theme : 
 
 # Logo
-logo : logo.png
-
+logo : https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/title.png
 # Footnote
 footnote : "Keio University, Hiroaki Nishi 2018/10"
 
