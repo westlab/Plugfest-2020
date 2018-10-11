@@ -26,8 +26,9 @@ Tokyo Denki University
 
 ---
 
-### Bluetooth Sensor – Raspberry Pi 3 connection
+### Bluetooth Sensor
 
+@snap{west}
 - ALPS IoT Sensor (BLE)
   - Power: 2.35-3.30V 7mA(Peak)
   - Communication: Bluetooth 4.1
@@ -38,11 +39,19 @@ Tokyo Denki University
     - Humidity (0 – 100%, 0.016%/LSB)
     - UV (0 - 20.48mW/cm2)
     - Illuminance (0 – 81900Lx, 20Lx/LSB)
+@snapend
 
+@snap{east}
 ![BLE Sensor](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/alps.png)
+@snapend
+
+---
+
+### Raspberry Pi 3 connection
 
 - Raspberry Pi 3 B/B+
   - NOOBS + bluepy + alps_extension
+- Rasberry Pi 2 or earlier needs bluetooth and WiFi dongles.
 
 ![Raspberry Pi 3](https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/RP3.png)
 
@@ -361,6 +370,6 @@ optional arguments:
 
 ### Operation Demo
 
-https://www.youtube.com/watch?v=fLECv2HtAZ4
+![Video]{https://www.youtube.com/watch?v=fLECv2HtAZ4}
 
 ---
