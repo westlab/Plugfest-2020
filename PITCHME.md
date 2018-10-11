@@ -28,6 +28,16 @@ Tokyo Denki University
 
 ### Bluetooth Sensor
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
 @snap[west]
 <ul>
   <li>ALPS IoT Sensor (BLE)</li>
