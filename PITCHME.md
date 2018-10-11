@@ -377,6 +377,7 @@ optional arguments:
 ### Command line options (NCAP)
 
 - rfcommserver.py
+
 ```
 usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
 optional arguments:
@@ -395,7 +396,6 @@ optional arguments:
                         specify MQTT keepalive timer (default is 15)
   -t TOPIC, --topic TOPIC
                         specify topic to publish (suffix is automatically added)
-
 ```
 
 ---
