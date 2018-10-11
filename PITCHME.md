@@ -165,13 +165,13 @@ Tokyo Denki University
 
 ### TEDS acquisition sequence (Option A = preferable)
 
-- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+- Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Publish TEDS *with retain flag*  
   /plugfest/ModeName/SensorName/TEDS  
-  /plugfest/ModeName/SensorName/METATEDS
-  [Opt-A] Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message)　 
-  (We need to check whether the timer expires.  
-  In this case, WILL is helpful.)  
+  /plugfest/ModeName/SensorName/METATEDS  
+  [Opt-A] Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message)  
+  We need to check whether the timer expires.  
+  In this case, WILL is helpful.  
   OR
   [Opt-A’] Subscribe PING topic with similar way of Option B  
   plugfest/ModeName/SensorName/ALIVE
@@ -191,7 +191,8 @@ Tokyo Denki University
 
 - MQTT Broker can keep TEDS by retain flag　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Publisher publishes TEDS message with retain bit firstly.
-  - After that sensor data is sent to the same topic without retain bit.
+  - After that sensor data is sent to the same topic without  
+  retain bit.
 - Then, all application can subscribe TEDS in the beginning.
 - Clients can get TEDS again by reconnecting.
 
