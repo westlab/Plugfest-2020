@@ -173,16 +173,17 @@ Tokyo Denki University
   Use Keep-Alive-Timer (PINGREQ/PINGRESQ Message)  
   We need to check whether the timer expires.  
   In this case, WILL is helpful.  
-  OR
+  OR  
   [Option-A’] 
-  Subscribe PING topic with similar way of Option B  
+  Subscribe PING topic with similar way of  
+  next Option B  
   plugfest/ModeName/SensorName/ALIVE
 - Application
   - Subscribe TEDS by method [Option-A]
   - Check availability of sensors by cheking TEDS accessibility using method [Option-A]+WILL or [Option-A’]
 
 @snap[east]
-<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png" alt="Dual" width="30%">
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/DualTopic.png" alt="Dual" width="40%">
 @snapend
 
 @snapend
@@ -203,7 +204,7 @@ Tokyo Denki University
 If application do not care the first TEDS in its implementation, it may cause a serious system failure.
 
 @snap[east]
-<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png" alt="Single" width="30%">
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/SingleTopic.png" alt="Single" width="40%">
 @snapend
 
 ---
@@ -227,7 +228,7 @@ If application do not care the first TEDS in its implementation, it may cause a 
   Retain flag may simplify this process. However, this option implies the target broker does not have any retain and will implementation.
 
 @snap[east]
-<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Callback.png" alt="Callback" width="30%">
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/Callback.png" alt="Callback" width="40%">
 @snapend
 
 
