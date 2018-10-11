@@ -7,7 +7,7 @@ Tokyo Denki University
 
 ### Interop 1451 Plugfest/Demo System Configuration
 
-![Demo System Configuration](PlugFest/assets/img/PlugFest.png)
+![Demo System Configuration](PlugFest/PlugFest.png)
 
 ---
 
