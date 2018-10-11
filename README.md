@@ -22,12 +22,13 @@ https://gitpitch.com/westlab/PlugFest/
 To obtain PDF file of the material, please access the following link. PDF file will be automatically generated.  
 https://gitpitch.com/pitchme/print/github/westlab/PlugFest/master/white/PITCHME.pdf
 
-## Requirement
+## Requirements
 
-Required libraries and python packages must be installed. Follow the description of Install section.
-You may use BLE-based Smart IoT Sensor Module manufactured by ALPS ELEC Co.Ltd. If you don’t have the module, you can use pseudo sensor mode. TIM and NCAP are run on Raspberry-Pi 3 or BLE/Bluetooth compatible Raspberry-Pi. NOOBS+Raspbian installation is recommended. For the minimum, two raspberry-pi, one for TIM and the other for NCAP are required. Designed NCAP has a capability of multiple connections and supports multiple TIM.
-
-To compile and execute MQTTnet-based MQTT server, Microsoft Visual Studio is required.
+- Required libraries and python packages must be installed. Follow the description of Install section.
+- You may use BLE-based Smart IoT Sensor Module manufactured by ALPS ELEC Co.Ltd. If you don’t have the module, you can use pseudo sensor mode.
+- TIM and NCAP are run on Raspberry-Pi 3 or BLE/Bluetooth compatible Raspberry-Pi. NOOBS+Raspbian installation is recommended.
+- For minimum environment, two raspberry-pi, one for TIM and the other for NCAP, are required. Designed NCAP has a capability of multiple connections and supports multiple TIM.
+- To compile and execute MQTTnet-based MQTT server, Microsoft Visual Studio is required.
 
 ## Installation
 
@@ -39,7 +40,7 @@ Then, Visual Studio opens the design, and you can compile and execute the progra
 - When you execute the server, you may see a window with some buttons. A few buttons of functions are implemented.
 You can execute MQTTnet server by pressing “Start MQTT Server” button.
 
-### Confiture and establish Raspberry Pi Environment
+### Configure and establish Raspberry Pi Environment
 
 #### Raspberry Pi Setup
 
@@ -78,9 +79,41 @@ You will install software keyboard by using the following command after this ins
 	# apt-get install matchbox-keyboard
 ```
 
+- Connect to the Internet
+
+Use dhclient to connect via DHCP.
+
+If you want to connect by using static IP address, you have to edit /etc/dhcpcd.conf.
+
+You may use vim. nano is a popular editor for Raspbian.
+
+```
+	$ apt-get install vim
+```
+
+
+```
+	# vi /etc/dhcpd.conf
+```
+
+Then, add the following lines to the bottom of the file.
+
+```
+	interface eth0
+	static ip_address=131.113.98.75/24
+	static routers=131.113.98.1 
+	static domain_name_servers=131.113.1.8
+```
+
+Then, reboot your raspberry-pi.
+
+```
+	# reboot
+```
+
 - Update your environment
 
-To update use the following commands.
+To update your environment, use the following commands.
 
 ```
 	# apt-get -y upgrade
@@ -100,10 +133,9 @@ Install the following languages adding to “C.”
 			Set default language to en_US
 	# apt-get -y install fonts-noto
 	# apt-get -y install uim uim-anthy
-	# reboot
 ```
 
-- Dnsutils
+- Install dnsutils
 
 Install dnsutils. It is convenient for checking network conectivity.
 
@@ -128,28 +160,30 @@ Then select memnu to enable the following services.
 	vnc enable
 ```
 
-From here, it is better to use rloing for installing multiple machines.  Login via ssh clients (the best one is rlogin)
-
-```
-	# apt-get install realvnc-vnc-server (may be not required if use raspi-config)
-```
-
 - Add USB serial cable entry to use USB serial cable for connecting Serial devices if you want.
 
 ```
 	dtoverlay=pi3-miniuart-bt
 ```
 
+- Finally, reboot your raspberry-pi
+
+```
+	# reboot
+```
+
+To continue the installation, it is better to use rloing for installing multiple machines. Now, you are available to use both ssh and vnc.
+
 #### ALPS ELEC Smart IoT BLE Sensor Module
 
-If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor module, which generates random values.
+If you don’t have the module, you can skip this installation. In this case, you will use a dummy sensor, which generates random values. You can skip this installation if you use dummy sensor.
 
 Blog of TomoSoft (as given below) explains how to install the ALPS module. This is a very simple way for us to connect sensors to Raspberry Pi via Bluetooth.
 http://tomosoft.jp/design/?p=8104
 http://www.hiramine.com/physicalcomputing/raspberrypi3/wlan_howto.html
 These pages are written in Japanese. Use google translator. Simply, it is enough to follow the process below.
 
-- Connect to the Internet
+(Note) The code in the site has a bug in handling sign of values. Acceleration sensor value and geomagnetic sensor value are signed values. The original code handles these values as unsigned values. Our design does not hve this bug.
 
 Firstly, it is better to check the update.
 
@@ -171,7 +205,7 @@ Fix the clock of your raspberry pi.
 
 - Install required modules.
 
-Firstly, blupy, a python interface to communicate via bluetooth
+Firstly, install blupy, which is a python interface to communicate via bluetooth
 
 ```
 	# apt-get install python-pip libglib2.0-dev
@@ -181,18 +215,18 @@ Firstly, blupy, a python interface to communicate via bluetooth
 ```
 
 + we need some part of bluepy sourses. Extract sources from git.
-+ our working directory is /export/
++ It is better to set a working directory. Here, we set /export as a working directory.
 
 In the working directory, install bluepy.
 
 ```
-	# mkdir /export/install
+	# mkdir -p /export/install
 	# cd /export/install
 	# git clone https://github.com/IanHarvey/bluepy.git
 	# cd bluepy
 ```
 
-Maybe, it is needless but we want to update the blupy.
+Update the blupy. It is preferable.
 
 ```
 	# python setup.py build
@@ -221,9 +255,7 @@ Then, type Ctrl-C
 	# ls 
 ```
 
-Check btle.pyc and bluepy-helper.
-
-These files are very important to communicate with the Bluetooth sensor module.
+Check btle.pyc and bluepy-helper. These files are important to communicate with the Bluetooth sensor module.
 
 ```
 	# cd /export
@@ -233,38 +265,35 @@ These files are very important to communicate with the Bluetooth sensor module.
 	# python alps_sensor.py
 ```
 
-Again, type Ctrl-C
+Again, Check it does not report any errors, and just quiet. If it is Ok, then type Ctrl-C.
 
-Check it does not report any errors, and just quiet, again
-
-```
-	# apt-get install vim (you may edit the source file)
-```
-
-The source is also given at the end of this file.
-
-Edit the following line in the source to fit your sensor module address.
+Edit the following line of the alps.py source file to fit your sensor module address. You can specify the sensor module address by using -m option.
 
 ```
 	alps = AlpsSensor("28:A1:83:E1:59:48")
 ```
 
-The address is printed on the surface of the sensor module.
+The address is printed on the surface of the sensor module. You can also check the address by using the following command.
+
+```
+	# hciconfig
+```
+
+Run the python script. You can add -h option to check the options of the script.
 
 ```
 	# python alps_sensor.py
 ```
 
-Then you can get the sensor values. It takes about 10 seconds when it executes.
-The program uses HyblidMode and set all sensors ON.
+Then, you can get the sensor values. It takes about 10 seconds to get sensor data from when you run the script.
+
+The program uses Hyblid Mode of sensor module and set all sensors ON.
 The sampling rate of the acceleration sensor and the geomagnetic sensor is 100 mil seconds.
 Others are 1 second.
 
-The following code has a fix of sign handling mistakes in the original source. Acceleration sensor value and geomagnetic sensor value are signed values. The original code handles these values as unsigned values.
-
 #### MQTT clients and server installation.
 
-Docker version and general version are available.
+Both Docker container installation and packet installaion are available.
 Ok, then, let’s do both. (Wao!)
 
 - MQTT broker server on Docker
@@ -385,6 +414,8 @@ And change the mosuquitto.exe, mosquitt_pub.exe,mosquitto_sub.exe as public func
 
 One important point. Windows mosquitto cannot send and recive UTF coded messages. This is a serious problem.
 
+- Paho mqtt client
+
 To use MQTT server from python, install paho-mqtt.
 This is only available for Python v3.
 So you may change python link to python 3. In my environment, it is not required.
@@ -416,7 +447,7 @@ Check the operation of paho-mqtt.
 
 The bluetooth instration for ALPS MODULE is for Bluetooth Low Energy. This is simple protocol and pairing is not needed. To communicate between sensor node and processing/combining node, it needs general Bluetooth connection modules.
 
-- Two raspberry-pi for sensor node and processing node are required to check the connectivity.
+- Two raspberry-pi for sensor node (TIM) and processing node (NCAP) are required to check the connectivity.
 - This model supports multiple clients. Here, we use three raspberry-pi as sensor nodes to check the operation.
 
 - Preparation
@@ -429,7 +460,7 @@ Firstly, you should do this.
 	# apt-get dist-upgrade
 ```
 
-If you do not have our environment, execute the following command.
+Execute the following command to get our design model. If you follow this install manual, you may have already got our model.
 
 ```
 	# mkdir –p /export/install
