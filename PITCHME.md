@@ -1,5 +1,3 @@
-@css{font-size}{smaller;}
-
 ### PlugFest Demo
 ### MQTT+Bluetooth+IoT
 Keio University
