@@ -173,7 +173,7 @@ Tokyo Denki University
 - Expression flexibility improvement
  - User Property was given and error codes are improved.
 - End-to-end message acceptance confirmation is supported.
-- MQTT v3 defined little about broker, and MQTT extend the definition. However, MQTT broker design had flexibility. MQTT v5 defines many broker design rules.
+- MQTT v3 did not give enough definition to broker design. It cause a multiple interpretation in designing MQTT broker. HQTT v5 gives many definitions for broker design.
 
 +++
 
