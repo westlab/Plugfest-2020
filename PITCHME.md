@@ -300,7 +300,7 @@ Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 - We used DeweTEDSEditor to generate TEDS information
   - It outputs TEDS binary data (HEX text) only
 - XML-based TEDS was also defined according to the input data to the editor (self-typed)
-  - Currently using Meta-identification TEDS
+  - Currently using Tranducer Channel TEDS
   - It will be extended to XEP-0323  
   (http://www.sensei-iot.org/PDF/Transforming_TEDS.pdf)
   
