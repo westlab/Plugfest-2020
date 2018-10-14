@@ -1,0 +1,4 @@
+theme : White
+slide-number: true
+transition : fade
+theme-override: PITCHME.css
