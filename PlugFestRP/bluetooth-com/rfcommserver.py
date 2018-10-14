@@ -161,7 +161,7 @@ def operation():
                         try:
                             peer = sock.getpeername()
                         except:
-                            peeraddr = "N/A"
+                            peeraddr = "NA"
                         else:
                             peeraddr = peer[0]
                         if len(msg) == 0:
@@ -174,11 +174,8 @@ def operation():
                         else:
                             if vflag == True:
                                 print("RCV:"+str(len(msg)))
-<<<<<<< HEAD
-                if peeraddr == "N/A":
+                if peeraddr == "NA2":
                     continue
-=======
->>>>>>> 224f790336bae3e0f493245f4cc262ddf5e72f2b
                 if qflag == False:
                     print(msg)
                 if re.match("^#", msg):
@@ -276,13 +273,10 @@ def main():
         mqttc = mqtt.Client(protocol=mqtt.MQTTv311)
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
-<<<<<<< HEAD
         mqttc.on_subscribe = on_subscribe
         mqttc.on_unsubscribe = on_unsubscribe
         mqttc.on_publish = on_subscribe
         mqttc.on_disconnect = on_disconnect
-=======
->>>>>>> 224f790336bae3e0f493245f4cc262ddf5e72f2b
 	mqttc.will_set("503 Service Unavailable")
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
