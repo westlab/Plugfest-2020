@@ -19,7 +19,7 @@ from datetime import datetime
 
 parser = argparse.ArgumentParser(
     prog = 'alps.py',
-    usage = 'Receive BLE sensor data and send to NCAP with TEDS and METATEDS',
+    usage = 'Receive BLE sensor data and send to NCAP with TEDS and TEXTTEDS (xml-based TEDS)',
     description= 'TIM for ALPS Smart IoT BLE Sensor module\nYou have to put TEDS files of required filenames to ../TEDS/ directory',
     epilog = 'Programmer Hiroaki Nishi west@west.yokohama',
     add_help = True)
@@ -159,7 +159,7 @@ def main():
      
 # Main loop --------
     fileset = ["TEDS-TEDS-ACCEL.txt", "TEDS-TEDS-GEOMAG.txt", "TEDS-TEDS-HUMID.txt", "TEDS-TEDS-ILLUMI.txt", "TEDS-TEDS-PRESSURE.txt", "TEDS-TEDS-TEMP.txt", "TEDS-TEDS-UV.txt", 
-    "TEDS-METATEDS-ACCEL.txt", "TEDS-METATEDS-GEOMAG.txt", "TEDS-METATEDS-HUMID.txt", "TEDS-METATEDS-ILLUMI.txt", "TEDS-METATEDS-PRESSURE.txt", "TEDS-METATEDS-TEMP.txt", "TEDS-METATEDS-UV.txt"]
+    "TEDS-TXTTEDS-ACCEL.txt", "TEDS-TXTTEDS-GEOMAG.txt", "TEDS-TXTTEDS-HUMID.txt", "TEDS-TXTTEDS-ILLUMI.txt", "TEDS-TXTTEDS-PRESSURE.txt", "TEDS-TXTTEDS-TEMP.txt", "TEDS-TXTTEDS-UV.txt"]
     for fname in fileset:
         ftype = re.split('[-.]', fname)
         with open("../TEDS/"+fname) as f:

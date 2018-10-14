@@ -9,7 +9,7 @@ Tokyo Denki University
 
 ### PlugFest Demo System Configuration
 
-![PlugFest](image=https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png)
+<img src="https://raw.githubusercontent.com/wiki/westewest/PlugFest/images/PlugFest.png" alt="PlugFest">
 
 ---
 
@@ -191,7 +191,7 @@ Tokyo Denki University
 - Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Publish TEDS *with retain flag*  
   /plugfest/ModeName/SensorName/TEDS  
-  /plugfest/ModeName/SensorName/METATEDS  
+  /plugfest/ModeName/SensorName/TXTTEDS  
   [Option-A]  Use Keep-Alive-Timer  
     (PINGREQ/PINGRESQ Message)  
   We need to check whether the timer expires.  
@@ -238,7 +238,7 @@ especially managing distribution tree.
   - Subscribe predefined Topic to receive TEDS request  
   /plugfest/ModeName/SensorName/TEDS/TEDSREQ  
   OR  
-  .../METATEDS/TEDSREQ
+  .../TXTTEDS/TEDSREQ
 - Application
   - Generate UniqID  
   (according to MAC address and time)
@@ -295,7 +295,7 @@ Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 
 +++
 
-### TEDS editor and METATEDS
+### TEDS editor and TXTTEDS
 
 - We used DeweTEDSEditor to generate TEDS information
   - It outputs TEDS binary data (HEX text) only
@@ -313,7 +313,7 @@ Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
     40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124  
     CCA0183933228A60000803F010040830100548500EA540773C1642FE654081C00
 ```
-- METATEDS (XML)  
+- TXTTEDS (XML)  
 ```
 <?xml version="1.0" encoding="UTF-8"?>  
 <MetaIdentificationTEDSDataBlock>  
@@ -356,7 +356,7 @@ Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 
 - alps.py
 ```
-usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
+usage: Receive BLE sensor data and send to NCAP with TEDS and TXTTEDS
 optional arguments:
   -h, --help            show this help message and exit
   --version             verbose operation (output sensor data)
@@ -389,7 +389,7 @@ optional arguments:
 - rfcommserver.py
 
 ```
-usage: Receive BLE sensor data and send to NCAP with TEDS and METATEDS
+usage: Receive BLE sensor data and send to NCAP with TEDS and TXTTEDS
 optional arguments:
   -h, --help            show this help message and exit
   --version             verbose operation (output sensor data)
