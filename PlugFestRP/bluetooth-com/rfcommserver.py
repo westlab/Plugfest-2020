@@ -13,7 +13,7 @@ import random
 
 parser = argparse.ArgumentParser(
     prog = 'alps.py',
-    usage = 'Receive BLE sensor data and send to NCAP with TEDS and METATEDS',
+    usage = 'Receive BLE sensor data and send to NCAP with TEDS and TXTTEDS (xml-based TEDS)',
     description= 'NCAP for TIM of ALPS Smart IoT BLE Sensor module\nYou have to install and communicate with supported TIM',
     epilog = 'Programmer: Hiroaki Nishi west@west.yokohama',
     add_help = True)
