@@ -12,8 +12,8 @@ while(<$ipcmd>){
 	}
 }
 my $tedsfilename = "ALPS-$ip-TEDS.txt";
+system ("/bin/rm -f TEDS-*.txt $tedsfilename");
 system("/usr/bin/wget --no-cache https://raw.githubusercontent.com/wiki/westewest/PlugFest/TEDS/$tedsfilename -O $tedsfilename");
-system ("/bin/rm -f TEDS-*.txt");
 open(my $tedsfile, $tedsfilename) or die "Error No TEDS file ($tedsfilename)";
 my $chapter;
 my $type;
