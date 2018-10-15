@@ -3,6 +3,7 @@ use warnings;
 use strict;
 
 my $ip;
+system ("/bin/rm -f ALPS-*-TEDS.txt");
 open(my $ipcmd, "ip -4 addr show dev wlan0|") or die "Error in ip cmd";
 while(<$ipcmd>){
 	my $line = $_;
@@ -23,7 +24,7 @@ if($ip == 0){
 }
 die("No IP") if($ip == 0);
 my $tedsfilename = "ALPS-$ip-TEDS.txt";
-system ("/bin/rm -f TEDS-*.txt $tedsfilename");
+system ("/bin/rm -f TEDS-*.txt");
 system("/usr/bin/wget --no-cache https://raw.githubusercontent.com/wiki/westewest/PlugFest/TEDS/$tedsfilename -O $tedsfilename");
 open(my $tedsfile, $tedsfilename) or die "Error No TEDS file ($tedsfilename)";
 my $chapter;
