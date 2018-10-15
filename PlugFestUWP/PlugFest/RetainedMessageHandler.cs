@@ -35,23 +35,23 @@ namespace PlugFest
             MqttApplicationMessage TEDSSepC = new MqttApplicationMessage();
             TEDSA.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringA);
             TEDSA.Retain = true;
-            TEDSA.Topic = "/PlugFest/sensors/A/integrated";
+            TEDSA.Topic = "/plugfest/A/integrated";
             TEDSB.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringB);
             TEDSB.Retain = true;
-            TEDSB.Topic = "/PlugFest/sensors/B/integrated";
+            TEDSB.Topic = "/plugfest/B/integrated";
             TEDSC.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringC);
             TEDSC.Retain = true;
-            TEDSC.Topic = "/PlugFest/sensors/C/integrated";
+            TEDSC.Topic = "/plugfest/C/integrated";
 
             TEDSSepA.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringA);
             TEDSSepA.Retain = true;
-            TEDSSepA.Topic = "/PlugFest/sensors/A/TEDS";
+            TEDSSepA.Topic = "/plugfest/A/TEDS";
             TEDSSepB.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringB);
             TEDSSepB.Retain = true;
-            TEDSSepB.Topic = "/PlugFest/sensors/B/TEDS";
+            TEDSSepB.Topic = "/plugfest/B/TEDS";
             TEDSSepC.Payload = System.Text.Encoding.Unicode.GetBytes(TEDSStringC);
             TEDSSepC.Retain = true;
-            TEDSSepC.Topic = "/PlugFest/sensors/C/TEDS";
+            TEDSSepC.Topic = "/plugfest/C/TEDS";
 
             retainList.Add(TEDSA);
             retainList.Add(TEDSB);
@@ -63,12 +63,12 @@ namespace PlugFest
 
         public void UpdateTEDS()
         {
-            topicMsgConnector["/PlugFest/sensors/A/integrated"] = TEDSStringA;
-            topicMsgConnector["/PlugFest/sensors/B/integrated"] = TEDSStringB;
-            topicMsgConnector["/PlugFest/sensors/C/integrated"] = TEDSStringC;
-            topicMsgConnector["/PlugFest/sensors/A/TEDS"] = TEDSStringA;
-            topicMsgConnector["/PlugFest/sensors/B/TEDS"] = TEDSStringB;
-            topicMsgConnector["/PlugFest/sensors/C/TEDS"] = TEDSStringC;
+            topicMsgConnector["/plugfest/A/integrated"] = TEDSStringA;
+            topicMsgConnector["/plugfest/B/integrated"] = TEDSStringB;
+            topicMsgConnector["/plugfest/C/integrated"] = TEDSStringC;
+            topicMsgConnector["/plugfest/A/TEDS"] = TEDSStringA;
+            topicMsgConnector["/plugfest/B/TEDS"] = TEDSStringB;
+            topicMsgConnector["/plugfest/C/TEDS"] = TEDSStringC;
 
             foreach (String topicName in topicMsgConnector.Keys)
             {
