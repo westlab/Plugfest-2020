@@ -37,9 +37,9 @@ namespace PlugFest
 {
     /// <summary>
     /// Current design of topics: 
-    /// "PlugFest/sensors/[Sensor Name]/TEDS"
-    /// "PlugFest/sensors/[Sensor Name]/data"
-    /// "PlugFest/sensors/[Sensor Name]/integrated"
+    /// "/plugfest/[Sensor Name]/TEDS"
+    /// "/plugfest/[Sensor Name]/data"
+    /// "/plugfest/[Sensor Name]/integrated"
     /// </summary>
     public sealed partial class MainPage : Page
     {
