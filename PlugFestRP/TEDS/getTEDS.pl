@@ -24,7 +24,7 @@ if($ip == 0){
 }
 die("No IP") if($ip == 0);
 my $tedsfilename = "ALPS-$ip-TEDS.txt";
-system ("/bin/rm -f TEDS-*.txt");
+system ("/bin/rm -f DATA-*.txt");
 system("/usr/bin/wget --no-cache https://raw.githubusercontent.com/wiki/westewest/PlugFest/TEDS/$tedsfilename -O $tedsfilename");
 open(my $tedsfile, $tedsfilename) or die "Error No TEDS file ($tedsfilename)";
 my $chapter;
@@ -46,7 +46,7 @@ while(<$tedsfile>){
 		next;
 	}
 	if(!($line =~ /^\s+$/)){
-		open(my $fo, ">>TEDS-$type-$chapter.txt");
+		open(my $fo, ">>DATA-$type-$chapter-$ip.txt");
 		print $fo $line."\n";
 		close($fo);
 	}

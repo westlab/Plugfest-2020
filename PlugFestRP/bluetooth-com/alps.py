@@ -15,6 +15,7 @@ import re
 import argparse
 import requests
 import random
+import glob
 from datetime import datetime
 
 parser = argparse.ArgumentParser(
@@ -158,11 +159,12 @@ def main():
     ras.connectBluetooth(ras.bdAddr,ras.port)
      
 # Main loop --------
-    fileset = ["TEDS-TEDS-ACCEL.txt", "TEDS-TEDS-GEOMAG.txt", "TEDS-TEDS-HUMID.txt", "TEDS-TEDS-ILLUMI.txt", "TEDS-TEDS-PRESSURE.txt", "TEDS-TEDS-TEMP.txt", "TEDS-TEDS-UV.txt", 
-    "TEDS-TXTTEDS-ACCEL.txt", "TEDS-TXTTEDS-GEOMAG.txt", "TEDS-TXTTEDS-HUMID.txt", "TEDS-TXTTEDS-ILLUMI.txt", "TEDS-TXTTEDS-PRESSURE.txt", "TEDS-TXTTEDS-TEMP.txt", "TEDS-TXTTEDS-UV.txt"]
+    fileset = glob.glob("../TEDS/DATA-*.txt") 
     for fname in fileset:
-        ftype = re.split('[-.]', fname)
-        with open("../TEDS/"+fname) as f:
+        ftype = re.split('-', fname)
+        with open(fname) as f:
+            if qflag == False:
+                print(fname+"=="+"#"+ftype[1]+":"+ftype[2])
             ras.sock.send("#"+ftype[1]+":"+ftype[2])
             msg = f.read()
             ras.sock.send(msg)
