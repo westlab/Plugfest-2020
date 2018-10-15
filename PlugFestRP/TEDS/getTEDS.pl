@@ -11,6 +11,17 @@ while(<$ipcmd>){
 		$ip = $line+0;
 	}
 }
+if($ip == 0){
+	open(my $ipcmd, "ip -4 addr show dev eth0|") or die "Error in ip cmd";
+	while(<$ipcmd>){
+		my $line = $_;
+		if($line =~ /inet/){
+			$line =~ s/.*\.(\d+)\/.*$/$1/;
+			$ip = $line+0;
+		}
+	}
+}
+die("No IP") if($ip == 0);
 my $tedsfilename = "ALPS-$ip-TEDS.txt";
 system ("/bin/rm -f TEDS-*.txt $tedsfilename");
 system("/usr/bin/wget --no-cache https://raw.githubusercontent.com/wiki/westewest/PlugFest/TEDS/$tedsfilename -O $tedsfilename");
