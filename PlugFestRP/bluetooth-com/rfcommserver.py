@@ -223,9 +223,9 @@ def operation():
                                 print(data[0]+"="+data[1])
                             if args.connect:
                                 #publish data[0] for data[1]
-                                mqttc.publish(args.topic+peeraddr+"/"+data[0], data[1])
                                 if qflag == False:
                                     print("Publish[data]:"+args.topic+peeraddr+"/"+data[0]+" as "+data[1])
+                                mqttc.publish(args.topic+peeraddr+"/"+data[0], data[1])
     finally:
         for sock in readfds:
             sock.close()
