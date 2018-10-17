@@ -212,7 +212,7 @@ Firstly, install blupy, which is a python interface to communicate via bluetooth
 	# apt-get install git build-essential
 	# cd
 	# pip install bluepy
-	# python3 -m pip install pybluez
+	# pip3 install pybluez
 ```
 
 + we need some part of bluepy sourses. Extract sources from git.
@@ -432,7 +432,7 @@ Install the paho library.
 
 ```
 	# pip install paho-mqtt
-	# python3 -m pip install paho-mqtt
+	# pip3 install paho-mqtt
 ```
 
 pub-, sub- client examples of paho-mqtt are as follows.
