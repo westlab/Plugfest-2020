@@ -178,7 +178,7 @@ def operation():
                     continue
                 if qflag == False:
                     print(msg)
-                if re.match("^#", msg):
+                if re.match("^#", msg.decode(utf-8)):
                     pmsg = msg[1:].split(':')
                     tname = pmsg[0]
                     name = pmsg[1]
