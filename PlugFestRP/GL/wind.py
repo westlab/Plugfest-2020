@@ -14,8 +14,8 @@ UPPER_ARM_HEIGHT = 0.3
 LOWER_ARM_WIDTH = 0.03
 LOWER_ARM_HEIGHT = 0.5
 
-position = [-2.0, 2.0, 10.0, 1.0]
-ambient = [0.5, 0.5, 0.5]
+position = [-20.0, 20.0, 100.0, 1.0]
+ambient = [0.6, 0.6, 0.6]
 diffuse = [0.7, 0.7, 0.7]
 specular = [0.2, 0.2, 0.2]
 
@@ -55,19 +55,37 @@ def on_message(client, userdata, msg):
 
 def display():
     print("USE", sp, tb, tl)
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
+
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    gluPerspective(30, 1.0, 0.0, 100.0)
+#    glMatrixMode(GL_MODELVIEW)
+
     gluLookAt(2.0, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
-    glColor3f(1.0, 0.0, 0.0)
-    glRotatef(tb, 0.0, 1.0, 0.0)
-    base()
+
+    glPushMatrix()
+    glTranslatef(0.0, sp/4, 0.0)
+    glRotatef(0, 0.0, 0.0, 1.0)
+    glColor3f(0.0, 0.0, 1.0)
+    upper_arm()
+    glPopMatrix()
+
+    glPushMatrix()
     glTranslatef(0.0, BASE_HEIGHT, 0.0)
     glColor3f(0.0, 1.0, 0.0)
     glRotatef(tl, 0.0, 0.0, 1.0)
     lower_arm()
-    glTranslatef(0.0, sp*2, 0.0)
-    glRotatef(0, 0.0, 0.0, 1.0)
-    glColor3f(0.0, 0.0, 1.0)
-    upper_arm()
+    glPopMatrix()
+
+    glPushMatrix()
+    glColor3f(1.0, 0.0, 0.0)
+    glRotatef(tb, 0.0, 1.0, 0.0)
+    base()
+    glPopMatrix()
+
     glFlush()
 
 def base():
@@ -89,15 +107,15 @@ def lower_arm():
     glPushMatrix()
     glTranslatef(0.0, 0.0, 0.0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)
-    gluCylinder(p, LOWER_ARM_WIDTH, LOWER_ARM_WIDTH, sp*2, 10, 10)
+    gluCylinder(p, LOWER_ARM_WIDTH, LOWER_ARM_WIDTH, sp/4, 10, 10)
     glPopMatrix()
 
 def mykey(key, x, y):
     global tb, tl, tu
     if key=='q': # +base
-        sp = sp + 1.0
+        sp = sp + 0.2
     elif key=='a': # -base
-        sp = sp - 1.0
+        sp = sp - 0.2
     elif key=='w': #+lower
         tb = tb + 5.0
     elif key=='s': #-lower
@@ -111,10 +129,9 @@ def mykey(key, x, y):
     print("sp=", sp, "tb=", tb, " tl=", tl)
     glutPostRedisplay()
 
-
 def idlef():
     glutPostRedisplay()
-
+    sleep(0.2)
 
 if sys.version_info[0] != 3:
     print("Version 3 is required")
@@ -122,35 +139,30 @@ if sys.version_info[0] != 3:
             
 glutInit( sys.argv )
 glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
-glutInitWindowSize( 500, 500 )
-glutInitWindowPosition(100,500)
+glutInitWindowSize( 400, 400 )
+glutInitWindowPosition(100,0)
 glutCreateWindow( 'WindArrow' )
 glutDisplayFunc( display )
 glutKeyboardFunc(mykey)
 glutIdleFunc(idlef)
-p=gluNewQuadric()
+p = gluNewQuadric()
 #gluQuadricDrawStyle(p, GLU_LINE)
 gluQuadricDrawStyle(p, GLU_FILL)
 
 glClearColor(0.0, 0.0, 0.0, 0.0)
 
-#    glLightfv(GL_LIGHT0, GL_POSITION, position)
-#    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient)
-#    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse)
-#    glLightfv(GL_LIGHT0, GL_SPECULAR, specular)
+
+#glLightfv(GL_LIGHT0, GL_POSITION, position)
+#glLightfv(GL_LIGHT0, GL_AMBIENT, ambient)
+#glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse)
+#glLightfv(GL_LIGHT0, GL_SPECULAR, specular)
 glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE)
-#    glEnable(GL_LIGHTING)
-#    glEnable(GL_LIGHT0)
-#    glEnable(GL_DEPTH_TEST)
+glEnable(GL_DEPTH_TEST)
+#glEnable(GL_LIGHTING)
+#glEnable(GL_LIGHT0)
 glEnable(GL_COLOR_MATERIAL)
 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-#    glMatrixMode(GL_MODELVIEW)
-glMatrixMode(GL_PROJECTION)
-glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-
-glMatrixMode(GL_PROJECTION)
-glLoadIdentity()
-gluPerspective(30, 1.0, 0.0, 100.0)
+#glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) # Wireframe
 
 client = mqtt.Client(protocol=mqtt.MQTTv311)
 client.on_connect = on_connect
@@ -158,4 +170,3 @@ client.on_message = on_message
 client.connect(host, port=port, keepalive=60)
 client.loop_start()
 glutMainLoop()
-
