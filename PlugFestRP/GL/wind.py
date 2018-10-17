@@ -1,5 +1,7 @@
 import sys
 import math
+from time import sleep
+import paho.mqtt.client as mqtt
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
@@ -18,7 +20,27 @@ specular = [0.2, 0.2, 0.2]
 
 tb = 0
 tl = 0
-tu = 0
+sp = 0
+
+host = '131.113.98.77'
+port = 1883
+topic = 'TESTData'
+
+def on_connect(client, userdata, flags, respons_code):
+    print('status {0}'.format(respons_code))
+    client.subscribe(topic)
+
+def on_message(client, userdata, msg):
+    strdat = str(msg.payload,'utf-8')
+    print(msg.topic + ' ' + strdat)
+    ardat = istrdat.split(',')
+    if(ardat[0] == "<AM"):
+        sp = float(ardata[1])
+        tb = float(ardata[2])
+        tl = float(ardata[3])
+        print(sp, tb, tl)
+        glutPostRedisplay()
+        
 
 def display():
 #    glLightfv(GL_LIGHT0, GL_POSITION, position)
@@ -42,8 +64,8 @@ def display():
     glColor3f(0.0, 1.0, 0.0)
     glRotatef(tl, 0.0, 0.0, 1.0)
     lower_arm()
-    glTranslatef(0.0, LOWER_ARM_HEIGHT, 0.0)
-    glRotatef(tu, 0.0, 0.0, 1.0)
+    glTranslatef(0.0, sp*10, 0.0)
+    glRotatef(0, 0.0, 0.0, 1.0)
     glColor3f(0.0, 0.0, 1.0)
     upper_arm()
     glFlush()
@@ -67,7 +89,7 @@ def lower_arm():
     glPushMatrix()
     glTranslatef(0.0, 0.0, 0.0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)
-    gluCylinder(p, LOWER_ARM_WIDTH, LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, 10, 10)
+    gluCylinder(p, LOWER_ARM_WIDTH, LOWER_ARM_WIDTH, sp*10, 10, 10)
     glPopMatrix()
 
 def mykey(key, x, y):
@@ -80,14 +102,18 @@ def mykey(key, x, y):
         tl = tl + 5.0
     elif key=='s': #-lower
         tl = tl - 5.0
-    elif key=='e': #+upper
-        tu = tu + 5.0
-    elif key=='d': #-upper
-        tu = tu - 5.0
+#    elif key=='e': #+upper
+#        tu = tu + 5.0
+#    elif key=='d': #-upper
+#        tu = tu - 5.0
     else: 
         sys.exit()
-        
-    print "tb=", tb, " tl=", tl, " tu=", tu
+#    print "tb=", tb, " tl=", tl, " tu=", tu
+    print "tb=", tb, " tl=", tl
+    glutPostRedisplay()
+
+
+def idlef():
     glutPostRedisplay()
             
 glutInit( sys.argv )
@@ -97,6 +123,7 @@ glutInitWindowPosition(0,0)
 glutCreateWindow( 'WindArrow' )
 glutDisplayFunc( display )
 glutKeyboardFunc(mykey)
+glutIdleFunc(idlef)
 p=gluNewQuadric()
 #gluQuadricDrawStyle(p, GLU_LINE)
 gluQuadricDrawStyle(p, GLU_FILL)
@@ -107,5 +134,10 @@ glMatrixMode(GL_PROJECTION)
 glLoadIdentity()
 gluPerspective(30, 1.0, 0.0, 100.0)
 
+client = mqtt.Client(protocol=mqtt.MQTTv311)
+client.on_connect = on_connect
+client.on_message = on_message
+client.connect(host, port=port, keepalive=60)
+client.loop_start()
 glutMainLoop()
 
