@@ -277,7 +277,7 @@ def main():
         mqttc.on_unsubscribe = on_unsubscribe
         mqttc.on_publish = on_subscribe
         mqttc.on_disconnect = on_disconnect
-	mqttc.will_set("503 Service Unavailable")
+        mqttc.will_set('503 Service Unavailable')
         mqttc.connect(args.mqtt_server, port=args.mqtt_port, keepalive=args.mqtt_keepalive)
         if qflag == False:
             print("MQTT server ["+args.mqtt_server+"] connected")

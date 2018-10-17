@@ -1,5 +1,6 @@
 import sys
 import math
+import re
 from time import sleep
 import paho.mqtt.client as mqtt
 from OpenGL.GL import *
@@ -18,43 +19,42 @@ ambient = [0.5, 0.5, 0.5]
 diffuse = [0.7, 0.7, 0.7]
 specular = [0.2, 0.2, 0.2]
 
-tb = 0
-tl = 0
-sp = 0
+sp = 0.0
+tb = 0.0
+tl = 0.0
 
 host = '131.113.98.77'
 port = 1883
-topic = 'TESTData'
+topic = '/TESTData'
 
 def on_connect(client, userdata, flags, respons_code):
     print('status {0}'.format(respons_code))
     client.subscribe(topic)
 
 def on_message(client, userdata, msg):
+    global sp, tb, tl
     strdat = str(msg.payload,'utf-8')
     print(msg.topic + ' ' + strdat)
-    ardat = istrdat.split(',')
-    if(ardat[0] == "<AM"):
-        sp = float(ardata[1])
-        tb = float(ardata[2])
-        tl = float(ardata[3])
-        print(sp, tb, tl)
+    ardat = strdat.split(',')
+    print(ardat[0])
+    if(re.search('<AM', ardat[0])):
+        try:
+            sp = float(ardat[1])
+        except:
+            return
+        try:
+            tb = -float(ardat[2])
+        except:
+            return
+        try:
+            tl = float(ardat[3])-90.0
+        except:
+            return
+        print("OK", sp, tb, tl)
         glutPostRedisplay()
-        
 
 def display():
-#    glLightfv(GL_LIGHT0, GL_POSITION, position)
-#    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient)
-#    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse)
-#    glLightfv(GL_LIGHT0, GL_SPECULAR, specular)
-    glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE)
-#    glEnable(GL_LIGHTING)
-#    glEnable(GL_LIGHT0)
-#    glEnable(GL_DEPTH_TEST)
-    glEnable(GL_COLOR_MATERIAL)
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    glMatrixMode(GL_MODELVIEW)
-
+    print("USE", sp, tb, tl)
     glLoadIdentity()
     gluLookAt(2.0, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
     glColor3f(1.0, 0.0, 0.0)
@@ -64,7 +64,7 @@ def display():
     glColor3f(0.0, 1.0, 0.0)
     glRotatef(tl, 0.0, 0.0, 1.0)
     lower_arm()
-    glTranslatef(0.0, sp*10, 0.0)
+    glTranslatef(0.0, sp*2, 0.0)
     glRotatef(0, 0.0, 0.0, 1.0)
     glColor3f(0.0, 0.0, 1.0)
     upper_arm()
@@ -89,37 +89,41 @@ def lower_arm():
     glPushMatrix()
     glTranslatef(0.0, 0.0, 0.0)
     glRotatef(-90.0, 1.0, 0.0, 0.0)
-    gluCylinder(p, LOWER_ARM_WIDTH, LOWER_ARM_WIDTH, sp*10, 10, 10)
+    gluCylinder(p, LOWER_ARM_WIDTH, LOWER_ARM_WIDTH, sp*2, 10, 10)
     glPopMatrix()
 
 def mykey(key, x, y):
     global tb, tl, tu
     if key=='q': # +base
-        tb = tb + 5.0
+        sp = sp + 1.0
     elif key=='a': # -base
-        tb = tb - 5.0
+        sp = sp - 1.0
     elif key=='w': #+lower
-        tl = tl + 5.0
+        tb = tb + 5.0
     elif key=='s': #-lower
+        tb = tb - 5.0
+    elif key=='e': #+upper
+        tl = tl + 5.0
+    elif key=='d': #-upper
         tl = tl - 5.0
-#    elif key=='e': #+upper
-#        tu = tu + 5.0
-#    elif key=='d': #-upper
-#        tu = tu - 5.0
     else: 
         sys.exit()
-#    print "tb=", tb, " tl=", tl, " tu=", tu
-    print "tb=", tb, " tl=", tl
+    print("sp=", sp, "tb=", tb, " tl=", tl)
     glutPostRedisplay()
 
 
 def idlef():
     glutPostRedisplay()
+
+
+if sys.version_info[0] != 3:
+    print("Version 3 is required")
+    sys.exit()
             
 glutInit( sys.argv )
 glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
 glutInitWindowSize( 500, 500 )
-glutInitWindowPosition(0,0)
+glutInitWindowPosition(100,500)
 glutCreateWindow( 'WindArrow' )
 glutDisplayFunc( display )
 glutKeyboardFunc(mykey)
@@ -129,6 +133,20 @@ p=gluNewQuadric()
 gluQuadricDrawStyle(p, GLU_FILL)
 
 glClearColor(0.0, 0.0, 0.0, 0.0)
+
+#    glLightfv(GL_LIGHT0, GL_POSITION, position)
+#    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient)
+#    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse)
+#    glLightfv(GL_LIGHT0, GL_SPECULAR, specular)
+glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE)
+#    glEnable(GL_LIGHTING)
+#    glEnable(GL_LIGHT0)
+#    glEnable(GL_DEPTH_TEST)
+glEnable(GL_COLOR_MATERIAL)
+glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+#    glMatrixMode(GL_MODELVIEW)
+glMatrixMode(GL_PROJECTION)
+glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
 glMatrixMode(GL_PROJECTION)
 glLoadIdentity()
