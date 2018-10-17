@@ -256,12 +256,12 @@ Then, type Ctrl-C
 	# ls 
 ```
 
-Check btle.pyc and bluepy-helper. These files are important to communicate with the Bluetooth sensor module.
+Check btle.py btle.pyc and bluepy-helper. These files are important to communicate with the Bluetooth sensor module.
 
 ```
 	# cd /export
 	# ln -s install/PlugFest/PlugFestRP/alps .
-	# cp install/bluepy/bluepy/{btle.pyc,bluepy-helper} alps
+	# cp install/bluepy/bluepy/{btle.py,bluepy-helper} alps
 	# cd alps
 	# python alps_sensor.py
 ```
