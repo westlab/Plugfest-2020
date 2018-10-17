@@ -107,12 +107,12 @@ class NtfyDelegate(btle.DefaultDelegate):
             NtfyDelegate.GeoMagnetic_Y = s16(int((cal[10:12] + cal[8:10]), 16)) * 0.15
             NtfyDelegate.GeoMagnetic_Z = s16(int((cal[14:16] + cal[12:14]), 16)) * 0.15
             if vflag == True:
-                print 'Geo-Magnetic X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.GeoMagnetic_X, NtfyDelegate.GeoMagnetic_Y, NtfyDelegate.GeoMagnetic_Z)
+                print('Geo-Magnetic X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.GeoMagnetic_X, NtfyDelegate.GeoMagnetic_Y, NtfyDelegate.GeoMagnetic_Z))
             NtfyDelegate.Acceleration_X = 1.0 * s16(int((cal[18:20] + cal[16:18]), 16)) / 1024
             NtfyDelegate.Acceleration_Y = 1.0 * s16(int((cal[22:24] + cal[20:22]), 16)) / 1024
             NtfyDelegate.Acceleration_Z = 1.0 * s16(int((cal[26:28] + cal[24:26]), 16)) / 1024
             if vflag == True:
-                print 'Acceleration X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.Acceleration_X, NtfyDelegate.Acceleration_Y, NtfyDelegate.Acceleration_Z)
+                print('Acceleration X:{0:.3f} Y:{1:.3f} Z:{2:.3f}'.format(NtfyDelegate.Acceleration_X, NtfyDelegate.Acceleration_Y, NtfyDelegate.Acceleration_Z))
 
         if int((cal[0:2]), 16) == 0xf3:
             NtfyDelegate.Pressure = int((cal[6:8] + cal[4:6]), 16) * 860.0/65535 + 250
@@ -121,7 +121,7 @@ class NtfyDelegate(btle.DefaultDelegate):
             UV = int((cal[18:20] + cal[16:18]), 16) / (100*0.388)
             NtfyDelegate.AmbientLight = int((cal[22:24] + cal[20:22]), 16) / (0.05*0.928)
             if vflag == True:
-                print 'Pressure:{0:.3f} Humidity:{1:.3f} Temperature:{2:.3f} UV:{3:.3f} AmbientLight:{4:.3f} '.format(NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.UV, NtfyDelegate.AmbientLight)
+                print('Pressure:{0:.3f} Humidity:{1:.3f} Temperature:{2:.3f} UV:{3:.3f} AmbientLight:{4:.3f} '.format(NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.UV, NtfyDelegate.AmbientLight))
 
 class AlpsSensor(Peripheral):
     def __init__(self,addr):
@@ -130,7 +130,7 @@ class AlpsSensor(Peripheral):
  
 def main():
     if pflag == False:
-        print "Turn On Sensor Node"
+        print("Turn On Sensor Node")
 #       alps = AlpsSensor("48:F0:7B:78:47:33")
         alps = AlpsSensor(args.alpsmodule)
         alps.setDelegate( NtfyDelegate(btle.DefaultDelegate) )
@@ -138,7 +138,7 @@ def main():
     if eflag == True:
         response = requests.put(args.elasticsearch_address)
         if vflag == True:
-            print response.json()
+            print(response.json())
  
     if pflag == False:
         #Hybrid MAG ACC8G 100ms / Other 1s
@@ -169,7 +169,7 @@ def main():
             msg = f.read()
             ras.sock.send(msg)
             if qflag == False:
-                print ("TEDS:"+msg)
+                print("TEDS:"+msg)
     while True:
         (dt, micro) = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f').split('.')
         dt = "%s.%03d" % (dt, int(micro)/1000)
@@ -197,15 +197,15 @@ def main():
                 msg = '{{DATETIME:{0},PRESSURE:{1:.3f},HUMID:{2:.3f},TEMP:{3:.3f},ILLUMI:{4:.3f},UV:{5:.3f},GEOMAG:{5:.3f},ACCEL:{6:.3f}}}'.format(dt, NtfyDelegate.Pressure, NtfyDelegate.Humidity, NtfyDelegate.Temperature, NtfyDelegate.AmbientLight, NtfyDelegate.UV, NtfyDelegate.GeoMagnetic_X, NtfyDelegate.Acceleration_Y)
                 ras.sock.send(msg)
         if qflag == False:
-            print ("DATA:"+msg)
+            print("DATA:"+msg)
         if eflag == True:
             eheaders = {'Content-Type': 'application/json'}
             response = requests.post(args.elasticsearch_address, headers=eheaders, data=msg)
             if vflag == True:
-                print response.json()
+                print(response.json())
             continue
     if vflag == True:
-        print "Waiting..."
+        print("Waiting...")
         # Perhaps do something else here
 if __name__ == "__main__":
     main()
