@@ -13,6 +13,9 @@ host = '10.1.1.24'
 port = 1883
 topic = '/plugfest/hoge'
 
+if sys.version_info[0] != 3: 
+    print("Version 3 is required") 
+
 client = mqtt.Client(protocol=mqtt.MQTTv311)
 
 client.connect(host, port=port, keepalive=60)
