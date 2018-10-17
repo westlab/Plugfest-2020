@@ -148,7 +148,7 @@ def operation():
                     print("connected!:"+client_socket.getpeername()[0])
                 else:
                     try:
-                        msg = sock.recv(2048).decode()
+                        msg = sock.recv(2048)
                     except KeyboardInterrupt:
                         for sock in readfds:
                             sock.close()
@@ -178,7 +178,8 @@ def operation():
                     continue
                 if qflag == False:
                     print(msg)
-                if re.match('#', msg):
+                if re.match("^#", msg): # for python 2.x
+#                if re.match("^#", msg.decode(utf-8)): # for python 3.x
                     pmsg = msg[1:].split(':')
                     tname = pmsg[0]
                     name = pmsg[1]
