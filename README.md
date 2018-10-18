@@ -569,6 +569,31 @@ Now reload the daemon processes.
 	# systemctl restart bluetooth
 ```
 
+####
+
+Now, new design model use Python3. Paho MQTT client on Python requires Python3 for subscribing.
+Here is the additinal installations for Python3.
+
+```
+	# pip3 install pybluez
+	# pip3 install paho-mqtt
+	# pip3 install pyopengl Pillow
+	# pip3 install gattlib
+```
+
+If you failed in installing gattlib, you may install it from sources.
+
+```
+	# cd /export/install
+	# pip3 download gattlib
+	# tar xvzf ./gattlib-0.20150805.tar.gz
+	# cd gattlib-0.20150805/
+	# sed -ie 's/boost_python-py34/boost_python-py35/' setup.py
+	# pip3 install .
+	# systemctl daemon-reload
+	# systemctl restart bluetooth
+```
+
 ## Usage
 
 ### Pairing
@@ -803,6 +828,13 @@ adminAuth: {
     }]
 }
 ```
+
+#### Wind speed and direction sensor
+
+This model is applicable to use SGLab wind speed and direction sensor.
+NodeMCU was used to read data from the sensor. Use Arduino IDE to design NodeMCU. To install NodeMCU, you may install required libraries to design NodeMCU on Arduino IDE.
+
+To depict the graphical image of the measured data,  use the python script in GL directory.
 
 #### Prevent Darkout
 
