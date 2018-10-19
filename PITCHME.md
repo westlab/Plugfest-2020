@@ -5,7 +5,7 @@
 Keio University
 Tokyo Denki University
 
-### To make presentation this document, please access:
+To make a presentation of this document, please access:
 
 https://gitpitch.com/westlab/PlugFest/
 
