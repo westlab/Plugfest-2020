@@ -336,6 +336,15 @@ Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 
 ---
 
+### IEEE1451.0 Implementation
+
+- Use Block Method (5.9)
+- Use Continuous Sampling Mode and Immediate Operation (5.10.1.6, 7)
+- Partially Supports HTTP API (Table 106)
+- YAML is used for the expression of commands
+  - All command and TEDS will be replaced into YAML for simplifing implementation.
+---
+
 ### TIM Operation
 
 - Get sensor data from BLE sensor
