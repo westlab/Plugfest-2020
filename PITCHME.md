@@ -120,6 +120,16 @@ https://gitpitch.com/westlab/PlugFest/
 
 ---
 
+### Why we desined our own MQTT broker?
+
+- MQTT v3 does not define the function of MQTT broker clearly.
+- THere are many local rules in the implementation of MQTT blokers.
+- We wanted to check and adopt the differences of MQTT brokers.
+  - mosquitto becomes a defact standard of MQTT broker.
+- MQTTnet is a C# based MQTT broker implementation, and is very flexible.
+
+---
+
 ### How to send TEDS?
 
 - Design Policy
