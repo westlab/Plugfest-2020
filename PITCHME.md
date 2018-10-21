@@ -5,6 +5,10 @@
 Keio University
 Tokyo Denki University
 
+To make a presentation of this document, please access:
+
+https://gitpitch.com/westlab/PlugFest/
+
 ---
 
 ### PlugFest Demo System Configuration
@@ -113,6 +117,16 @@ Tokyo Denki University
   OR  
   /Country/Region/City/Area/Street/Building/Apartment/Sensor[/Field]
  - Application becomes subscriber to read the sensor data by using same Topic.
+
+---
+
+### Why we desined our own MQTT broker?
+
+- MQTT v3 does not define the function of MQTT broker clearly.
+- THere are many local rules in the implementation of MQTT blokers.
+- We wanted to check and adopt the differences of MQTT brokers.
+  - mosquitto becomes a defact standard of MQTT broker.
+- MQTTnet is a C# based MQTT broker implementation, and is very flexible.
 
 ---
 
@@ -334,6 +348,15 @@ Specification of Smart IoT Sensor Module, ALPS Electric Co.Ltd.
 </MetaIdentificationTEDSDataBlock>
 ```
 
+---
+
+### IEEE1451.0 Implementation
+
+- Use Block Method (5.9)
+- Use Continuous Sampling Mode and Immediate Operation (5.10.1.6, 7)
+- Partially Supports HTTP API (Table 106)
+- YAML is used for the expression of commands
+  - All command and TEDS will be replaced into YAML for simplifing implementation.
 ---
 
 ### TIM Operation
