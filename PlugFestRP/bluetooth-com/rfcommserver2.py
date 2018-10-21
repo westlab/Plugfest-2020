@@ -61,7 +61,7 @@ parser.add_argument('-k', '--mqtt_keepalive',
 parser.add_argument('-t', '--topic',
     action = 'store',
     help = 'specify topic to publish (suffix is automatically added)',
-    default = '/plugfest/',
+    default = '/plugfest/westlab/',
     type = str)
 
 args = parser.parse_args()
