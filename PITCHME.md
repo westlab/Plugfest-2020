@@ -53,22 +53,17 @@ https://gitpitch.com/westlab/PlugFest/
 
 - Command
  - Write command
-
-|Event Code|Length|Data (Single/LSB,MSB)|
-|:---|:---|:---|
-
-  - Read command
-
-|Event Code + 0x80|Length|Data (Single/LSB,MSB)|
-|:---|:---|:---|
-
+  - Event Code + Length + Data (Single/LSB,MSB)
+ - Read command
+  - Event Code + 0x80 + Length + Data (Single/LSB,MSB)
+  
 - Event Code  
-0x20 (Measurement control)  
-0x21 (Bluetooth configuration)  
-0x23 (Disable data transfer)  
-0x2D (Communication parameter)  
-0x2E (Status / Data request)  
-0x30 (Internal Clock adjustment)
+  - 0x20 (Measurement control)  
+  - 0x21 (Bluetooth configuration)  
+  - 0x23 (Disable data transfer)  
+  - 0x2D (Communication parameter)  
+  - 0x2E (Status / Data request)  
+  - 0x30 (Internal Clock adjustment)
 
 +++
 
@@ -204,8 +199,8 @@ https://gitpitch.com/westlab/PlugFest/
 
 - Sensor Node　　　　　　　　　　　　　　　　　　　　　　　　　　　　
   - Publish TEDS *with retain flag*  
-  /plugfest/ModeName/SensorName/TEDS  
-  /plugfest/ModeName/SensorName/TXTTEDS  
+  /plugfest/NodeName/SensorName/TEDS  
+  /plugfest/NodeName/SensorName/TXTTEDS  
   [Option-A]  Use Keep-Alive-Timer  
     (PINGREQ/PINGRESQ Message)  
   We need to check whether the timer expires.  
@@ -213,7 +208,7 @@ https://gitpitch.com/westlab/PlugFest/
   OR  
   [Option-A’] Subscribe PING topic  
   with similar way of next Option B  
-  plugfest/ModeName/SensorName/ALIVE
+  plugfest/NodeName/SensorName/ALIVE
 - Application
   - Subscribe TEDS by method [Option-A]
   - Check availability of sensors by cheking TEDS accessibility using method [Option-A]+WILL or [Option-A’]
