@@ -3,31 +3,28 @@ Demonstration of IEEE P21451-1-6 for 2018 IEEE IES IECON PlugFest
 
 IEEE P21451-1-6 Working Group (WG) Development Meeting on STANDARD FOR A SMART TRANSDUCER INTERFACE FOR SENSORS, ACTUATORS AND DEVICES – MESSAGE QUEUE TELEMETRY TRANSPORT (MQTT)FOR NETWORKED DEVICE COMMUNICATION. 
 
-IEEE P21451-1-6 is included in IEEE 1451 Standards family. An event, IEEE 1451 Standards Plug Fest, is achieved at INTEROP 1451, IECON '18. The objectives are as follows.
+IEEE P21451-1-6 is included in IEEE 1451 Standards family. An event, IEEE 1451 Standards Plug Fest, is achieved at INTEROP Plugfest IECON 2020. The objectives are as follows.
 
 - Provide the IEEE 1451/21451 standards community with verification and validation platforms for the standards so the community can test the development of their applications to these benchmarks, ensuring compliance and interoperability to their systems.
 - The standards and platforms will provide compliance and interoperability to the IoT applications and its industrial components (IIoT)
 - Encourage industry partners to make sure of the verification and validation platforms for IEEE Standards compliance in the industry context.
 - Verification and developing platforms are being implemented following several different approaches, allowing coverage of specific sensor transducer applications conforming to the IEEE P1451 standards.
-- The goal of these platforms is to support users with “turn-key” approaches for their applications, by providing relatively easy initial start-up processes, allowing easy installation and configuration.
+- The goal of these platforms is to support users with “turn-key” approaches for their applications by providing relatively easy initial start-up processes, allowing easy installation and configuration.
 
 This demonstration program shows the typical example of IEEE P21451-1-6.
 
 ## Presentation Material
 
-This document focusis on installation.
+This document focuses on installation.
 To know about this design model, please use the following link.  
-https://gitpitch.com/westlab/PlugFest/
-
-To obtain PDF file of the material, please access the following link. PDF file will be automatically generated.  
-https://gitpitch.com/pitchme/print/github/westlab/PlugFest/master/white/PITCHME.pdf
+https://gitpitch.com/westewest/PlugFest/
 
 ## Requirements
 
-- Required libraries and python packages must be installed. Follow the description of Install section.
-- You may use BLE-based Smart IoT Sensor Module manufactured by ALPS ELEC Co.Ltd. If you don’t have the module, you can use pseudo sensor mode.
+- Required libraries and python packages must be installed. Follow the description of the install section.
+- You may use BLE-based Smart IoT Sensor Module manufactured by ALPS ELEC Co.Ltd. If you don’t have the module, you can use the pseudo sensor mode.
 - TIM and NCAP are run on Raspberry-Pi 3 or BLE/Bluetooth compatible Raspberry-Pi. NOOBS+Raspbian installation is recommended.
-- For minimum environment, two raspberry-pi, one for TIM and the other for NCAP, are required. Designed NCAP has a capability of multiple connections and supports multiple TIM.
+- For the minimum environment, two raspberry-pi, one for TIM and the other for NCAP, are required. Designed NCAP has the capability of multiple connections and supports multiple TIM.
 - To compile and execute MQTTnet-based MQTT server, Microsoft Visual Studio is required.
 
 ## Installation
@@ -39,6 +36,7 @@ https://gitpitch.com/pitchme/print/github/westlab/PlugFest/master/white/PITCHME.
 Then, Visual Studio opens the design, and you can compile and execute the program.
 - When you execute the server, you may see a window with some buttons. A few buttons of functions are implemented.
 You can execute MQTTnet server by pressing “Start MQTT Server” button.
+- Now, MQTTv5 mosquitto server is avairable and suport full feature of MQTTv5. We recommend to use mosquitto MQTT broder. We also provides open MQTTv5 broker.
 
 ### Configure and establish Raspberry Pi Environment
 
@@ -46,14 +44,14 @@ You can execute MQTTnet server by pressing “Start MQTT Server” button.
 
 KEIO-MODEL Installation manual for Raspberry-Pi 3 (B+)
 
-(Notice) It is easy to copy the installation-completed image. However, we have a problem in creating images. Still, it is easy to mount the image and copy into your installation.
+(Notice) It is easy to copy the installation-completed image. However, we have a problem in creating images. Still, it is easy to mount the image and copy it into your installation.
 
 - This installation requires >16G MicroSD memory. 8G is not enough.
 - Install NOOBS. If you have a kit, it is Ok, but in many cases, it uses 8G SD memory.
-- Follow general installation guide of NOOBS.
+- Follow the general installation guide of NOOBS.
 - Edit your /boot/config.txt for fitting your display.
 
-+ If you use Getic mobile display panel, then give a pache as follows.
++ If you use Getic mobile display panel, then give the paches as follows.
 
 ```
 	disable_oberscan=1
@@ -73,7 +71,7 @@ KEIO-MODEL Installation manual for Raspberry-Pi 3 (B+)
 	lcd_lotate=2
 ```
 
-You will install software keyboard by using the following command after this installation.
+You will install a software keyboard by using the following command after this installation.
 
 ```
 	# apt-get install matchbox-keyboard
