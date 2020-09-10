@@ -1,0 +1,148 @@
++ TEMP
+= TEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124CCA0183933228A60000803F010040830100548500EA540773C1642FE654081C00
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>TEMPARATURE</UserPhysicalMeasurand>
+	<UnitScale>DEG C/DECIM/TXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>-20</PhysicalSensorMin>
+	<PhysicalSensorMax>85</PhysicalSensorMax>
+	<UserDataValue>S:0.02/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>
++ HUMID
+= TEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E1A0E8B1C40224ECAA098020000FE040000000000401602B8531DCC058BD95ECCA9103800
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>HUMIDITY</UserPhysicalMeasurand>
+	<UnitScale>PERC RH.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>0</PhysicalSensorMin>
+	<PhysicalSensorMax>100</PhysicalSensorMax>
+	<UserDataValue>S:0.016/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>
++ PRESSURE
+= TEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E168A60E0A40C8A290000E04F0000CB2100C04422803BD5C15CB0D8ECC59C0A810300
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>PRESSURE</UserPhysicalMeasurand>
+	<UnitScale>HPA.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>300</PhysicalSensorMin>
+	<PhysicalSensorMax>1100</PhysicalSensorMax>
+	<UserDataValue>S:0.013/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>
++ILLUMI
+= TEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF9BE0027C66A4B2ED0F45C24C39C944131050000FC090000000060FF790410A73A19ECC59C0A810300
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>ILLUMINATION</UserPhysicalMeasurand>
+	<UnitScale>LX</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>0</PhysicalSensorMin>
+	<PhysicalSensorMax>81900</PhysicalSensorMax>
+	<UserDataValue>S:20/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>
++UV
+= TEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF9BE80541BDF12BB7DCEC6491914530000C09F000000000AD7A3410077AA83B960B0DA8B3915020700
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>UV</UserPhysicalMeasurand>
+	<UnitScale>MILW/SSM.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>0</PhysicalSensorMin>
+	<PhysicalSensorMax>20.48</PhysicalSensorMax>
+	<UserDataValue>S:0.005/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>
++ACCEL
+= TEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E1578382983620A0000F8130000001800000008244F7530978CD63EBE9853217000
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>ACCELERATION</UserPhysicalMeasurand>
+	<UnitScale>G.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>-2</PhysicalSensorMin>
+	<PhysicalSensorMax>2</PhysicalSensorMax>
+	<UserSensorScaleChangeable>Yes</UserSensorScaleChangeable>
+	<UserDataValue>S:0.24mG/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>
++GEOMAG
+= TEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF9BE009FF25A38AED0345B64A39C944131050000FCA9999901AC9999010490A73A982B56AB535FCCA9103800
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaIdentificationTEDSDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>GEOMAGNETISM</UserPhysicalMeasurand>
+	<UnitScale>MT.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>-2.4</PhysicalSensorMin>
+	<PhysicalSensorMax>2.4</PhysicalSensorMax>
+	<UserDataValue>S:0.15uT/LSB</UserDataValue>
+</MetaIdentificationTEDSDataBlock>

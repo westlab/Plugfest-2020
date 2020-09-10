@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEDS ID="[v03]">
+<BasicTEDS>
+<Manufacturer>UnknownID(109)</Manufacturer>
+<Model>1</Model>
+<VersionLetter>A</VersionLetter>
+<VersionNumber>1</VersionNumber>
+<SerialNumber>50</SerialNumber>
+</BasicTEDS>
+<TEDS-Code length="72">6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF9BE80541BDF12BB7DCEC6491914530000C09F000000000AD7A3410077AA83B960B0DA8B3915020700</TEDS-Code>
+<Info-Section EditorVersion="Dewesoft TedsEditor V2.2.8">
+<TEDS-Interface Name="OneWire Reader" InfoCount="0"></TEDS-Interface>
+<TEDS-Device FamCode="-1"></TEDS-Device>
+<EditorActivity InfoCount="58">
+<InfoLine0>2018/09/30 16:11:21: Startup init [OneWire Reader] done.</InfoLine0>
+<InfoLine1>2018/09/30 16:11:21: TEDS read started...</InfoLine1>
+<InfoLine2>2018/09/30 16:11:21: TEDS read: could not open Maxim OneWireAPI driver? Please visit ..</InfoLine2>
+<InfoLine3>2018/09/30 16:11:21: .. www.maximintegrated.com/products/ibutton/software/tmex/download_drivers.cfm</InfoLine3>
+<InfoLine4>2018/09/30 16:11:24: TEDS read from file started...</InfoLine4>
+<InfoLine5>2018/09/30 16:11:29: TEDS read from file [ALPS-TERM - コピー.tedsxml] done.</InfoLine5>
+<InfoLine6>2018/09/30 16:11:49: TEDS write started...</InfoLine6>
+<InfoLine7>2018/09/30 16:11:52: TEDS write to file [ALPS-TERM - コピー.tedsxml] done.</InfoLine7>
+<InfoLine8>2018/09/30 16:12:25: TEDS read from file started...</InfoLine8>
+<InfoLine9>2018/09/30 16:12:28: TEDS read from file [ALPS-TERM.tedsxml] done.</InfoLine9>
+<InfoLine10>2018/09/30 16:12:33: TEDS write started...</InfoLine10>
+<InfoLine11>2018/09/30 16:12:37: TEDS write to file [ALPS-TERM - コピー.tedsxml] done.</InfoLine11>
+<InfoLine12>2018/09/30 16:14:01: TEDS write started...</InfoLine12>
+<InfoLine13>2018/09/30 16:14:05: TEDS write to file cancled by user.</InfoLine13>
+<InfoLine14>2018/09/30 16:20:32: TEDS write started...</InfoLine14>
+<InfoLine15>2018/09/30 16:20:35: TEDS write to file [ALPS-TERM - コピー.tedsxml] done.</InfoLine15>
+<InfoLine16>2018/09/30 16:21:15: TEDS read from file started...</InfoLine16>
+<InfoLine17>2018/09/30 16:21:19: TEDS read from file [ALPS-TERM.tedsxml] done.</InfoLine17>
+<InfoLine18>2018/09/30 16:21:21: TEDS write started...</InfoLine18>
+<InfoLine19>2018/09/30 16:21:26: TEDS write to file [ALPS-TERM - コピー.tedsxml] done.</InfoLine19>
+<InfoLine20>2018/09/30 16:22:48: TEDS write started...</InfoLine20>
+<InfoLine21>2018/09/30 16:22:53: TEDS write to file [ALPS-TERM - コピー.tedsxml] done.</InfoLine21>
+<InfoLine22>2018/09/30 16:29:43: TEDS write started...</InfoLine22>
+<InfoLine23>2018/09/30 16:29:48: TEDS write to file [ALPS-TERM.tedsxml] done.</InfoLine23>
+<InfoLine24>2018/09/30 16:42:14: TEDS write started...</InfoLine24>
+<InfoLine25>2018/09/30 16:42:24: TEDS write to file [IEEE1451_4_106_1_A_1_1.tedsxml] done.</InfoLine25>
+<InfoLine26>2018/09/30 16:42:48: TEDS write started...</InfoLine26>
+<InfoLine27>2018/09/30 16:43:03: TEDS write to file [ALPS-HUMID.tedsxml] done.</InfoLine27>
+<InfoLine28>2018/09/30 16:45:12: TEDS write started...</InfoLine28>
+<InfoLine29>2018/09/30 16:45:17: TEDS write to file [ALPS-HUMID.tedsxml] done.</InfoLine29>
+<InfoLine30>2018/09/30 16:47:58: TEDS write started...</InfoLine30>
+<InfoLine31>2018/09/30 16:48:09: TEDS write to file [ALPS-PRESSURE.tedsxml] done.</InfoLine31>
+<InfoLine32>2018/09/30 16:51:37: TEDS write started...</InfoLine32>
+<InfoLine33>2018/09/30 16:51:48: TEDS write to file [ALPS-ILLUMI.tedsxml] done.</InfoLine33>
+<InfoLine34>2018/09/30 16:54:48: TEDS write started...</InfoLine34>
+<InfoLine35>2018/09/30 16:54:59: TEDS write to file [ALPS-UV.tedsxml] done.</InfoLine35>
+<InfoLine36>2018/09/30 16:56:53: TEDS read from file started...</InfoLine36>
+<InfoLine37>2018/09/30 16:57:01: TEDS read from file [ALPS-HUMID.tedsxml] done.</InfoLine37>
+<InfoLine38>2018/09/30 16:58:50: TEDS write started...</InfoLine38>
+<InfoLine39>2018/09/30 16:58:59: TEDS write to file [ALPS-HUMID.tedsxml] done.</InfoLine39>
+<InfoLine40>2018/09/30 16:59:15: TEDS read from file started...</InfoLine40>
+<InfoLine41>2018/09/30 16:59:17: TEDS read from file [ALPS-TERM.tedsxml] done.</InfoLine41>
+<InfoLine42>2018/09/30 16:59:30: TEDS write started...</InfoLine42>
+<InfoLine43>2018/09/30 16:59:36: TEDS write to file [ALPS-TERM.tedsxml] done.</InfoLine43>
+<InfoLine44>2018/09/30 17:00:35: TEDS read from file started...</InfoLine44>
+<InfoLine45>2018/09/30 17:00:37: TEDS read from file [ALPS-PRESSURE.tedsxml] done.</InfoLine45>
+<InfoLine46>2018/09/30 17:00:51: TEDS write started...</InfoLine46>
+<InfoLine47>2018/09/30 17:00:55: TEDS write to file [ALPS-PRESSURE.tedsxml] done.</InfoLine47>
+<InfoLine48>2018/09/30 17:02:14: TEDS read from file started...</InfoLine48>
+<InfoLine49>2018/09/30 17:02:17: TEDS read from file [ALPS-ILLUMI.tedsxml] done.</InfoLine49>
+<InfoLine50>2018/09/30 17:02:34: TEDS read from file started...</InfoLine50>
+<InfoLine51>2018/09/30 17:02:36: TEDS read from file [ALPS-PRESSURE.tedsxml] done.</InfoLine51>
+<InfoLine52>2018/09/30 17:03:02: TEDS read from file started...</InfoLine52>
+<InfoLine53>2018/09/30 17:03:07: TEDS read from file [ALPS-ILLUMI.tedsxml] done.</InfoLine53>
+<InfoLine54>2018/09/30 17:03:16: TEDS write started...</InfoLine54>
+<InfoLine55>2018/09/30 17:03:20: TEDS write to file [ALPS-ILLUMI.tedsxml] done.</InfoLine55>
+<InfoLine56>2018/09/30 17:03:49: TEDS read from file started...</InfoLine56>
+<InfoLine57>2018/09/30 17:03:51: TEDS read from file [ALPS-UV.tedsxml] done.</InfoLine57>
+</EditorActivity>
+</Info-Section>
+</TEDS>

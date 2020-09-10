@@ -1,0 +1,19 @@
+mqtthost: 192.168.0.10
+mqttport: 1883
+topic: PRISM/
+sensortopic: SENSOR/
+persontopic: PERSON/
+slowsample: 1
+fastsample: 500
+reqtopic: NCAP/1451OPE
+restopic: SERVICE/1451RES
+#username: iesstd        not for MQTTv5
+#password: 1451Plugfest        not for MQTTv5
+alpsmodule1: 48:F0:7B:78:47:46
+alpsmodule2: 48:F0:7B:78:47:4B
+alpsmodule3: 48:F0:7B:78:47:4C
+#alpsmodule4: 48:F0:7B:78:47:25
+#alpsmodule5: 48:F0:7B:78:47:33
+#alpsmodule6: 48:F0:7B:78:47:35
+#alpsmodule7: 48:F0:7B:78:47:36
+#alpsmodule8: 48:F0:7B:78:47:4E
