@@ -1,0 +1,718 @@
++ TEMP
+= TCTEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E124CCA0183933228A60000803F010040830100548500EA540773C1642FE654081C00
+= TXTTCTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<TransducerChannelIdDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>TEMPARATURE</UserPhysicalMeasurand>
+	<UnitScale>DEG C/DECIM/TXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>-20</PhysicalSensorMin>
+	<PhysicalSensorMax>85</PhysicalSensorMax>
+	<UserDataValue>S:0.02/LSB</UserDataValue>
+</TransducerChannelIdDataBlock>
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+targetNamespace="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="SmartTransducerDataModel.xsd"/>
+<xs:include schemaLocation="TextTEDS.xsd"/>
+<xs:element name="Meta-IdentificationTEDS" type="stml:Meta-
+IdentificationTEDSType" substitutionGroup="stml:TextTEDS">
+<xs:annotation>
+<xs:documentation>1451 Smart Sensor Meta-Identification TEDS
+schema</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="Meta-IdentificationTEDSDataBlockType">
+<xs:sequence>
+<xs:element name="ManufacturerId" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="ModelNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="VersionCode" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="SerialNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="DateCode" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="NumOfChannelGrouping" type="stml:UInt8"/>
+<xs:element name="GroupName" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="ProductDescription" type="stml:_String"
+minOccurs="0" maxOccurs="65535"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meta-IdentificationTEDSType">
+<xs:complexContent>
+<xs:extension base="stml:TextTEDSType">
+<xs:sequence>
+<xs:element name="XMLText" type="stml:Meta-
+IdentificationTEDSDataBlockType"/>
+<xs:element name="XMLSum" type="stml:UInt16"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+= USRXDCRNAMETEDS
+030400000154454d50
+= USRXDCRNAMETXTTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersTransducerNameTEDS>
+<Format>XML-Text,Binary-Text</Format>
+<TCName>TEMP</TCName>
+</UsersTransducerNameTEDS>
++ HUMID
+= TCTEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E1A0E8B1C40224ECAA098020000FE040000000000401602B8531DCC058BD95ECCA9103800
+= TXTTCTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<TransducerChannelIdDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>HUMIDITY</UserPhysicalMeasurand>
+	<UnitScale>PERC RH.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>0</PhysicalSensorMin>
+	<PhysicalSensorMax>100</PhysicalSensorMax>
+	<UserDataValue>S:0.016/LSB</UserDataValue>
+</TransducerChannelIdDataBlock>
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+targetNamespace="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="SmartTransducerDataModel.xsd"/>
+<xs:include schemaLocation="TextTEDS.xsd"/>
+<xs:element name="Meta-IdentificationTEDS" type="stml:Meta-
+IdentificationTEDSType" substitutionGroup="stml:TextTEDS">
+<xs:annotation>
+<xs:documentation>1451 Smart Sensor Meta-Identification TEDS
+schema</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="Meta-IdentificationTEDSDataBlockType">
+<xs:sequence>
+<xs:element name="ManufacturerId" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="ModelNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="VersionCode" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="SerialNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="DateCode" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="NumOfChannelGrouping" type="stml:UInt8"/>
+<xs:element name="GroupName" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="ProductDescription" type="stml:_String"
+minOccurs="0" maxOccurs="65535"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meta-IdentificationTEDSType">
+<xs:complexContent>
+<xs:extension base="stml:TextTEDSType">
+<xs:sequence>
+<xs:element name="XMLText" type="stml:Meta-
+IdentificationTEDSDataBlockType"/>
+<xs:element name="XMLSum" type="stml:UInt16"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+= USRXDCRNAMETEDS
+030400000148554D4944
+= USRXDCRNAMETXTTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersTransducerNameTEDS>
+<Format>XML-Text,Binary-Text</Format>
+<TCName>HUMID</TCName>
+</UsersTransducerNameTEDS>
++ PRESSURE
+= TCTEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E168A60E0A40C8A290000E04F0000CB2100C04422803BD5C15CB0D8ECC59C0A810300
+= TXTTCTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<TransducerChannelIdDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>PRESSURE</UserPhysicalMeasurand>
+	<UnitScale>HPA.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>300</PhysicalSensorMin>
+	<PhysicalSensorMax>1100</PhysicalSensorMax>
+	<UserDataValue>S:0.013/LSB</UserDataValue>
+</TransducerChannelIdDataBlock>
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+targetNamespace="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="SmartTransducerDataModel.xsd"/>
+<xs:include schemaLocation="TextTEDS.xsd"/>
+<xs:element name="Meta-IdentificationTEDS" type="stml:Meta-
+IdentificationTEDSType" substitutionGroup="stml:TextTEDS">
+<xs:annotation>
+<xs:documentation>1451 Smart Sensor Meta-Identification TEDS
+schema</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="Meta-IdentificationTEDSDataBlockType">
+<xs:sequence>
+<xs:element name="ManufacturerId" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="ModelNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="VersionCode" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="SerialNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="DateCode" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="NumOfChannelGrouping" type="stml:UInt8"/>
+<xs:element name="GroupName" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="ProductDescription" type="stml:_String"
+minOccurs="0" maxOccurs="65535"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meta-IdentificationTEDSType">
+<xs:complexContent>
+<xs:extension base="stml:TextTEDSType">
+<xs:sequence>
+<xs:element name="XMLText" type="stml:Meta-
+IdentificationTEDSDataBlockType"/>
+<xs:element name="XMLSum" type="stml:UInt16"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+= USRXDCRNAMETEDS
+03040000015052455353555245
+= USRXDCRNAMETXTTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersTransducerNameTEDS>
+<Format>XML-Text,Binary-Text</Format>
+<TCName>PRESSURE</TCName>
+</UsersTransducerNameTEDS>
++ILLUMI
+= TCTEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF9BE0027C66A4B2ED0F45C24C39C944131050000FC090000000060FF790410A73A19ECC59C0A810300
+= TXTTCTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<TransducerChannelIdDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>ILLUMINATION</UserPhysicalMeasurand>
+	<UnitScale>LX</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>0</PhysicalSensorMin>
+	<PhysicalSensorMax>81900</PhysicalSensorMax>
+	<UserDataValue>S:20/LSB</UserDataValue>
+</TransducerChannelIdDataBlock>
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+targetNamespace="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="SmartTransducerDataModel.xsd"/>
+<xs:include schemaLocation="TextTEDS.xsd"/>
+<xs:element name="Meta-IdentificationTEDS" type="stml:Meta-
+IdentificationTEDSType" substitutionGroup="stml:TextTEDS">
+<xs:annotation>
+<xs:documentation>1451 Smart Sensor Meta-Identification TEDS
+schema</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="Meta-IdentificationTEDSDataBlockType">
+<xs:sequence>
+<xs:element name="ManufacturerId" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="ModelNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="VersionCode" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="SerialNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="DateCode" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="NumOfChannelGrouping" type="stml:UInt8"/>
+<xs:element name="GroupName" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="ProductDescription" type="stml:_String"
+minOccurs="0" maxOccurs="65535"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meta-IdentificationTEDSType">
+<xs:complexContent>
+<xs:extension base="stml:TextTEDSType">
+<xs:sequence>
+<xs:element name="XMLText" type="stml:Meta-
+IdentificationTEDSDataBlockType"/>
+<xs:element name="XMLSum" type="stml:UInt16"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+= USRXDCRNAMETEDS
+0304000001494c4c554d49
+= USRXDCRNAMETXTTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersTransducerNameTEDS>
+<Format>XML-Text,Binary-Text</Format>
+<TCName>ILLUMI</TCName>
+</UsersTransducerNameTEDS>
++UV
+= TCTEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF9BE80541BDF12BB7DCEC6491914530000C09F000000000AD7A3410077AA83B960B0DA8B3915020700
+= TXTTCTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<TransducerChannelIdDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>UV</UserPhysicalMeasurand>
+	<UnitScale>MILW/SSM.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>0</PhysicalSensorMin>
+	<PhysicalSensorMax>20.48</PhysicalSensorMax>
+	<UserDataValue>S:0.005/LSB</UserDataValue>
+</TransducerChannelIdDataBlock>
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+targetNamespace="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="SmartTransducerDataModel.xsd"/>
+<xs:include schemaLocation="TextTEDS.xsd"/>
+<xs:element name="Meta-IdentificationTEDS" type="stml:Meta-
+IdentificationTEDSType" substitutionGroup="stml:TextTEDS">
+<xs:annotation>
+<xs:documentation>1451 Smart Sensor Meta-Identification TEDS
+schema</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="Meta-IdentificationTEDSDataBlockType">
+<xs:sequence>
+<xs:element name="ManufacturerId" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="ModelNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="VersionCode" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="SerialNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="DateCode" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="NumOfChannelGrouping" type="stml:UInt8"/>
+<xs:element name="GroupName" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="ProductDescription" type="stml:_String"
+minOccurs="0" maxOccurs="65535"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meta-IdentificationTEDSType">
+<xs:complexContent>
+<xs:extension base="stml:TextTEDSType">
+<xs:sequence>
+<xs:element name="XMLText" type="stml:Meta-
+IdentificationTEDSDataBlockType"/>
+<xs:element name="XMLSum" type="stml:UInt16"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+= USRXDCRNAMETEDS
+03040000015556
+= USRXDCRNAMETXTTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersTransducerNameTEDS>
+<Format>XML-Text,Binary-Text</Format>
+<TCName>UV</TCName>
+</UsersTransducerNameTEDS>
++ACCEL
+= TCTEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF93E1578382983620A0000F8130000001800000008244F7530978CD63EBE9853217000
+= TXTTCTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<TransducerChannelIdDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>ACCELERATION</UserPhysicalMeasurand>
+	<UnitScale>G.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>-2</PhysicalSensorMin>
+	<PhysicalSensorMax>2</PhysicalSensorMax>
+	<UserSensorScaleChangeable>Yes</UserSensorScaleChangeable>
+	<UserDataValue>S:0.24mG/LSB</UserDataValue>
+</TransducerChannelIdDataBlock>
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+targetNamespace="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="SmartTransducerDataModel.xsd"/>
+<xs:include schemaLocation="TextTEDS.xsd"/>
+<xs:element name="Meta-IdentificationTEDS" type="stml:Meta-
+IdentificationTEDSType" substitutionGroup="stml:TextTEDS">
+<xs:annotation>
+<xs:documentation>1451 Smart Sensor Meta-Identification TEDS
+schema</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="Meta-IdentificationTEDSDataBlockType">
+<xs:sequence>
+<xs:element name="ManufacturerId" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="ModelNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="VersionCode" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="SerialNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="DateCode" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="NumOfChannelGrouping" type="stml:UInt8"/>
+<xs:element name="GroupName" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="ProductDescription" type="stml:_String"
+minOccurs="0" maxOccurs="65535"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meta-IdentificationTEDSType">
+<xs:complexContent>
+<xs:extension base="stml:TextTEDSType">
+<xs:sequence>
+<xs:element name="XMLText" type="stml:Meta-
+IdentificationTEDSDataBlockType"/>
+<xs:element name="XMLSum" type="stml:UInt16"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+= USRXDCRNAMETEDS
+0304000001414343454c
+= USRXDCRNAMETXTTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersTransducerNameTEDS>
+<Format>XML-Text,Binary-Text</Format>
+<TCName>ACCEL</TCName>
+</UsersTransducerNameTEDS>
++GEOMAG
+= TCTEDS
+6D40002004320000AA0107A1C0E00485953A3D0A660B928246586A56F3722DF9BE009FF25A38AED0345B64A39C944131050000FCA9999901AC9999010490A73A982B56AB535FCCA9103800
+= TXTTCTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<TransducerChannelIdDataBlock>
+	<manufacturer>Unknown</manufacturer>	
+	<manufacturerId>109</manufacturerId>	
+	<ModelNo>1A1</ModelNo>
+	<SerialNo>50</SerialNo>
+	<UserManufacturer>ALPS ELE</UserManufacturer>
+	<UserModelNo>IOT SMART MDL</UserModelNo>
+	<UserSerialNo>SUFOYUEYWO</UserSerialNo>
+	<UserPhysicalMeasurand>GEOMAGNETISM</UserPhysicalMeasurand>
+	<UnitScale>.DECTXT</UnitScale>
+	<UnitConvertionFactor>1</UnitConvertionFactor>
+	<UserSensorLimits>Yes</UserSensorLimits>
+	<PhysicalSensorMin>-2.4</PhysicalSensorMin>
+	<PhysicalSensorMax>2.4</PhysicalSensorMax>
+	<UserDataValue>S:0.15uT/LSB</UserDataValue>
+</TransducerChannelIdDataBlock>
+= METATEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+targetNamespace="http://grouper.ieee.org/groups/1451/0/1451HTTPAPI"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="SmartTransducerDataModel.xsd"/>
+<xs:include schemaLocation="TextTEDS.xsd"/>
+<xs:element name="Meta-IdentificationTEDS" type="stml:Meta-
+IdentificationTEDSType" substitutionGroup="stml:TextTEDS">
+<xs:annotation>
+<xs:documentation>1451 Smart Sensor Meta-Identification TEDS
+schema</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="Meta-IdentificationTEDSDataBlockType">
+<xs:sequence>
+<xs:element name="ManufacturerId" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="ModelNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="VersionCode" type="stml:_String"
+minOccurs="0" maxOccurs="255"/>
+<xs:element name="SerialNo" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="DateCode" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="NumOfChannelGrouping" type="stml:UInt8"/>
+<xs:element name="GroupName" type="stml:_String" minOccurs="0"
+maxOccurs="255"/>
+<xs:element name="ProductDescription" type="stml:_String"
+minOccurs="0" maxOccurs="65535"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meta-IdentificationTEDSType">
+<xs:complexContent>
+<xs:extension base="stml:TextTEDSType">
+<xs:sequence>
+<xs:element name="XMLText" type="stml:Meta-
+IdentificationTEDSDataBlockType"/>
+<xs:element name="XMLSum" type="stml:UInt16"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+= USRXDCRNAMETEDS
+030400000147454f4d4147
+= USRXDCRNAMETXTTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersTransducerNameTEDS>
+<Format>XML-Text,Binary-Text</Format>
+<TCName>GEOMAG</TCName>
+</UsersTransducerNameTEDS>
++Discovery
+=TIMDiscovery
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="TIMDiscoveryHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timIds" type="stml:UInt16Array"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++TransducerAccess
+=ReadData
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="ReadDataHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+<xs:element name="transducerData" type="stml:ArgumentArrayType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+=StartReadData
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="StartReadDataHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++MeasurementUpdate
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="MeasurementUpdateHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16"/>
+<xs:element name="transducerId" type="stml:UInt16"/>
+<xs:element name="transducerData" type="stml:ArgumentArrayType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++WriteData
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="WriteDataHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/> </xs:sequence>
+</xs:complexType>
+</xs:schema>
++StartWriteData
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="StartWriteDataHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+=TEDSManager
++ReadTeds
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="ReadTEDSHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+<xs:element name="tedsType" type="stml:UInt8"/>
+<xs:element name="teds" type="stml:ArgumentArrayType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++ReadRawTEDS
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="ReadRawTEDSHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+<xs:element name="tedsType" type="stml:UInt8"/>
+<xs:element name="teds" type="stml:ArgumentArrayType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++WriteTeds
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="WriteTEDSHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="tedsId" type="stml:UInt16"/>
+<xs:element name="tedsType" type="stml:UInt8"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++WriteRawTeds
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="WriteRawTEDSHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+<xs:element name="tedsType" type="stml:UInt8"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++UpdateTedsCache
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="UpdateTEDSHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+<xs:element name="tedsType" type="stml:UInt8"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+=TransducerManager
++SendCommand
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="SendCommandHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+<xs:element name="outArgs" type="stml:ArgumentArrayType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++StartCommand
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="StartCommandHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++Trigger
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="TriggerHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
++StartTrigger
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:stml=http://grouper.ieee.org/groups/1451/0/1451HTTPAPI
+<xs:complexType name="StartTriggerHTTPResponse">
+<xs:sequence>
+<xs:element name="errorCode" type="stml:UInt16"/>
+<xs:element name="timId" type="stml:UInt16Array"/>
+<xs:element name="channelId" type="stml:UInt16"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
