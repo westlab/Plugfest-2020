@@ -1,0 +1,12 @@
+output_file:smtp_src.json
+if $all_message regmatch ^(ehlo|mail|rcpt|data|quit)
+discard
+endif
+string $to regex ^To:\s([a-zA-Z0-9\.]+@[a-zA-Z0-9\.]+) $all_message 1
+string $from regex From:\s([a-zA-Z0-9\.]+@[a-zA-Z0-9\.]+) $all_message 1
+string $subject regex Subject:\s([!-~\x20]*) $all_message 1
+string $message regex Subject:\s[!-~\x20]*\r\n\r\n([!-~\s]+)\r\n\.\r\n$ $all_message 1
+assign $to
+assign $from
+assign $subject
+assign $message

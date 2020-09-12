@@ -1,0 +1,31 @@
+{
+    "input_file":"coap_src.json",
+    "output_file":"general.json",
+    "method":{
+      "get":"method"
+    },
+    "uri":{
+      "get":"uri"
+    },
+    "pubsub_topic":{
+      "if_use":"$uri regmatch localhost\/ps\/",
+      "rule":[
+        "$_ regex localhost\/ps\/([a-zA-Z0-9\/]+) $uri 1"
+      ]
+    },
+    "message_type":{
+      "rule":[
+        "if $uri regmatch localhost\/ps\/ and $method == PUT",
+        "$_ = publish",
+        "print $_",
+        "elif $uri regmatch localhost\/ps\/ and $method == GET",
+        "$_ = subscribe",
+        "else",
+        "$_ = $method",
+        "endif"
+      ]
+    },
+    "message":{
+      "get":"payload"
+    }
+}

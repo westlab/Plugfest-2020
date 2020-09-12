@@ -1,0 +1,9 @@
+{
+    "srcip": "::1",
+    "dstip": "::1",
+    "srcport": "58029",
+    "dstport": "5222",
+    "message_type": "publish",
+    "pubsub_topic": "temp",
+    "message": "300K"
+}

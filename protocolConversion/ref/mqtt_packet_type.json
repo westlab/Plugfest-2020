@@ -1,0 +1,60 @@
+{
+    "data": [
+        {
+            "type_no": "1",
+            "type": "connect"
+        },
+        {
+            "type_no": "2",
+            "type": "connack"
+        },
+        {
+            "type_no": "3",
+            "type": "publish"
+        },
+        {
+            "type_no": "4",
+            "type": "puback"
+        },
+        {
+            "type_no": "5",
+            "type": "pubrec"
+        },
+        {
+            "type_no": "6",
+            "type": "pubrel"
+        },
+        {
+            "type_no": "7",
+            "type": "pubcomp"
+        },
+        {
+            "type_no": "8",
+            "type": "subscribe"
+        },
+        {
+            "type_no": "9",
+            "type": "suback"
+        },
+        {
+            "type_no": "10",
+            "type": "unsubscribe"
+        },
+        {
+            "type_no": "11",
+            "type": "unsuback"
+        },
+        {
+            "type_no": "12",
+            "type": "pingreq"
+        },
+        {
+            "type_no": "13",
+            "type": "pingresp"
+        },
+        {
+            "type_no": "14",
+            "type": "disconnect"
+        } 
+    ]
+}

@@ -1,0 +1,14 @@
+input_file:xmpp_src.json
+output_file:general.json
+string $stanza get stanza
+string $xmpp_id get id
+string $message_type get message_type
+string $pubsub_topic get node
+string $message get message
+string $to_jabber get to
+assign $stanza
+assign $xmpp_id
+assign $message_type
+assign $pubsub_topic
+assign $message
+assign $to_jabber

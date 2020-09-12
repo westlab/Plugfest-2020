@@ -1,0 +1,21 @@
+input_file:coap_dst.json
+string $message_type get message_type
+string $uri get uri
+string $pubsub_topic get pubsub_topic
+string $method get method
+string $message get message
+if $message_type regmatch (publish|subscribe)
+string $address = "coap://localhost/ps/"+ $pubsub_topic
+else
+string $address = "coap://" + $uri 
+endif
+if $message_type == "publish"
+process coap-client -m PUT -e $message $address
+endif
+assign $message_type
+assign $uri
+assign $pubsub_topic
+assign $method
+assign $message
+assign $address
+assign $post_process

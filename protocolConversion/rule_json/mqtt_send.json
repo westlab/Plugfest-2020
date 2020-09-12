@@ -1,0 +1,35 @@
+{
+    "input_file":"mqtt_dst.json",
+    "message_type":{
+        "get":"message_type",
+        "if_discard":"not $_ regmatch publish"
+    },
+    "dup_flag":{
+        "get":"dup_flag",
+        "if_none":"0"
+    },
+    "qos_level":{
+        "get":"qos_level",
+        "if_none":"0"
+    },
+    "retain_bool":{
+        "get":"retain",
+        "if_none":"0"
+    },
+    "retain":{
+        "rule":["if $retain_bool == \"1\"",
+          "$_ = \"-r\"",
+          "else",
+          "$_ = \"\"",
+          "endif"]
+    },
+    "topic":{
+        "get":"topic"
+    },
+    "message":{
+        "get":"message"
+    },
+    "postprocess":{
+        "rule":["process mosquitto_pub -t $topic -m $message -q $qos_level $retain"]
+    }
+}

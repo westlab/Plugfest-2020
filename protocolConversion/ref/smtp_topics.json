@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "address": "mailtest@localhost",
+            "topic": "test"
+        },
+        {
+            "address":"west@localhost",
+            "topic": "temp"
+        }
+    ]
+}

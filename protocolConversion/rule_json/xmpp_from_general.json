@@ -1,0 +1,24 @@
+{
+    "input_file":"general.json",
+    "output_file":"xmpp_dst.json",
+    "stanza":{
+        "get":"stanza"
+    },
+    "id":{
+        "get":"xmpp_id"
+    },
+    "to":{
+        "get":"to_jabber",
+        "if_none":"pubsub.localhost"
+    },
+    "message_type":{
+        "get":"message_type",
+        "if_discard":"$_ != \"publish\""
+    },
+    "node":{
+        "get":"pubsub_topic"
+    },
+    "message":{
+        "get":"message"
+    }
+}

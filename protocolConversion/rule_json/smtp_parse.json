@@ -1,0 +1,30 @@
+{
+    "output_file":"smtp_src.json",
+    "preprocess":{
+        "rule":[
+            "if $all_message regmatch ^(ehlo|mail|rcpt|data|quit)",
+            "discard",
+            "endif"
+        ]
+    },
+    "to":{
+        "rule":[
+           "$_ regex ^To:\\s([a-zA-Z0-9\\.]+@[a-zA-Z0-9\\.]+) $all_message 1"
+        ]
+    },
+    "from":{
+        "rule":[
+           "$_ regex From:\\s([a-zA-Z0-9\\.]+@[a-zA-Z0-9\\.]+) $all_message 1"
+        ]
+    },
+    "subject":{
+        "rule":[
+            "$_ regex Subject:\\s([!-~\\x20]*) $all_message 1"
+        ]
+    },
+    "message":{
+        "rule":[
+            "$_ regex Subject:\\s[!-~\\x20]*\\r\\n\\r\\n([!-~\\s]+)\\r\\n\\.\\r\\n$ $all_message 1"
+        ]
+    }
+}

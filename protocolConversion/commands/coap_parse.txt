@@ -1,0 +1,24 @@
+output_file:coap_src.json
+int $token_length -> [0]>4:[0]>8
+int $code -> [1]:[2]
+string $method ref ref/coap_method.json > no==$code ? method : none
+int $message_id -> [2]:[4]
+int $token -> [3]:[3+$token_length]
+int $s = 4+$token_length
+int $length -> [$s]>4:[$s]>8
+string $uri -> [$s+1]:[$s+1+$length]
+$s = $s + $length +1
+int $end_check -> [$s]:[$s+1]
+while $end_check != 255
+int $length -> [$s]>4:[$s]>8
+string $tmp -> [$s+1]:[$s+1+$length]
+string $uri = $uri + "/" + $tmp
+$s = $s + $length +1
+$end_check -> [$s]:[$s+1]
+endwhile
+string $payload -> [$s+1]:[$packet_length]
+assign $method
+assign $message_id
+assign $token
+assign $uri
+assign $payload

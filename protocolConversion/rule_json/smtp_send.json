@@ -1,0 +1,36 @@
+{
+    "input_file":"smtp_dst.json",
+    "to":{
+        "get":"to"
+    },
+    "from":{
+        "get":"from"
+    },
+    "message_type":{
+        "get":"message_type"
+    },
+    "pubsub_topic":{
+        "get":"pubsub_topic"
+    },
+    "subject":{
+        "get":"subject",
+        "rule":["if $message_type ==\"publish\"",
+                "$_ = \"<\" + $message_type + \"> \" + $pubsub_topic",
+                "endif"
+        ]
+    },
+    "subscriber":{
+        "if_use":"$message_type == \"publish\"",
+        "rule":["$_ ref ref/smtp_topics.json > topic == $pubsub_topic ? address"]
+    },
+    "message":{
+        "get":"message"
+    },
+    "postprocess":{
+      "rule":["if $message_type == \"send_message\"",
+          "process sendmail -f $from -t $to -s $subject -m $message",
+          "elif $message_type == \"publish\" and $subscriber != \"\"",
+          "process sendmail -f pubsub@localhost -t $subscriber -s $subject -m $message",
+          "endif"]
+    }
+}

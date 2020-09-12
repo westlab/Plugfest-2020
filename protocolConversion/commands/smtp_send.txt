@@ -1,0 +1,25 @@
+input_file:smtp_dst.json
+string $to get to
+string $from get from
+string $message_type get message_type
+string $pubsub_topic get pubsub_topic
+string $subject get subject
+if $message_type =="publish"
+string $subject = "<" + $message_type + "> " + $pubsub_topic
+endif
+if $message_type == "publish"
+string $subscriber ref ref/smtp_topics.json > topic == $pubsub_topic ? address
+endif
+string $message get message
+if $message_type == "send_message"
+process sendmail -f $from -t $to -s $subject -m $message
+elif $message_type == "publish" and $subscriber != ""
+process sendmail -f pubsub@localhost -t $subscriber -s $subject -m $message
+endif
+assign $to
+assign $from
+assign $message_type
+assign $pubsub_topic
+assign $subject
+assign $subscriber
+assign $message

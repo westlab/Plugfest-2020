@@ -1,0 +1,26 @@
+{
+    "input_file":"general.json",
+    "output_file":"mqtt_dst.json",
+    "message_type":{
+        "get":"message_type",
+        "if_discard":"not $_ regmatch (publish|subscribe)"
+    },
+    "dup_flag":{
+        "get":"dup_flag",
+        "if_none":"0"
+    },
+    "qos_level":{
+        "get":"qos_level",
+        "if_none":"0"
+    },
+    "retain":{
+        "get":"retain",
+        "if_none":"0"
+    },
+    "topic":{
+        "get":"pubsub_topic"
+    },
+    "message":{
+        "get":"message"
+    }
+}

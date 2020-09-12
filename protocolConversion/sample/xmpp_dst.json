@@ -1,0 +1,10 @@
+{
+    "srcip": "127.0.0.1",
+    "dstip": "127.0.0.1",
+    "srcport": "56231",
+    "dstport": "25",
+    "to": "pubsub.localhost",
+    "message_type": "publish",
+    "node": "temp",
+    "message": "290K"
+}

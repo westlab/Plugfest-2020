@@ -1,0 +1,22 @@
+{
+    "input_file":"general.json",
+    "output_file":"smtp_dst.json",
+    "to":{
+        "get":"to_mailaddress"
+    },
+    "from":{
+        "get":"from_mailaddress"
+    },
+    "subject":{
+        "get":"subject_mail"
+    },
+    "message_type":{
+        "get":"message_type" 
+    },
+    "pubsub_topic":{
+        "get":"pubsub_topic"
+    },
+    "message":{
+        "get":"message"
+    }
+}

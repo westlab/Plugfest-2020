@@ -1,0 +1,22 @@
+{
+    "input_file":"xmpp_src.json",
+    "output_file":"general.json",
+    "stanza":{
+        "get":"stanza"
+    },
+    "xmpp_id":{
+        "get":"id"
+    },
+    "message_type":{
+        "get":"message_type"
+    },
+    "pubsub_topic":{
+        "get":"node"
+    },
+    "message":{
+        "get":"message"
+    },
+    "to_jabber":{
+        "get":"to"
+    }
+}

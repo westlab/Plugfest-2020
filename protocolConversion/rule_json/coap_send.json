@@ -1,0 +1,33 @@
+{
+   "input_file":"coap_dst.json",
+   "message_type":{
+      "get":"message_type"
+   },
+   "uri":{
+      "get":"uri"
+   },
+   
+   "pubsub_topic":{
+      "get":"pubsub_topic"
+   },
+   "method":{
+      "get":"method"
+   },
+   "message":{
+      "get":"message"
+   },
+   "address":{
+    "rule":["if $message_type regmatch (publish|subscribe)",
+      "$_ = \"coap:\/\/localhost/ps/\"+ $pubsub_topic",
+      "else",
+      "$_ = \"coap:\/\/\" + $uri ",
+      "endif"]
+   },
+   "post_process":{
+      "rule":[
+        "if $message_type == \"publish\"",
+        "process coap-client -m PUT -e $message $address",
+        "endif"
+      ]
+   }
+}

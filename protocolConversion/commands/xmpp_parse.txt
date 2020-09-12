@@ -1,0 +1,20 @@
+output_file:xmpp_src.json
+string $stanza regex ^<([a-z]+) $all_message 1
+if $stanza != "iq"
+discard
+endif
+string $to regex to="([a-z\.]+)" $all_message 1
+string $id regex id="([0-9a-z\-]+)" $all_message 1
+string $protocol_xep regex ^<iq\s[!-=?-~\s]+><([a-z]+) $all_message 1
+if $protocol_xep != "pubsub"
+discard
+endif
+string $message_type regex <pubsub\sxmlns="http://jabber.org/protocol/pubsub"><([a-z]+) $all_message 1
+string $node regex node="([a-zA-Z0-9/#+]+)" $all_message 1
+string $message regex xmlns="data">([!-;=-~\s]+)< $all_message 1
+assign $stanza
+assign $to
+assign $id
+assign $message_type
+assign $node
+assign $message

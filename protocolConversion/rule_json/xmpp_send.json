@@ -1,0 +1,21 @@
+{
+  "input_file":"xmpp_dst.json",  
+  "stanza":{
+      "get":"stanza"
+  },
+  "to":{
+      "get":"to"
+  },
+  "message_type":{
+      "get":"message_type"
+  },
+  "node":{
+      "get":"node"
+  },
+  "message":{
+      "get":"message"
+  },
+  "postprocess":{
+      "rule":["process xmpp_pubsub_client $to $message_type $node $message -j west@localhost -p west"]
+  }
+}

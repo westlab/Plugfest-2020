@@ -1,0 +1,50 @@
+{
+  "output_file":"coap_src.json",
+  "token_length":{
+      "ignore":"true",
+      "type":"int",
+      "rule":[
+        "$_ -> [0]>4:[0]>8"
+      ]
+  },
+  "method":{
+      "rule":[
+        "int $code -> [1]:[2]",
+        "$_ ref ref/coap_method.json > no==$code ? method : none"
+      ]
+  },
+  "message_id":{
+      "type":"int",
+      "rule":[
+          "$_ -> [2]:[4]"
+      ]
+  },
+  "token":{
+      "type":"int",
+      "rule":[
+          "$_ -> [3]:[3+$token_length]"
+      ]
+  },
+  "uri":{
+      "rule":[
+        "int $s = 4+$token_length",
+        "int $length -> [$s]>4:[$s]>8",
+        "$_ -> [$s+1]:[$s+1+$length]",
+        "$s = $s + $length +1",
+        "int $end_check -> [$s]:[$s+1]",
+        "while $end_check != 255",
+        "int $length -> [$s]>4:[$s]>8",
+        "string $tmp -> [$s+1]:[$s+1+$length]",
+        "$_ = $_ + \"/\" + $tmp",
+        "$s = $s + $length +1",
+        "$end_check -> [$s]:[$s+1]",
+        "endwhile"
+      ] 
+  },
+  "payload":{
+     "rule":[
+       "$_ -> [$s+1]:[$packet_length]"
+     ]
+  }
+  
+}

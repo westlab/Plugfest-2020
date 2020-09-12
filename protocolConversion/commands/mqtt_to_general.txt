@@ -1,0 +1,25 @@
+input_file:mqtt_src.json
+output_file:general.json
+string $message_type get message_type
+if not $message_type regmatch (publish|subscribe)
+discard
+endif
+string $dup_flag get dup_flag
+string $qos_level get qos_level
+string $retain get retain
+string $pubsub_topic get topic
+if $message_type == "publish" and $pubsub_topic regmatch ^xmpp/send
+string $to_jabber regex xmpp/send/([a-zA-Z0-9\.]+@[a-zA-Z0-9\.]+) $pubsub_topic 1
+endif
+if $message_type == "publish" and $pubsub_topic regmatch ^xmpp/recieve
+string $from_jabber regex xmpp/recieve/([a-zA-Z0-9\.]+@[a-zA-Z0-9\.]+) $pubsub_topic 1
+endif
+string $message get message
+assign $message_type
+assign $dup_flag
+assign $qos_level
+assign $retain
+assign $pubsub_topic
+assign $to_jabber
+assign $from_jabber
+assign $message

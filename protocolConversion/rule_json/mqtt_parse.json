@@ -1,0 +1,59 @@
+{
+    "output_file":"mqtt_src.json",
+    "message_type":{
+      "rule":["int $mes_type_no->[0]>0:[0]>4",
+         "$_ ref ref/mqtt_packet_type.json > type_no==$mes_type_no ?type : none"
+      ],
+      "if_discard":"not $_ regmatch (connect|publish|subscribe)"
+    },
+    "dup_flag":{
+      "type":"int",
+      "rule":["$_->[0]>4:[0]>5"]
+    },
+    "qos_level":{
+      "type":"int",
+      "rule":["$_ ->[0]>5:[0]>7"]
+    },
+    "mes_id_len":{
+      "type":"int",
+      "ignore":true,
+      "rule":["if $qos_level == 0","$_ = 0","else","$_ = 2","endif"]
+    },
+    "retain":{
+      "type":"int",
+      "rule":["$_ ->[0]>5:[0]>7"]
+    },
+    "meslen_len":{
+      "type":"int",
+      "ignore":true,
+      "rule":["$_ = 1",
+      "int $ref_value -> [1]:[2]",
+      "while $ref_value >= 128 and $meslen_len < 5",
+      "$_ = $_ + 1",
+      "$ref_value -> [ $meslen_len ] : [ $meslen_len + 1 ]",
+      "endwhile"]
+    },
+    "message_version":{
+      "type":"int",
+      "if_use":"$message_type == \"connect\"",
+      "rule":["int $protocol_name_length -> [1+$meslen_len]:[1+$meslen_len+2]",
+      "$_ -> [3+$meslen_len + $protocol_name_length]:[4+$meslen_len + $protocol_name_length]"
+      ]
+    },
+    "topic":{
+      "if_use":"$message_type == \"publish\" or $message_type == \"subscribe\"",
+      "rule":["int $topic_length -> [1+$meslen_len]:[3+$meslen_len]",
+      "$_ -> [3+$meslen_len]:[3+$meslen_len+$topic_length]"]
+    },
+    "message_id":{
+      "type":"int",
+      "if_use":"$qos_level > 0",
+      "rule":["$_ -> [3+$meslen_len+$topic_length]:[5+$meslen_len+$topic_length]"]
+    },
+    "message":{
+      "if_use":"$message_type == \"publish\"",
+      "rule":[
+        "$_ -> [3+ $meslen_len + $topic_length + $mes_id_len]:[$packet_length]"
+      ]
+    }
+}

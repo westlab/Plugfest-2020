@@ -1,0 +1,12 @@
+{
+    "srcip": "::1",
+    "dstip": "::1",
+    "srcport": "54178",
+    "dstport": "5222",
+    "message_type": "publish",
+    "dup_flag": "0",
+    "qos_level": "0",
+    "retain": "0",
+    "topic": "temp",
+    "message": "300K"
+}

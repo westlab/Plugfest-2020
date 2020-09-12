@@ -261,3 +261,9 @@ __pycache__/
 *.pyc
 PlugFestUWP/PlugFest/TEDS.dll
 PlugFestUWP/PlugFest/operateTEDS.dll
+
+# Visual Studio Code setting files
+.vscode/
+
+# macOS system file
+.DS_STORE

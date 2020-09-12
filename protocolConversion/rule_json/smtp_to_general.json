@@ -1,0 +1,39 @@
+{
+    "input_file":"smtp_src.json",
+    "output_file":"general.json",
+    "from_mailaddress":{
+        "get":"from"
+    },
+    "to_mailaddress":{
+        "get":"to"
+    },
+    "subject_mail":{
+        "get":"subject"
+    },
+    "message_type":{
+        "rule":[
+            "$_ regex ^<([a-z]+)> $subject_mail 1",
+            "if $_ == \"\"",
+            "$_ = \"send_message\"",
+            "endif"
+        ]
+    },
+    "pubsub_topic":{
+        "if_use":"$message_type regmatch (publish|subscribe|unsubscribe)",
+        "rule":[
+            "$_ regex ^<[a-z]+>\\s([!-~\\s]+)$ $subject_mail 1"
+        ]
+    },
+    "message":{
+        "get":"message"
+    },
+    "postprocess":{
+        "rule":[
+            "if $message_type == \"subscribe\"",
+            "add_ref \"ref/smtp_topics.json\" { \"address\" : $from_mailaddress ,\"topic\" : $pubsub_topic }",
+            "elif $message_type == \"unsubscribe\"",
+            "erace_ref \"ref/smtp_topics.json\" > address == $from_mailaddress and topic == $pubsub_topic",
+            "endif"
+        ]
+    } 
+}

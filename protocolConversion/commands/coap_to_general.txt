@@ -1,0 +1,21 @@
+input_file:coap_src.json
+output_file:general.json
+string $method get method
+string $uri get uri
+if $uri regmatch localhost/ps/
+string $pubsub_topic regex localhost/ps/([a-zA-Z0-9/]+) $uri 1
+endif
+if $uri regmatch localhost/ps/ and $method == PUT
+string $message_type = publish
+print $message_type
+elif $uri regmatch localhost/ps/ and $method == GET
+string $message_type = subscribe
+else
+string $message_type = $method
+endif
+string $message get payload
+assign $method
+assign $uri
+assign $pubsub_topic
+assign $message_type
+assign $message

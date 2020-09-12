@@ -1,0 +1,24 @@
+input_file:smtp_src.json
+output_file:general.json
+string $from_mailaddress get from
+string $to_mailaddress get to
+string $subject_mail get subject
+string $message_type regex ^<([a-z]+)> $subject_mail 1
+if $message_type == ""
+string $message_type = "send_message"
+endif
+if $message_type regmatch (publish|subscribe|unsubscribe)
+string $pubsub_topic regex ^<[a-z]+>\s([!-~\s]+)$ $subject_mail 1
+endif
+string $message get message
+if $message_type == "subscribe"
+add_ref "ref/smtp_topics.json" { "address" : $from_mailaddress ,"topic" : $pubsub_topic }
+elif $message_type == "unsubscribe"
+erace_ref "ref/smtp_topics.json" > address == $from_mailaddress and topic == $pubsub_topic
+endif
+assign $from_mailaddress
+assign $to_mailaddress
+assign $subject_mail
+assign $message_type
+assign $pubsub_topic
+assign $message

@@ -1,0 +1,37 @@
+{
+    "input_file":"mqtt_src.json",
+    "output_file":"general.json",
+    "message_type":{
+        "get":"message_type",
+        "if_discard":"not $_ regmatch (publish|subscribe)"
+    },
+    "dup_flag":{
+        "get":"dup_flag"
+    },
+    "qos_level":{
+        "get":"qos_level"
+    },
+    "retain":{
+        "get":"retain"
+    },
+    "pubsub_topic":{
+        "get":"topic"
+    },
+    "to_jabber":{
+        "comment":"for send message to xmpp user",
+        "if_use":"$message_type == \"publish\" and $pubsub_topic regmatch ^xmpp/send",
+        "rule":[
+            "$_ regex xmpp/send/([a-zA-Z0-9\\.]+@[a-zA-Z0-9\\.]+) $pubsub_topic 1"
+        ]
+    },
+    "from_jabber":{
+        "comment":"for recieve message from xmpp user",
+        "if_use":"$message_type == \"publish\" and $pubsub_topic regmatch ^xmpp/recieve",
+        "rule":[
+            "$_ regex xmpp/recieve/([a-zA-Z0-9\\.]+@[a-zA-Z0-9\\.]+) $pubsub_topic 1"
+        ] 
+    },
+    "message":{
+        "get":"message"
+    }
+}

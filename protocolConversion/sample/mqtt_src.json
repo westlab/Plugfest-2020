@@ -1,0 +1,10 @@
+{
+    "srcip": "::1",
+    "dstip": "::1",
+    "srcport": "55937",
+    "dstport": "1883",
+    "message_type": "disconnect",
+    "dup_flag": "0",
+    "qos_level": "0",
+    "retain": "0"
+}

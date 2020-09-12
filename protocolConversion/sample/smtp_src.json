@@ -1,0 +1,10 @@
+{
+    "srcip": "127.0.0.1",
+    "dstip": "127.0.0.1",
+    "srcport": "56231",
+    "dstport": "25",
+    "to": "mailtest@localhost",
+    "from": "pubsub@localhost",
+    "subject": "<publish> temp",
+    "message": "290K"
+}

@@ -1,0 +1,11 @@
+{
+    "srcip": "::1",
+    "dstip": "::1",
+    "srcport": "52183",
+    "dstport": "5683",
+    "method": "PUT",
+    "message_id": "23737",
+    "token": "185",
+    "uri": "localhost\/ps\/temp",
+    "payload": "210K"
+}

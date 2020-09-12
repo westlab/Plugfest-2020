@@ -1,0 +1,20 @@
+{
+  "data":[
+    {
+      "no":"1",
+      "method":"GET"
+    },
+    {
+      "no":"2",
+      "method":"POST"
+    },
+    {
+      "no":"3",
+      "method":"PUT"
+    },
+    {
+      "no":"4",
+      "method":"DELETE"
+    }
+  ]
+}

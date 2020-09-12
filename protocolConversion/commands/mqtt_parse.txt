@@ -1,0 +1,42 @@
+output_file:mqtt_src.json
+int $mes_type_no->[0]>0:[0]>4
+string $message_type ref ref/mqtt_packet_type.json > type_no==$mes_type_no ?type : none
+if not $message_type regmatch (connect|publish|subscribe)
+discard
+endif
+int $dup_flag->[0]>4:[0]>5
+int $qos_level ->[0]>5:[0]>7
+if $qos_level == 0
+int $mes_id_len = 0
+else
+int $mes_id_len = 2
+endif
+int $retain ->[0]>5:[0]>7
+int $meslen_len = 1
+int $ref_value -> [1]:[2]
+while $ref_value >= 128 and $meslen_len < 5
+int $meslen_len = $meslen_len + 1
+$ref_value -> [ $meslen_len ] : [ $meslen_len + 1 ]
+endwhile
+if $message_type == "connect"
+int $protocol_name_length -> [1+$meslen_len]:[1+$meslen_len+2]
+int $message_version -> [3+$meslen_len + $protocol_name_length]:[4+$meslen_len + $protocol_name_length]
+endif
+if $message_type == "publish" or $message_type == "subscribe"
+int $topic_length -> [1+$meslen_len]:[3+$meslen_len]
+string $topic -> [3+$meslen_len]:[3+$meslen_len+$topic_length]
+endif
+if $qos_level > 0
+int $message_id -> [3+$meslen_len+$topic_length]:[5+$meslen_len+$topic_length]
+endif
+if $message_type == "publish"
+string $message -> [3+ $meslen_len + $topic_length + $mes_id_len]:[$packet_length]
+endif
+assign $message_type
+assign $dup_flag
+assign $qos_level
+assign $retain
+assign $message_version
+assign $topic
+assign $message_id
+assign $message

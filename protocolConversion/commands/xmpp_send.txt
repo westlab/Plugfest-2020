@@ -1,0 +1,12 @@
+input_file:xmpp_dst.json
+string $stanza get stanza
+string $to get to
+string $message_type get message_type
+string $node get node
+string $message get message
+process xmpp_pubsub_client $to $message_type $node $message -j west@localhost -p west
+assign $stanza
+assign $to
+assign $message_type
+assign $node
+assign $message

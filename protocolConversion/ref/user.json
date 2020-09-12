@@ -1,0 +1,18 @@
+{
+    "data":[
+        {
+            "name":"west"
+        },
+        {
+            "name":"east",
+            "jabber_id":"east@localhost"
+        },
+        {
+            "name":"north",
+            "mailaddress":"north@localhost"
+        },
+        {
+            "name":"south"
+        }
+    ]
+}

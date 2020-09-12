@@ -1,0 +1,12 @@
+{
+    "srcip": "::1",
+    "dstip": "::1",
+    "srcport": "54178",
+    "dstport": "5222",
+    "stanza": "iq",
+    "xmpp_id": "bc0ed333-cac9-44e9-b64e-606ed6599304-4",
+    "message_type": "publish",
+    "pubsub_topic": "temp",
+    "message": "300K",
+    "to_jabber": "pubsub.localhost"
+}

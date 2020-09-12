@@ -1,0 +1,12 @@
+input_file:general.json
+output_file:coap_dst.json
+string $method get method
+string $uri get uri
+string $pubsub_topic get pubsub_topic
+string $message_type get message_type
+string $message get message
+assign $method
+assign $uri
+assign $pubsub_topic
+assign $message_type
+assign $message

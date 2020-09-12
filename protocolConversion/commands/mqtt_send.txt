@@ -1,0 +1,23 @@
+input_file:mqtt_dst.json
+string $message_type get message_type
+if not $message_type regmatch publish
+discard
+endif
+string $dup_flag get dup_flag 0
+string $qos_level get qos_level 0
+string $retain_bool get retain 0
+if $retain_bool == "1"
+string $retain = "-r"
+else
+string $retain = ""
+endif
+string $topic get topic
+string $message get message
+process mosquitto_pub -t $topic -m $message -q $qos_level $retain
+assign $message_type
+assign $dup_flag
+assign $qos_level
+assign $retain_bool
+assign $retain
+assign $topic
+assign $message

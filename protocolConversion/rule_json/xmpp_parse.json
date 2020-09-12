@@ -1,0 +1,41 @@
+{
+    "output_file":"xmpp_src.json",
+    "stanza":{
+        "rule":[
+          "$_ regex ^<([a-z]+) $all_message 1"
+        ],
+        "if_discard":"$_ != \"iq\""
+    },
+    "to":{
+        "rule":[
+          "$_ regex to=\"([a-z\\.]+)\" $all_message 1"
+        ]
+    },
+    "id":{
+        "rule":[
+          "$_ regex id=\"([0-9a-z\\-]+)\" $all_message 1"
+        ]
+    },
+    "protocol_xep":{
+        "ignore":true,
+        "rule":[
+          "$_ regex ^<iq\\s[!-=?-~\\s]+><([a-z]+) $all_message 1"
+        ],
+        "if_discard":"$_ != \"pubsub\""
+    },
+    "message_type":{
+        "rule":[
+          "$_ regex <pubsub\\sxmlns=\"http://jabber.org/protocol/pubsub\"><([a-z]+) $all_message 1"
+        ]
+    },
+    "node":{
+        "rule":[
+          "$_ regex node=\"([a-zA-Z0-9/#+]+)\" $all_message 1"
+        ]
+    },
+    "message":{
+        "rule":[
+          "$_ regex xmlns=\"data\">([!-;=-~\\s]+)< $all_message 1"
+        ]
+    }
+}

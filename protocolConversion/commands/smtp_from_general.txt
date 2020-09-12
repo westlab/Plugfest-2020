@@ -1,0 +1,14 @@
+input_file:general.json
+output_file:smtp_dst.json
+string $to get to_mailaddress
+string $from get from_mailaddress
+string $subject get subject_mail
+string $message_type get message_type
+string $pubsub_topic get pubsub_topic
+string $message get message
+assign $to
+assign $from
+assign $subject
+assign $message_type
+assign $pubsub_topic
+assign $message
