@@ -7,8 +7,9 @@ This script creates an MQTT client as an NCAP that provides TEDS at teds_topic.
 # Parameters
 broker='192.168.0.10'
 client_id='NCAP'
+temp_topic="Plugfest/keio/sensor/1/TEMP"
 teds_topic="NCAP/TEDS"
-teds_msg="TEDS information from NCAP"
+teds_msg="TEDS information from NCAP (Default)"
 status_topic="NCAP/status"
 msg_on='Online'
 msg_off='Offline'
@@ -34,15 +35,24 @@ def on_disconnect(client, packet, exc=None):
     print('Disconnected.')
 
 def on_message(client, topic, payload, qos, properties):
+    global teds_msg
     print('Message received.')
 
-    print('Properties in received message:', properties)
-    response_topic = properties['response_topic'][0]
-    print('Response topic in received message:', response_topic)
+    if topic == temp_topic:
+        msg=str(payload.decode("utf-8"))
+        messages.append(msg)
+        teds_msg = msg
+        print('  Received message(TEMP):', teds_msg)
 
-    print('Publish response message to response topic...')
-    client.publish(response_topic, teds_msg)
-    print('Published.')
+    if topic == teds_topic:
+        print('Properties in received message:', properties)
+        response_topic = properties['response_topic'][0]
+        print('Response topic in received message:', response_topic)
+
+        print('Publish response message to response topic...')
+        client.publish(response_topic, teds_msg)
+        print('Published.')
+
     if not keep_connected:
       ask_exit()
 
@@ -62,6 +72,9 @@ async def main(broker_host):
 
     assign_callbacks_to_client(client)
     await client.connect(broker_host)
+
+    print('Subscribe TEMP')
+    client.subscribe(temp_topic, no_local=True)
 
     print('Publish message indicating current status...')
     client.publish(status_topic, msg_on, retain=True)
