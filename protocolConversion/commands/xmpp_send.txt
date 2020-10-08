@@ -4,7 +4,7 @@ string $to get to
 string $message_type get message_type
 string $node get node
 string $message get message
-process xmpp_pubsub_client $to $message_type $node $message -j west@localhost -p west
+process /home/demo/slixmpp/examples/pubsub_client.py $to $message_type $node $message -j converter@192.168.0.40 -p converterpass
 assign $stanza
 assign $to
 assign $message_type

@@ -9,7 +9,7 @@
     },
     "to":{
         "get":"to_jabber",
-        "if_none":"pubsub.localhost"
+        "if_none":"pubsub.192.168.0.40"
     },
     "message_type":{
         "get":"message_type",

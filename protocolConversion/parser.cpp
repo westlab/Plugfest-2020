@@ -362,6 +362,26 @@ void add_reference(vector<string> ope){
     write_json(ref_file_name,table);
 }
 
+string escape_str(string input){
+    string ret = "";
+    for(auto c:input){
+        if(c=='\'') {
+	    return ret;
+	} else if(c=='!'||c=='$') {
+	    return ret;
+	} else if(c=='&') {
+	    return ret;
+	} else if(c=='%'){
+	    return ret;
+	} else if(c==0) {
+	    continue;
+	} else {
+	    ret+=c;
+	}
+    }
+    return ret;    
+}
+
 void os_process(vector<string> ope){ //いろいろ適当なので今後修正予定
     find_variable(ope);
     //cout<<"called"<<endl;
@@ -369,10 +389,10 @@ void os_process(vector<string> ope){ //いろいろ適当なので今後修正�
     for(string s:ope) {
         if(regex_match(s,regex(R"(\||<{1,2}|2?>{1,2}(&1)?|&>)"))) command+=s+" ";
         else if(s=="") continue;
-        else command+="\""+s+"\" ";
+        else command+="'"+escape_str(s)+"' ";
     }
-    command+=" > /dev/null";
-    //cout<<"process"<<command<<endl;
+    //command+=" > /dev/null";
+    //cout<<"process "<<command.c_str()<<endl;
     chrono::system_clock::time_point start, end; //timing
     start = chrono::system_clock::now();
     system(command.c_str());
@@ -380,6 +400,7 @@ void os_process(vector<string> ope){ //いろいろ適当なので今後修正�
     double time = static_cast<double>(chrono::duration_cast<chrono::microseconds>(end - start).count() / 1000.0); //経過時間
     printf("%s : %.3f ms\n",command.c_str(),time);
 }
+
 
 void assign_process(vector<string> operation,ptree& payload){
     string tag,message;

@@ -16,6 +16,6 @@
       "get":"message"
   },
   "postprocess":{
-      "rule":["process xmpp_pubsub_client $to $message_type $node $message -j west@localhost -p west"]
+      "rule":["process /home/demo/slixmpp/examples/pubsub_client.py $to $message_type $node $message -j converter@192.168.0.40 -p converterpass"]
   }
 }

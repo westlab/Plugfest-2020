@@ -1,4 +1,4 @@
-gpp = g++ -std=c++17 -O3 -I /usr/local/Cellar/boost/1.73.0/include
+gpp = g++ -std=c++17 -O3 -I /usr/include/boost
 
 all: convert parse_only json_parser
 

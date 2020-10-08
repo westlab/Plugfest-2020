@@ -139,11 +139,11 @@ void dump(const unsigned char *data_buffer, const unsigned int length,const char
     start+=tplength;
 
     //application
-    if(dstport=="5222"){ //XMPP xep0060
-        if(convert(0,"commands/xmpp_parse.txt",data_buffer+start,length-start,srcip,dstip,srcport,dstport)&&convert(1,"commands/xmpp_to_general.txt")){
-            if(convert(2,"commands/mqtt_from_general.txt")) convert(3,"commands/mqtt_send.txt");
-            if(convert(2,"commands/coap_from_general.txt")) convert(3,"commands/coap_send.txt");
-            if(convert(2,"commands/smtp_from_general.txt")) convert(3,"commands/smtp_send.txt");
+    if(dstport=="1883"){ //MQTT
+        if(convert(0,"commands/mqtt_parse.txt",data_buffer+start,length-start,srcip,dstip,srcport,dstport)&&convert(1,"commands/mqtt_to_general.txt")){
+            if(convert(2,"commands/xmpp_from_general.txt")){
+	        convert(3,"commands/xmpp_send.txt");
+	    }
         }
     }
 

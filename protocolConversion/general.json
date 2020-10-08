@@ -1,0 +1,12 @@
+{
+    "srcip": "192.168.0.21",
+    "dstip": "192.168.0.10",
+    "srcport": "45456",
+    "dstport": "1883",
+    "message_type": "publish",
+    "dup_flag": "0",
+    "qos_level": "0",
+    "retain": "0",
+    "pubsub_topic": "Plugfest\/keio\/sensor\/3\/PRES",
+    "message": "\u00001023.0880%\u0000\u001CPlugfest\/keio\/sensor\/3\/HUMID\u000068.1090$\u0000\u001BPlugfest\/keio\/sensor\/3\/TEMP\u000021.9400!\u0000\u0019Plugfest\/keio\/sensor\/3\/UV\u00000.0520'\u0000\u001DPlugfest\/keio\/sensor\/3\/ILLUMI\u0000258.621"
+}

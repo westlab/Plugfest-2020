@@ -2,7 +2,7 @@ input_file:general.json
 output_file:xmpp_dst.json
 string $stanza get stanza
 string $id get xmpp_id
-string $to get to_jabber pubsub.localhost
+string $to get to_jabber pubsub.192.168.0.40
 string $message_type get message_type
 if $message_type != "publish"
 discard

@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
     char *device;
     if(argc==1){
-        device="lo0";
+        device="wlp2s0";
     }else{
         device=argv[1];
     }
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    for (int i = 0; i < 100;) {
+    for (int i = 0; i > -1;) {
         packet = pcap_next(pcap_handle, &header);
         if(header.len>30000||!packet) continue;
         dump(packet, header.len, device);
