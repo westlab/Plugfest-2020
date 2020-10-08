@@ -5,7 +5,7 @@ This script creates an MQTT client that requests an NCAP to send TEDS.
 """
 
 # Parameters
-broker='127.0.0.1'
+broker='192.168.0.10'
 client_id='Application'
 req_msg='Request TEDS'
 res_topic='client/res'
