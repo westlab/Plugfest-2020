@@ -26,6 +26,37 @@ jsonのルール記述ファイルの書き方はすでにあるファイルや�
 
 `./update.sh`でコマンドファイルを生成します。JSONを更新したら、実行してください。
 
+## Plugfestでの実行方法
+### プロトコル変換処理の起動
+NIC（デフォルトはwlp2s0）を通るパケットをキャプチャして変換する処理を起動する。MQTTブローカと同じマシンで動かす。
+```bash
+$ make
+$ protocolconversion/convert_full.out
+```
+### XMPPサーバの起動
+xmppserver(ejabberd)を起動（停止）する場合、
+```bash
+$ sudo /opt/ejabberd-20.07/bin/ejabberdctl start(stop)
+```
+
+xmppserver(ejabberd)を起動してログをリアルタイムで表示させる場合、
+```bash
+$ sudo /opt/ejabberd-20.07/bin/ejabberdctl live
+```
+ctrl+Cで止めても、サーバは動き続けることに注意
+
+※起動中は `http://192.168.0.40:5280/admin/` で管理画面に入れる。管理者アカウントはIDが`admin`、パスワードはドク系
+
+### XMPPクライアントの実行
+予めsubscribeするnodeを登録しておく。
+```bash
+$ /home/demo/slixmpp/examples/pubsub_client.py pubsub.192.168.0.40 subscribe Plugfest/keio/sensor/1/TEMP -j client@192.168.0.40 -p clientpass
+```
+listenして、subscribeしているノードにパブリッシュされたら受け取って表示する。
+```bash
+$ /home/demo/slixmpp/examples/pubsub_events.py -j client@192.168.0.40 -p clientpass
+```
+
 ## TO DO?
 conversion(const unsigned char *data, const string srcProtocol, const vector\<string\> &dstProtocol)で変換して、送るライブラリを作る？
 
