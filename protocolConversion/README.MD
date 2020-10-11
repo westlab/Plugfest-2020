@@ -48,8 +48,8 @@ Note that it cannot be terminated by pressing `ctrl+C`
 
 Administrator menu is avairable on `http://192.168.0.40:5280/admin/` with admin/demo account.
 
-### XMPPクライアントの実行
-Register subscribing nodes as preperation.
+### Execute XMPP client
+Register subscribing nodes as a preperation. Firstly, it is required for subscribing data.
 ```bash
 $ /home/demo/slixmpp/examples/pubsub_client.py pubsub.192.168.0.40 subscribe Plugfest/keio/sensor/1/TEMP -j client@192.168.0.40 -p clientpass
 ```
@@ -59,5 +59,5 @@ $ /home/demo/slixmpp/examples/pubsub_events.py -j client@192.168.0.40 -p clientp
 ```
 
 ## TO DO?
-conversion(const unsigned char *data, const string srcProtocol, const vector\<string\> &dstProtocol)で変換して、送るライブラリを作る？
+Convert by using conversion(const unsigned char *data, const string srcProtocol, const vector\<string\> &dstProtocol), and create transfering library
 
