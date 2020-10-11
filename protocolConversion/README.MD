@@ -1,58 +1,59 @@
 # Protocol Conversion
 
-## 使用ライブラリ
+## Required Libraries
 boost 1.73.0
-libpcap (バイト列を入力とする場合は入力不要)
+libpcap (only when directly capture network interfaces to get protocols)
 
-## ディレクトリ・ファイル構成
+## Directory and files structure
 ```
 .
-├ rule_json/  //jsonの変換ルール記述ファイル
-├ commands/  //rule_jsonのファイルを変換したもの
-├ ref //変換時の参照ファイル
-├ sample/  //中間ファイルの例
-├ update.sh  //rule_jsonのファイルからcommandを生成する
+├ rule_json/  //Description files for conversion in json
+├ commands/  //Translated files from rule_json
+├ ref // Referenced files when translating
+├ sample/  //Samples of middle files
+├ update.sh  // generating commands according to rule_json
 ```
 
-## 実行ファイル生成
-`make all`で生成
+## Making executables
+`make all` for making all
 
-* convert_full.out ... lo0インターフェイスをキャプチャリングしてXMPPのpubsubからMQTT, CoAP, SMTPに変換する。
-* convert_part.out ... `./parse_only.out 1 sample/mqtt_src.json`の形式で実行。数字はgeneralへの変換が`1`,generalからの変換が`2`
-* json_parser.out ... `./json_parser.out <json file name> <text file name>`の形式で実行。update.shで使用
+* convert_full.out ... Capture lo0 interface and translate XMPP pubsub to MQTT, CoAP, and SMTP
+* convert_part.out ... Execute as `./parse_only.out 1 sample/mqtt_src.json` where the digit means 1 to convert general form. and 2 to convert from general form.
+* json_parser.out ... Execute as `./json_parser.out <json file name> <text file name>`; used in update.sh
 
-## 使用方法
-jsonのルール記述ファイルの書き方はすでにあるファイルや、論文等を参考してください。整理ができたら追記します。
+## How to use
+Refer the syntax rules in the paper to write json rules.
 
-`./update.sh`でコマンドファイルを生成します。JSONを更新したら、実行してください。
+To generate command files, execute `./update.sh`. This is required whenever you update json files.
 
-## Plugfestでの実行方法
-### プロトコル変換処理の起動
-NIC（デフォルトはwlp2s0）を通るパケットをキャプチャして変換する処理を起動する。MQTTブローカと同じマシンで動かす。
+## Demo for Plugfest
+### How to run demo of protocol conversion
+It captures all network traffic of NIC(default is wlp2s0) and transfer MQTT protocol to XMPP protocol for decicated topics.
+It is required to execute on MQTT brokder server to captuer all MQTT protocols.
 ```bash
 $ make
 $ protocolconversion/convert_full.out
 ```
-### XMPPサーバの起動
-xmppserver(ejabberd)を起動（停止）する場合、
+### XMPP server
+Execute/terminate xmppserver(ejabberd) as follows:
 ```bash
 $ sudo /opt/ejabberd-20.07/bin/ejabberdctl start(stop)
 ```
 
-xmppserver(ejabberd)を起動してログをリアルタイムで表示させる場合、
+To get realtime message from xmppserver(ejabberd)
 ```bash
 $ sudo /opt/ejabberd-20.07/bin/ejabberdctl live
 ```
-ctrl+Cで止めても、サーバは動き続けることに注意
+Note that it cannot be terminated by pressing `ctrl+C`
 
-※起動中は `http://192.168.0.40:5280/admin/` で管理画面に入れる。管理者アカウントはIDが`admin`、パスワードはドク系
+Administrator menu is avairable on `http://192.168.0.40:5280/admin/` with admin/demo account.
 
 ### XMPPクライアントの実行
-予めsubscribeするnodeを登録しておく。
+Register subscribing nodes as preperation.
 ```bash
 $ /home/demo/slixmpp/examples/pubsub_client.py pubsub.192.168.0.40 subscribe Plugfest/keio/sensor/1/TEMP -j client@192.168.0.40 -p clientpass
 ```
-listenして、subscribeしているノードにパブリッシュされたら受け取って表示する。
+Show messages when published to subscribing nodes by using `listen`
 ```bash
 $ /home/demo/slixmpp/examples/pubsub_events.py -j client@192.168.0.40 -p clientpass
 ```
