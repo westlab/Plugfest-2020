@@ -7,6 +7,6 @@
     "dup_flag": "0",
     "qos_level": "0",
     "retain": "0",
-    "topic": "Plugfest\/keio\/ai\/5\/AGE",
-    "message": "0\u001C\u0000\u001APlugfest\/keio\/ai\/5\/EMOTION0!\u0000\u0018Plugfest\/keio\/ai\/5\/FACEX70.93750!\u0000\u0018Plugfest\/keio\/ai\/5\/FACEY5.773440 \u0000\u0018Plugfest\/keio\/ai\/5\/FACEZ4.6875"
+    "topic": "Plugfest\/keio\/ai\/2\/GENDER",
+    "message": "0\u0018\u0000\u0016Plugfest\/keio\/ai\/2\/AGE0\u001C\u0000\u001APlugfest\/keio\/ai\/2\/EMOTION0\"\u0000\u0018Plugfest\/keio\/ai\/2\/FACEX-1.752930\"\u0000\u0018Plugfest\/keio\/ai\/2\/FACEY-11.06250\"\u0000\u0018Plugfest\/keio\/ai\/2\/FACEZ-4.902340\u0019\u0000\u0017Plugfest\/keio\/ai\/3\/PROB"
 }
