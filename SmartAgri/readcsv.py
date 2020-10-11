@@ -42,18 +42,34 @@ async def main(host):
     #client.set_auth_credentials(token, None)
     #await client.connect(broker_host)
     await client.connect(host)
-    with open('./20200701_0830_Outdoor-utf8.csv') as f:
-        reader = csv.reader(f)
-        readeri = iter(reader)
-        next(readeri)
-        header = next(readeri)
-        print(header)
-        next(readeri)
-        while True:
-            for row in reader:
-                print(row)
-                client.publish(TOPIC+header[0], str(row[0]), qos=1)
-                time.sleep(5)
+    with open('./20200701_0830_Outdoor-utf8.csv') as fo:
+        with open('./20200701_0830_South-utf8.csv') as fs:
+            readero = csv.reader(fo)
+            readerio = iter(readero)
+            next(readerio)
+            headero = next(readerio)
+            print(headero)
+            next(readerio)
+            readers = csv.reader(fs)
+            readeris = iter(readers)
+            next(readeris)
+            headers = next(readeris)
+            print(headers)
+            next(readeris)
+            while True:
+                for rowo, rows in zip(readero, readers):
+                    print(rowo)
+                    for ent in (1, 6, 21, 26, 31, 36, 41, 46, 51):
+                        pubtopic = TOPIC+'outdoor/'+headero[ent]
+                        pubdata = str(rowo[ent])
+                        print(pubtopic, pubdata)
+                        client.publish(pubtopic, pubdata, qos=1)
+                    for ent in (1, 6, 11, 16, 21, 26):
+                        pubtopic = TOPIC+'south/'+headers[ent]
+                        pubdata = str(rows[ent])
+                        print(pubtopic, pubdata)
+                        client.publish(pubtopic, pubdata, qos=1)
+                    time.sleep(1)
 
     await STOP.wait()
     await client.disconnect()
