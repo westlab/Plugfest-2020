@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import csv
 import pprint
 import asyncio
@@ -58,32 +57,27 @@ async def main(host):
             print(headers)
             next(readeris)
             while True:
-                try:
-                    for rowo, rows in zip(readero, readers):
-                        print(rowo)
-                        for ent in (1, 6, 21, 26, 31, 36, 41, 46, 51):
-                            pubtopic = TOPIC+'outdoor/'+headero[ent]
-                            pubdata = str(rowo[ent])
-                            print(pubtopic, pubdata)
-                            client.publish(pubtopic, pubdata, qos=1)
-                        for ent in (1, 6, 11, 16, 21, 26):
-                            pubtopic = TOPIC+'south/'+headers[ent]
-                            pubdata = str(rows[ent])
-                            print(pubtopic, pubdata)
-                            client.publish(pubtopic, pubdata, qos=1)
-                        time.sleep(1)
-                except StopIteration:
-                        fo.close()
-                        fs.close()
-                        return
+                for rowo, rows in zip(readero, readers):
+                    print(rowo)
+                    for ent in (1, 6, 21, 26, 31, 36, 41, 46, 51):
+                        pubtopic = TOPIC+'outdoor/'+headero[ent]
+                        pubdata = str(rowo[ent])
+                        print(pubtopic, pubdata)
+                        client.publish(pubtopic, pubdata, qos=1)
+                    for ent in (1, 6, 11, 16, 21, 26):
+                        pubtopic = TOPIC+'south/'+headers[ent]
+                        pubdata = str(rows[ent])
+                        print(pubtopic, pubdata)
+                        client.publish(pubtopic, pubdata, qos=1)
+                    time.sleep(1)
 
-#    await STOP.wait()
+    await STOP.wait()
     await client.disconnect()
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(asyncio.wait_for(main(host), TIMEOUT))
+      loop.run_until_complete(asyncio.wait_for(main(host), TIMEOUT))
     except asyncio.TimeoutError:
-        print('Timeout.')
+      print('Timeout.')
 

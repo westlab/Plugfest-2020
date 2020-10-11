@@ -42,9 +42,9 @@ def on_message(client, topic, payload, qos, properties):
         ask_exit()
 
 def assign_callbacks_to_client(client):
-  client.on_connect = on_connect
-  client.on_message = on_message
-  client.on_disconnect = on_disconnect
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.on_disconnect = on_disconnect
 
 async def main(broker_host):
     client = MQTTClient(client_id)
@@ -68,6 +68,6 @@ async def main(broker_host):
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     try:
-      loop.run_until_complete(asyncio.wait_for(main(broker), TIMEOUT))
+        loop.run_until_complete(asyncio.wait_for(main(broker), TIMEOUT))
     except asyncio.TimeoutError:
-      print('Timeout.')
+        print('Timeout.')
