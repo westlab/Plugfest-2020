@@ -10,6 +10,7 @@
 #include "json.h"
 #include "calc.h"
 #include "my_utilities.h"
+#include "middle.h"
 using namespace std;
 
 unordered_map<string,int> int_variable;
@@ -402,7 +403,7 @@ void os_process(vector<string> ope){ //いろいろ適当なので今後修正�
 }
 
 
-void assign_process(vector<string> operation,ptree& payload){
+void assign_process(vector<string> operation,ptree& payload, void* middle){
     string tag,message;
     if(operation[0][0]='$'){
         string variable_name=operation[0].substr(1);
@@ -410,7 +411,13 @@ void assign_process(vector<string> operation,ptree& payload){
             if(operation.size()>1){
                 tag=operation[2];
             }else tag=variable_name; 
-            if(message.length()>0) payload.put(tag,message); //空白ならば送らない
+            if(message.length()>0) {
+                if(middle!=NULL){
+                    add_data(middle, tag.c_str(), message.c_str());
+                }else{
+                    payload.put(tag,message); //空白ならば送らない
+                }
+            }
         }
     }else{
             tag=operation[0];
@@ -420,7 +427,7 @@ void assign_process(vector<string> operation,ptree& payload){
 }
 
 
-void parser(const unsigned char* databuffer,vector<string> operation,int& linecnt,ptree& payload,bool& use){
+void parser(const unsigned char* databuffer,vector<string> operation,int& linecnt,ptree& payload,bool& use, void* middle){
     if(operation.empty()){
         ++linecnt;
         return;
@@ -504,7 +511,7 @@ void parser(const unsigned char* databuffer,vector<string> operation,int& linecn
     }else if(operation[0]=="process"){
         os_process(sub_vector(operation,1));
     }else if(operation[0]=="assign"){
-        assign_process(sub_vector(operation,1),payload); 
+        assign_process(sub_vector(operation,1),payload, middle); 
     }else if(operation[0]=="continue"){ //while文のcontinue
         if(for_stack.empty()) return;
         linecnt=for_stack.top();
@@ -517,9 +524,7 @@ void parser(const unsigned char* databuffer,vector<string> operation,int& linecn
     ++linecnt;
 }
 //変換を行ったかを返す
-bool convert(int convert_type,const string read_file_name,const unsigned char* data={},const int packet_length=0,string srcip="",string dstip="",string srcport="",string dstport=""){
-    chrono::system_clock::time_point start, end; //timing
-    start = chrono::system_clock::now();
+bool convert(int convert_type,const string read_file_name,const unsigned char* data={},const int packet_length=0,string srcip="",string dstip="",string srcport="",string dstport="", void *middle=NULL){
     ptree output;
     ifstream file_open;
     file_open.open(read_file_name,ios::in);
@@ -581,15 +586,13 @@ bool convert(int convert_type,const string read_file_name,const unsigned char* d
         }else{
             operations=split_statement(commands[read_line]);
         }
-        parser(data,operations,read_line,output,is_convert_packet);
+        parser(data,operations,read_line,output,is_convert_packet,middle);
     }
     int_variable.clear();
     str_variable.clear();
     skip=false;
-    if(is_convert_packet) write_json(output_file_name,output);
-    end = chrono::system_clock::now();
-    double time = static_cast<double>(chrono::duration_cast<chrono::microseconds>(end - start).count() / 1000.0); //経過時間
-    printf("%s : %.3f ms\n",read_file_name.c_str(),time);
+    if(is_convert_packet&& middle == NULL) {
+        write_json(output_file_name,output);
+    }
     return is_convert_packet;
 }
-

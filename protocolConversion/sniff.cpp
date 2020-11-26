@@ -1,5 +1,3 @@
-//
-//
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -9,7 +7,6 @@
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 
-//multi thread
 #include <chrono>
 
 #include "convert.h"
